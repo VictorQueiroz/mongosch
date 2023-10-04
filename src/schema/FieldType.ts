@@ -9,6 +9,7 @@ import { FieldTypeDate } from "./FieldTypeDate";
 import { FieldTypeEnumString } from "./FieldTypeEnum";
 import { FieldTypeEnumInt } from "./FieldTypeEnum";
 import { FieldTypeUnion } from "./FieldTypeUnion";
+import { FieldTypeBinary } from "./FieldTypeBinary";
 import { FieldTypeBoolean } from "./FieldTypeBoolean";
 import { isFieldTypeModelReference } from "./FieldTypeModelReference";
 import { isFieldTypeString } from "./FieldTypeString";
@@ -21,6 +22,7 @@ import { isFieldTypeDate } from "./FieldTypeDate";
 import { isFieldTypeEnumString } from "./FieldTypeEnum";
 import { isFieldTypeEnumInt } from "./FieldTypeEnum";
 import { isFieldTypeUnion } from "./FieldTypeUnion";
+import { isFieldTypeBinary } from "./FieldTypeBinary";
 import { isFieldTypeBoolean } from "./FieldTypeBoolean";
 import { ISerializer } from "./__types__";
 import { encodeFieldTypeModelReference } from "./FieldTypeModelReference";
@@ -34,6 +36,7 @@ import { encodeFieldTypeDate } from "./FieldTypeDate";
 import { encodeFieldTypeEnumString } from "./FieldTypeEnum";
 import { encodeFieldTypeEnumInt } from "./FieldTypeEnum";
 import { encodeFieldTypeUnion } from "./FieldTypeUnion";
+import { encodeFieldTypeBinary } from "./FieldTypeBinary";
 import { encodeFieldTypeBoolean } from "./FieldTypeBoolean";
 import { IDeserializer } from "./__types__";
 import { decodeFieldTypeModelReference } from "./FieldTypeModelReference";
@@ -47,6 +50,7 @@ import { decodeFieldTypeDate } from "./FieldTypeDate";
 import { decodeFieldTypeEnumString } from "./FieldTypeEnum";
 import { decodeFieldTypeEnumInt } from "./FieldTypeEnum";
 import { decodeFieldTypeUnion } from "./FieldTypeUnion";
+import { decodeFieldTypeBinary } from "./FieldTypeBinary";
 import { decodeFieldTypeBoolean } from "./FieldTypeBoolean";
 import { defaultFieldTypeModelReference } from "./FieldTypeModelReference";
 import { compareFieldTypeModelReference } from "./FieldTypeModelReference";
@@ -60,6 +64,7 @@ import { compareFieldTypeDate } from "./FieldTypeDate";
 import { compareFieldTypeEnumString } from "./FieldTypeEnum";
 import { compareFieldTypeEnumInt } from "./FieldTypeEnum";
 import { compareFieldTypeUnion } from "./FieldTypeUnion";
+import { compareFieldTypeBinary } from "./FieldTypeBinary";
 import { compareFieldTypeBoolean } from "./FieldTypeBoolean";
 export type FieldType =
   | Readonly<FieldTypeModelReference>
@@ -73,6 +78,7 @@ export type FieldType =
   | Readonly<FieldTypeEnumString>
   | Readonly<FieldTypeEnumInt>
   | Readonly<FieldTypeUnion>
+  | Readonly<FieldTypeBinary>
   | Readonly<FieldTypeBoolean>;
 export function isFieldTypeTrait(value: unknown): value is FieldType {
   if (isFieldTypeModelReference(value)) return true;
@@ -86,6 +92,7 @@ export function isFieldTypeTrait(value: unknown): value is FieldType {
   if (isFieldTypeEnumString(value)) return true;
   if (isFieldTypeEnumInt(value)) return true;
   if (isFieldTypeUnion(value)) return true;
+  if (isFieldTypeBinary(value)) return true;
   if (isFieldTypeBoolean(value)) return true;
   return false;
 }
@@ -113,11 +120,13 @@ export function encodeFieldTypeTrait(__s: ISerializer, value: FieldType) {
       return encodeFieldTypeEnumInt(__s, value);
     case "fieldTypeUnion.FieldTypeUnion":
       return encodeFieldTypeUnion(__s, value);
+    case "fieldTypeBinary.FieldTypeBinary":
+      return encodeFieldTypeBinary(__s, value);
     case "fieldTypeBoolean.FieldTypeBoolean":
       return encodeFieldTypeBoolean(__s, value);
   }
   throw new Error(
-    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- fieldTypeModelReference.FieldTypeModelReference\n\t- fieldTypeString.FieldTypeString\n\t- fieldTypeObject.FieldTypeObject\n\t- fieldTypeObject.FieldTypeArray\n\t- fieldTypeInteger.FieldTypeDouble\n\t- fieldTypeInteger.FieldTypeInt64\n\t- fieldTypeInteger.FieldTypeInt32\n\t- fieldTypeDate.FieldTypeDate\n\t- fieldTypeEnum.FieldTypeEnumString\n\t- fieldTypeEnum.FieldTypeEnumInt\n\t- fieldTypeUnion.FieldTypeUnion\n\t- fieldTypeBoolean.FieldTypeBoolean\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
+    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- fieldTypeModelReference.FieldTypeModelReference\n\t- fieldTypeString.FieldTypeString\n\t- fieldTypeObject.FieldTypeObject\n\t- fieldTypeObject.FieldTypeArray\n\t- fieldTypeInteger.FieldTypeDouble\n\t- fieldTypeInteger.FieldTypeInt64\n\t- fieldTypeInteger.FieldTypeInt32\n\t- fieldTypeDate.FieldTypeDate\n\t- fieldTypeEnum.FieldTypeEnumString\n\t- fieldTypeEnum.FieldTypeEnumInt\n\t- fieldTypeUnion.FieldTypeUnion\n\t- fieldTypeBinary.FieldTypeBinary\n\t- fieldTypeBoolean.FieldTypeBoolean\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
   );
 }
 export function decodeFieldTypeTrait(__d: IDeserializer) {
@@ -135,6 +144,7 @@ export function decodeFieldTypeTrait(__d: IDeserializer) {
     | FieldTypeEnumString
     | FieldTypeEnumInt
     | FieldTypeUnion
+    | FieldTypeBinary
     | FieldTypeBoolean;
   switch (__id) {
     case -1200777270: {
@@ -203,6 +213,12 @@ export function decodeFieldTypeTrait(__d: IDeserializer) {
       value = tmp;
       break;
     }
+    case -1706328239: {
+      const tmp = decodeFieldTypeBinary(__d);
+      if (tmp === null) return null;
+      value = tmp;
+      break;
+    }
     case -1452915313: {
       const tmp = decodeFieldTypeBoolean(__d);
       if (tmp === null) return null;
@@ -253,6 +269,9 @@ export function compareFieldTypeTrait(__a: FieldType, __b: FieldType) {
     case "fieldTypeUnion.FieldTypeUnion":
       if (__b._name !== "fieldTypeUnion.FieldTypeUnion") return false;
       return compareFieldTypeUnion(__a, __b);
+    case "fieldTypeBinary.FieldTypeBinary":
+      if (__b._name !== "fieldTypeBinary.FieldTypeBinary") return false;
+      return compareFieldTypeBinary(__a, __b);
     case "fieldTypeBoolean.FieldTypeBoolean":
       if (__b._name !== "fieldTypeBoolean.FieldTypeBoolean") return false;
       return compareFieldTypeBoolean(__a, __b);

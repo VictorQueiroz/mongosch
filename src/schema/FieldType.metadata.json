@@ -60,6 +60,11 @@
       },
       {
         "type": "externalType",
+        "name": "FieldTypeBinary",
+        "relativePath": "./FieldTypeBinary"
+      },
+      {
+        "type": "externalType",
         "name": "FieldTypeBoolean",
         "relativePath": "./FieldTypeBoolean"
       }
@@ -124,6 +129,11 @@
           "type": "externalType",
           "name": "FieldTypeUnion",
           "relativePath": "./FieldTypeUnion"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeBinary",
+          "relativePath": "./FieldTypeBinary"
         },
         {
           "type": "externalType",

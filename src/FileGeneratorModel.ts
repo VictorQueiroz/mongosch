@@ -145,7 +145,7 @@ export default class FileGeneratorModel extends CodeStream {
       case "fieldTypeInteger.FieldTypeInt32":
       case "fieldTypeDate.FieldTypeDate":
       case "fieldTypeEnum.FieldTypeEnumString":
-        case "fieldTypeEnum.FieldTypeEnumInt":
+      case "fieldTypeEnum.FieldTypeEnumInt":
       case "fieldTypeBoolean.FieldTypeBoolean":
     }
   }
@@ -636,10 +636,10 @@ export default class FileGeneratorModel extends CodeStream {
           }
         }
         break;
-      case 'fieldTypeEnum.FieldTypeEnumString':
-      case 'fieldTypeEnum.FieldTypeEnumInt': {
+      case "fieldTypeEnum.FieldTypeEnumString":
+      case "fieldTypeEnum.FieldTypeEnumInt": {
         for (const i of fieldType.fields) {
-          switch(fieldType._name) {
+          switch (fieldType._name) {
             case "fieldTypeEnum.FieldTypeEnumString":
               this.append(`"${i.value}"`);
               break;

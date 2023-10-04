@@ -1,0 +1,3 @@
+import { FieldType } from "./FieldType";
+
+export type FieldTypeBinary : FieldType {}

@@ -6,6 +6,7 @@ import "./FieldTypeInteger";
 import "./FieldTypeDate";
 import "./FieldTypeEnum";
 import "./FieldTypeUnion";
+import "./FieldTypeBinary";
 import "./FieldTypeBoolean";
 
 export trait Event {
