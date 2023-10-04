@@ -1,6 +1,10 @@
 export { FieldTypeDate } from "./schema/FieldTypeDate";
-export { FieldTypeEnum } from "./schema/FieldTypeEnum";
-export { FieldTypeDouble, FieldTypeInt32, FieldTypeInt64 } from "./schema/FieldTypeInteger";
+export { FieldTypeEnumString, FieldTypeEnumInt } from "./schema/FieldTypeEnum";
+export {
+  FieldTypeDouble,
+  FieldTypeInt32,
+  FieldTypeInt64
+} from "./schema/FieldTypeInteger";
 export { FieldTypeArray, FieldTypeObject } from "./schema/FieldTypeObject";
 export { FieldTypeString } from "./schema/FieldTypeString";
 export { FieldTypeUnion } from "./schema/FieldTypeUnion";

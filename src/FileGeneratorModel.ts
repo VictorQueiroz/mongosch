@@ -144,7 +144,8 @@ export default class FileGeneratorModel extends CodeStream {
       case "fieldTypeInteger.FieldTypeInt64":
       case "fieldTypeInteger.FieldTypeInt32":
       case "fieldTypeDate.FieldTypeDate":
-      case "fieldTypeEnum.FieldTypeEnum":
+      case "fieldTypeEnum.FieldTypeEnumString":
+        case "fieldTypeEnum.FieldTypeEnumInt":
       case "fieldTypeBoolean.FieldTypeBoolean":
     }
   }
@@ -346,7 +347,8 @@ export default class FileGeneratorModel extends CodeStream {
       case "fieldTypeInteger.FieldTypeInt64":
       case "fieldTypeInteger.FieldTypeInt32":
       case "fieldTypeDate.FieldTypeDate":
-      case "fieldTypeEnum.FieldTypeEnum":
+      case "fieldTypeEnum.FieldTypeEnumString":
+      case "fieldTypeEnum.FieldTypeEnumInt":
       case "fieldTypeBoolean.FieldTypeBoolean":
     }
     return depth;
@@ -634,6 +636,22 @@ export default class FileGeneratorModel extends CodeStream {
           }
         }
         break;
+      case 'fieldTypeEnum.FieldTypeEnumString':
+      case 'fieldTypeEnum.FieldTypeEnumInt': {
+        for (const i of fieldType.fields) {
+          switch(fieldType._name) {
+            case "fieldTypeEnum.FieldTypeEnumString":
+              this.append(`"${i.value}"`);
+              break;
+            case "fieldTypeEnum.FieldTypeEnumInt":
+              this.append(`${i.value}`);
+          }
+          if (i !== fieldType.fields[fieldType.fields.length - 1]) {
+            this.append(" | ");
+          }
+        }
+        break;
+      }
     }
   }
 }

@@ -45,7 +45,12 @@
       },
       {
         "type": "externalType",
-        "name": "FieldTypeEnum",
+        "name": "FieldTypeEnumString",
+        "relativePath": "./FieldTypeEnum"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeEnumInt",
         "relativePath": "./FieldTypeEnum"
       },
       {
@@ -107,7 +112,12 @@
         },
         {
           "type": "externalType",
-          "name": "FieldTypeEnum",
+          "name": "FieldTypeEnumString",
+          "relativePath": "./FieldTypeEnum"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeEnumInt",
           "relativePath": "./FieldTypeEnum"
         },
         {

@@ -41,13 +41,13 @@ export class StoryChapterModel {
       stories: [],
       contentParagraphs: [],
       contentUserInterfaces: [],
-    }
+    };
     const ids = {
       users: new Array<ObjectId>(),
       stories: new Array<ObjectId>(),
       contentParagraphs: new Array<ObjectId>(),
       contentUserInterfaces: new Array<ObjectId>(),
-    }
+    };
     ids.users.push(value.authorId);
     ids.stories.push(value.storyId);
     if(value.initialContentId.id === 0) {

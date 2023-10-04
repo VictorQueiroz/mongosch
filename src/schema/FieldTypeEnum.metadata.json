@@ -1,20 +1,4 @@
 {
-  "EnumField": {
-    "kind": "trait",
-    "name": "EnumField",
-    "nodes": [
-      {
-        "type": "externalType",
-        "name": "EnumFieldInt",
-        "relativePath": "./FieldTypeEnum"
-      },
-      {
-        "type": "externalType",
-        "name": "EnumFieldString",
-        "relativePath": "./FieldTypeEnum"
-      }
-    ]
-  },
   "EnumFieldInt": {
     "kind": "type",
     "id": 904993756,
@@ -35,39 +19,42 @@
       { "name": "value", "type": { "type": "generic", "value": "string" } }
     ]
   },
-  "FieldTypeEnum": {
+  "FieldTypeEnumString": {
     "kind": "type",
-    "id": -1869680550,
-    "globalName": "fieldTypeEnum.FieldTypeEnum",
-    "name": "FieldTypeEnum",
+    "id": -1783599301,
+    "globalName": "fieldTypeEnum.FieldTypeEnumString",
+    "name": "FieldTypeEnumString",
     "params": [
       {
         "name": "fields",
         "type": {
           "type": "template",
           "template": "vector",
-          "value": { "type": "internalType", "interfaceName": "EnumField" }
+          "value": {
+            "type": "internalType",
+            "interfaceName": "EnumFieldString"
+          }
+        }
+      }
+    ]
+  },
+  "FieldTypeEnumInt": {
+    "kind": "type",
+    "id": 1838761574,
+    "globalName": "fieldTypeEnum.FieldTypeEnumInt",
+    "name": "FieldTypeEnumInt",
+    "params": [
+      {
+        "name": "fields",
+        "type": {
+          "type": "template",
+          "template": "vector",
+          "value": { "type": "internalType", "interfaceName": "EnumFieldInt" }
         }
       }
     ]
   },
   "__all": [
-    {
-      "kind": "trait",
-      "name": "EnumField",
-      "nodes": [
-        {
-          "type": "externalType",
-          "name": "EnumFieldInt",
-          "relativePath": "./FieldTypeEnum"
-        },
-        {
-          "type": "externalType",
-          "name": "EnumFieldString",
-          "relativePath": "./FieldTypeEnum"
-        }
-      ]
-    },
     {
       "kind": "type",
       "id": 904993756,
@@ -90,16 +77,35 @@
     },
     {
       "kind": "type",
-      "id": -1869680550,
-      "globalName": "fieldTypeEnum.FieldTypeEnum",
-      "name": "FieldTypeEnum",
+      "id": -1783599301,
+      "globalName": "fieldTypeEnum.FieldTypeEnumString",
+      "name": "FieldTypeEnumString",
       "params": [
         {
           "name": "fields",
           "type": {
             "type": "template",
             "template": "vector",
-            "value": { "type": "internalType", "interfaceName": "EnumField" }
+            "value": {
+              "type": "internalType",
+              "interfaceName": "EnumFieldString"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": 1838761574,
+      "globalName": "fieldTypeEnum.FieldTypeEnumInt",
+      "name": "FieldTypeEnumInt",
+      "params": [
+        {
+          "name": "fields",
+          "type": {
+            "type": "template",
+            "template": "vector",
+            "value": { "type": "internalType", "interfaceName": "EnumFieldInt" }
           }
         }
       ]

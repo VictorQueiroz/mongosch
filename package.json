@@ -4,6 +4,7 @@
     "cli-argument-helper": "^0.0.8",
     "eslint": "^8.50.0",
     "jsbuffer": "^1.0.2",
+    "libphonenumber-js": "^1.10.45",
     "mongodb": "^6.1.0",
     "prettier": "^3.0.3",
     "ts-node": "^10.9.1",

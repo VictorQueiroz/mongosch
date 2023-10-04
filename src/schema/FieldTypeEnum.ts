@@ -1,58 +1,6 @@
+import JSBI from "jsbi";
 import { ISerializer } from "./__types__";
 import { IDeserializer } from "./__types__";
-import JSBI from "jsbi";
-export type EnumField = Readonly<EnumFieldInt> | Readonly<EnumFieldString>;
-export function isEnumFieldTrait(value: unknown): value is EnumField {
-  if (isEnumFieldInt(value)) return true;
-  if (isEnumFieldString(value)) return true;
-  return false;
-}
-export function encodeEnumFieldTrait(__s: ISerializer, value: EnumField) {
-  switch (value._name) {
-    case "fieldTypeEnum.EnumFieldInt":
-      return encodeEnumFieldInt(__s, value);
-    case "fieldTypeEnum.EnumFieldString":
-      return encodeEnumFieldString(__s, value);
-  }
-  throw new Error(
-    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- fieldTypeEnum.EnumFieldInt\n\t- fieldTypeEnum.EnumFieldString\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
-  );
-}
-export function decodeEnumFieldTrait(__d: IDeserializer) {
-  const __id = __d.readInt32();
-  __d.rewind(4);
-  let value: EnumFieldInt | EnumFieldString;
-  switch (__id) {
-    case 904993756: {
-      const tmp = decodeEnumFieldInt(__d);
-      if (tmp === null) return null;
-      value = tmp;
-      break;
-    }
-    case -1664488423: {
-      const tmp = decodeEnumFieldString(__d);
-      if (tmp === null) return null;
-      value = tmp;
-      break;
-    }
-    default:
-      return null;
-  }
-  return value;
-}
-export function defaultEnumFieldTrait() {
-  return defaultEnumFieldInt();
-}
-export function compareEnumFieldTrait(__a: EnumField, __b: EnumField) {
-  switch (__a._name) {
-    case "fieldTypeEnum.EnumFieldInt":
-      if (__b._name !== "fieldTypeEnum.EnumFieldInt") return false;
-      return compareEnumFieldInt(__a, __b);
-    case "fieldTypeEnum.EnumFieldString":
-      if (__b._name !== "fieldTypeEnum.EnumFieldString") return false;
-      return compareEnumFieldString(__a, __b);
-  }
-}
 export interface EnumFieldInt {
   _name: "fieldTypeEnum.EnumFieldInt";
   name: string;
@@ -304,18 +252,20 @@ export function updateEnumFieldString(
   }
   return value;
 }
-export interface FieldTypeEnum {
-  _name: "fieldTypeEnum.FieldTypeEnum";
-  fields: ReadonlyArray<Readonly<EnumField>>;
+export interface FieldTypeEnumString {
+  _name: "fieldTypeEnum.FieldTypeEnumString";
+  fields: ReadonlyArray<Readonly<EnumFieldString>>;
 }
-export function isFieldTypeEnum(value: unknown): value is FieldTypeEnum {
+export function isFieldTypeEnumString(
+  value: unknown
+): value is FieldTypeEnumString {
   if (
     !(
       typeof value === "object" &&
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeEnum.FieldTypeEnum"
+      value["_name"] === "fieldTypeEnum.FieldTypeEnumString"
     )
   )
     return false;
@@ -324,23 +274,28 @@ export function isFieldTypeEnum(value: unknown): value is FieldTypeEnum {
       "fields" in value &&
       ((__v0) =>
         (Array.isArray(__v0) || __v0 instanceof Set) &&
-        Array.from(__v0).every((p) => isEnumFieldTrait(p)))(value["fields"])
+        Array.from(__v0).every((p) => isEnumFieldString(p)))(value["fields"])
     )
   )
     return false;
   return true;
 }
-export interface FieldTypeEnumInputParams {
-  fields: ReadonlyArray<Readonly<EnumField>>;
+export interface FieldTypeEnumStringInputParams {
+  fields: ReadonlyArray<Readonly<EnumFieldString>>;
 }
-export function FieldTypeEnum(params: FieldTypeEnumInputParams): FieldTypeEnum {
+export function FieldTypeEnumString(
+  params: FieldTypeEnumStringInputParams
+): FieldTypeEnumString {
   return {
-    _name: "fieldTypeEnum.FieldTypeEnum",
+    _name: "fieldTypeEnum.FieldTypeEnumString",
     fields: params["fields"]
   };
 }
-export function encodeFieldTypeEnum(__s: ISerializer, value: FieldTypeEnum) {
-  __s.writeInt32(-1869680550);
+export function encodeFieldTypeEnumString(
+  __s: ISerializer,
+  value: FieldTypeEnumString
+) {
+  __s.writeInt32(-1783599301);
   /**
    * encoding param: fields
    */
@@ -348,43 +303,45 @@ export function encodeFieldTypeEnum(__s: ISerializer, value: FieldTypeEnum) {
   const __l1 = __pv0.length;
   __s.writeUint32(__l1);
   for (const __item1 of __pv0) {
-    encodeEnumFieldTrait(__s, __item1);
+    encodeEnumFieldString(__s, __item1);
   }
 }
-export function decodeFieldTypeEnum(__d: IDeserializer): FieldTypeEnum | null {
+export function decodeFieldTypeEnumString(
+  __d: IDeserializer
+): FieldTypeEnumString | null {
   const __id = __d.readInt32();
   /**
    * decode header
    */
-  if (__id !== -1869680550) return null;
-  let fields: Array<EnumField>;
+  if (__id !== -1783599301) return null;
+  let fields: Array<EnumFieldString>;
   /**
    * decoding param: fields
    */
   const __l1 = __d.readUint32();
-  const __o1 = new Array<EnumField>(__l1);
+  const __o1 = new Array<EnumFieldString>(__l1);
   fields = __o1;
   for (let __i1 = 0; __i1 < __l1; __i1++) {
-    const __tmp2 = decodeEnumFieldTrait(__d);
+    const __tmp2 = decodeEnumFieldString(__d);
     if (__tmp2 === null) return null;
     __o1[__i1] = __tmp2;
   }
   return {
-    _name: "fieldTypeEnum.FieldTypeEnum",
+    _name: "fieldTypeEnum.FieldTypeEnumString",
     fields
   };
 }
-export function defaultFieldTypeEnum(
-  params: Partial<FieldTypeEnumInputParams> = {}
-): FieldTypeEnum {
-  return FieldTypeEnum({
+export function defaultFieldTypeEnumString(
+  params: Partial<FieldTypeEnumStringInputParams> = {}
+): FieldTypeEnumString {
+  return FieldTypeEnumString({
     fields: [],
     ...params
   });
 }
-export function compareFieldTypeEnum(
-  __a: FieldTypeEnum,
-  __b: FieldTypeEnum
+export function compareFieldTypeEnumString(
+  __a: FieldTypeEnumString,
+  __b: FieldTypeEnumString
 ): boolean {
   return (
     /**
@@ -397,15 +354,15 @@ export function compareFieldTypeEnum(
         : ((__item0) =>
             typeof __item0 === "undefined"
               ? false
-              : compareEnumFieldTrait(__originalItem0, __item0))(
+              : compareEnumFieldString(__originalItem0, __item0))(
             Array.from(__b["fields"])[__index0]
           )
     )
   );
 }
-export function updateFieldTypeEnum(
-  value: FieldTypeEnum,
-  changes: Partial<FieldTypeEnumInputParams>
+export function updateFieldTypeEnumString(
+  value: FieldTypeEnumString,
+  changes: Partial<FieldTypeEnumStringInputParams>
 ) {
   if (typeof changes["fields"] !== "undefined") {
     if (
@@ -417,13 +374,147 @@ export function updateFieldTypeEnum(
             : ((__item1) =>
                 typeof __item1 === "undefined"
                   ? false
-                  : compareEnumFieldTrait(__originalItem1, __item1))(
+                  : compareEnumFieldString(__originalItem1, __item1))(
                 Array.from(value["fields"])[__index1]
               )
         )
       )
     ) {
-      value = FieldTypeEnum({
+      value = FieldTypeEnumString({
+        ...value,
+        fields: changes["fields"]
+      });
+    }
+  }
+  return value;
+}
+export interface FieldTypeEnumInt {
+  _name: "fieldTypeEnum.FieldTypeEnumInt";
+  fields: ReadonlyArray<Readonly<EnumFieldInt>>;
+}
+export function isFieldTypeEnumInt(value: unknown): value is FieldTypeEnumInt {
+  if (
+    !(
+      typeof value === "object" &&
+      value !== null &&
+      "_name" in value &&
+      typeof value["_name"] === "string" &&
+      value["_name"] === "fieldTypeEnum.FieldTypeEnumInt"
+    )
+  )
+    return false;
+  if (
+    !(
+      "fields" in value &&
+      ((__v0) =>
+        (Array.isArray(__v0) || __v0 instanceof Set) &&
+        Array.from(__v0).every((p) => isEnumFieldInt(p)))(value["fields"])
+    )
+  )
+    return false;
+  return true;
+}
+export interface FieldTypeEnumIntInputParams {
+  fields: ReadonlyArray<Readonly<EnumFieldInt>>;
+}
+export function FieldTypeEnumInt(
+  params: FieldTypeEnumIntInputParams
+): FieldTypeEnumInt {
+  return {
+    _name: "fieldTypeEnum.FieldTypeEnumInt",
+    fields: params["fields"]
+  };
+}
+export function encodeFieldTypeEnumInt(
+  __s: ISerializer,
+  value: FieldTypeEnumInt
+) {
+  __s.writeInt32(1838761574);
+  /**
+   * encoding param: fields
+   */
+  const __pv0 = value["fields"];
+  const __l1 = __pv0.length;
+  __s.writeUint32(__l1);
+  for (const __item1 of __pv0) {
+    encodeEnumFieldInt(__s, __item1);
+  }
+}
+export function decodeFieldTypeEnumInt(
+  __d: IDeserializer
+): FieldTypeEnumInt | null {
+  const __id = __d.readInt32();
+  /**
+   * decode header
+   */
+  if (__id !== 1838761574) return null;
+  let fields: Array<EnumFieldInt>;
+  /**
+   * decoding param: fields
+   */
+  const __l1 = __d.readUint32();
+  const __o1 = new Array<EnumFieldInt>(__l1);
+  fields = __o1;
+  for (let __i1 = 0; __i1 < __l1; __i1++) {
+    const __tmp2 = decodeEnumFieldInt(__d);
+    if (__tmp2 === null) return null;
+    __o1[__i1] = __tmp2;
+  }
+  return {
+    _name: "fieldTypeEnum.FieldTypeEnumInt",
+    fields
+  };
+}
+export function defaultFieldTypeEnumInt(
+  params: Partial<FieldTypeEnumIntInputParams> = {}
+): FieldTypeEnumInt {
+  return FieldTypeEnumInt({
+    fields: [],
+    ...params
+  });
+}
+export function compareFieldTypeEnumInt(
+  __a: FieldTypeEnumInt,
+  __b: FieldTypeEnumInt
+): boolean {
+  return (
+    /**
+     * compare parameter fields
+     */
+    __a["fields"].length === __b["fields"].length &&
+    Array.from(__a["fields"]).every((__originalItem0, __index0) =>
+      typeof __originalItem0 === "undefined"
+        ? false
+        : ((__item0) =>
+            typeof __item0 === "undefined"
+              ? false
+              : compareEnumFieldInt(__originalItem0, __item0))(
+            Array.from(__b["fields"])[__index0]
+          )
+    )
+  );
+}
+export function updateFieldTypeEnumInt(
+  value: FieldTypeEnumInt,
+  changes: Partial<FieldTypeEnumIntInputParams>
+) {
+  if (typeof changes["fields"] !== "undefined") {
+    if (
+      !(
+        changes["fields"].length === value["fields"].length &&
+        Array.from(changes["fields"]).every((__originalItem1, __index1) =>
+          typeof __originalItem1 === "undefined"
+            ? false
+            : ((__item1) =>
+                typeof __item1 === "undefined"
+                  ? false
+                  : compareEnumFieldInt(__originalItem1, __item1))(
+                Array.from(value["fields"])[__index1]
+              )
+        )
+      )
+    ) {
+      value = FieldTypeEnumInt({
         ...value,
         fields: changes["fields"]
       });

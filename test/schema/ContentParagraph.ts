@@ -39,11 +39,11 @@ export class ContentParagraphModel {
     const populated: IContentParagraphPopulated = {
       contentParagraphs: [],
       contentUserInterfaces: [],
-    }
+    };
     const ids = {
       contentParagraphs: new Array<ObjectId>(),
       contentUserInterfaces: new Array<ObjectId>(),
-    }
+    };
     for(const arrayElement_1 of value.paragraphs) {
       for(const arrayElement_3 of arrayElement_1.sentences) {
       }

@@ -44,11 +44,11 @@ export class ContentUserInterfaceModel {
     const populated: IContentUserInterfacePopulated = {
       contentParagraphs: [],
       contentUserInterfaces: [],
-    }
+    };
     const ids = {
       contentParagraphs: new Array<ObjectId>(),
       contentUserInterfaces: new Array<ObjectId>(),
-    }
+    };
     for(const arrayElement_1 of value.buttonRows) {
       for(const arrayElement_3 of arrayElement_1.buttons) {
       }
