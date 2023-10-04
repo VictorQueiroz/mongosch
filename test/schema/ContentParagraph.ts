@@ -35,6 +35,12 @@ export class ContentParagraphModel {
   public async findOne(value: Filter<IContentParagraph>) {
     return this.contentParagraphs.findOne(value);
   }
+  public async deleteOne(value: Filter<IContentParagraph>) {
+    return this.contentParagraphs.deleteOne(value);
+  }
+  public async deleteMany(value: Filter<IContentParagraph>) {
+    return this.contentParagraphs.deleteMany(value);
+  }
   public async populate(value: IContentParagraph, entities: ("ContentParagraph" | "ContentUserInterface")[] = ["ContentParagraph", "ContentUserInterface"]) {
     const populated: IContentParagraphPopulated = {
       contentParagraphs: [],
@@ -68,7 +74,7 @@ export class ContentParagraphModel {
     ]);
     return populated;
   }
-  public async insert(value: IContentParagraph) {
+  public async insertOne(value: IContentParagraph) {
     const validationErr = validateContentParagraph(value);
     if(validationErr !== null) {
       return validationErr;

@@ -18,7 +18,13 @@ export class UserModel {
   public async findOne(value: Filter<IUser>) {
     return this.users.findOne(value);
   }
-  public async insert(value: IUser) {
+  public async deleteOne(value: Filter<IUser>) {
+    return this.users.deleteOne(value);
+  }
+  public async deleteMany(value: Filter<IUser>) {
+    return this.users.deleteMany(value);
+  }
+  public async insertOne(value: IUser) {
     const validationErr = validateUser(value);
     if(validationErr !== null) {
       return validationErr;

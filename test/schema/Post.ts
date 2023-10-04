@@ -19,6 +19,12 @@ export class PostModel {
   public async findOne(value: Filter<IPost>) {
     return this.posts.findOne(value);
   }
+  public async deleteOne(value: Filter<IPost>) {
+    return this.posts.deleteOne(value);
+  }
+  public async deleteMany(value: Filter<IPost>) {
+    return this.posts.deleteMany(value);
+  }
   public async populate(value: IPost, entities: ("User")[] = ["User"]) {
     const populated: IPostPopulated = {
       users: [],
@@ -36,7 +42,7 @@ export class PostModel {
     ]);
     return populated;
   }
-  public async insert(value: IPost) {
+  public async insertOne(value: IPost) {
     const validationErr = validatePost(value);
     if(validationErr !== null) {
       return validationErr;

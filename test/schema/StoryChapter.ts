@@ -35,6 +35,12 @@ export class StoryChapterModel {
   public async findOne(value: Filter<IStoryChapter>) {
     return this.storyChapters.findOne(value);
   }
+  public async deleteOne(value: Filter<IStoryChapter>) {
+    return this.storyChapters.deleteOne(value);
+  }
+  public async deleteMany(value: Filter<IStoryChapter>) {
+    return this.storyChapters.deleteMany(value);
+  }
   public async populate(value: IStoryChapter, entities: ("User" | "Story" | "ContentParagraph" | "ContentUserInterface")[] = ["User", "Story", "ContentParagraph", "ContentUserInterface"]) {
     const populated: IStoryChapterPopulated = {
       users: [],
@@ -80,7 +86,7 @@ export class StoryChapterModel {
     ]);
     return populated;
   }
-  public async insert(value: IStoryChapter) {
+  public async insertOne(value: IStoryChapter) {
     const validationErr = validateStoryChapter(value);
     if(validationErr !== null) {
       return validationErr;

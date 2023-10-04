@@ -40,6 +40,12 @@ export class ContentUserInterfaceModel {
   public async findOne(value: Filter<IContentUserInterface>) {
     return this.contentUserInterfaces.findOne(value);
   }
+  public async deleteOne(value: Filter<IContentUserInterface>) {
+    return this.contentUserInterfaces.deleteOne(value);
+  }
+  public async deleteMany(value: Filter<IContentUserInterface>) {
+    return this.contentUserInterfaces.deleteMany(value);
+  }
   public async populate(value: IContentUserInterface, entities: ("ContentParagraph" | "ContentUserInterface")[] = ["ContentParagraph", "ContentUserInterface"]) {
     const populated: IContentUserInterfacePopulated = {
       contentParagraphs: [],
@@ -73,7 +79,7 @@ export class ContentUserInterfaceModel {
     ]);
     return populated;
   }
-  public async insert(value: IContentUserInterface) {
+  public async insertOne(value: IContentUserInterface) {
     const validationErr = validateContentUserInterface(value);
     if(validationErr !== null) {
       return validationErr;

@@ -167,7 +167,7 @@ export default class FileGeneratorModel extends CodeStream {
           },
           ") {}\n"
         );
-        for (const method of ["find", "findOne"]) {
+        for (const method of ["find", "findOne", "deleteOne", "deleteMany"]) {
           this.write(
             `public async ${method}(value: Filter<${getModelInterfaceName(
               m
@@ -184,7 +184,7 @@ export default class FileGeneratorModel extends CodeStream {
           this.#generatePopulateMethod();
         }
         this.write(
-          `public async insert(value: ${getModelInterfaceName(m)}) {\n`,
+          `public async insertOne(value: ${getModelInterfaceName(m)}) {\n`,
           () => {
             this.write(
               `const validationErr = ${getValidateFunctionName(m)}(value);\n`
