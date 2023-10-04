@@ -12,23 +12,26 @@ export class StoryModel {
     private readonly stories: Collection<IStory>,
     private readonly users: Collection<IUser>,
   ) {}
-  public async find(value: Filter<IStory>) {
+  public find(value: Filter<IStory>) {
     return this.stories.find(value);
   }
-  public async findOne(value: Filter<IStory>) {
+  public findOne(value: Filter<IStory>) {
     return this.stories.findOne(value);
   }
-  public async deleteOne(value: Filter<IStory>) {
+  public deleteOne(value: Filter<IStory>) {
     return this.stories.deleteOne(value);
   }
-  public async deleteMany(value: Filter<IStory>) {
+  public deleteMany(value: Filter<IStory>) {
     return this.stories.deleteMany(value);
   }
-  public async updateOne(filter: Filter<IStory>, update: UpdateFilter<IStory> | Partial<IStory>) {
+  public updateOne(filter: Filter<IStory>, update: UpdateFilter<IStory> | Partial<IStory>) {
     return this.stories.updateOne(filter, update);
   }
-  public async updateMany(filter: Filter<IStory>, update: UpdateFilter<IStory> | Partial<IStory>) {
+  public updateMany(filter: Filter<IStory>, update: UpdateFilter<IStory> | Partial<IStory>) {
     return this.stories.updateMany(filter, update);
+  }
+  public countDocuments() {
+    return this.stories.countDocuments();
   }
   public async populate(value: IStory, entities: ("User")[] = ["User"]) {
     const populated: IStoryPopulated = {

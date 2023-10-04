@@ -3,9 +3,11 @@ import { FieldType } from "./FieldType";
 
 export type UnionItem {
   int id;
+  string name;
   FieldType fieldType;
 }
 
 export type FieldTypeUnion : FieldType {
+  string name;
   vector<UnionItem> items;
 }

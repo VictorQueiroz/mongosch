@@ -13,4 +13,4 @@ export { Field } from "./schema/Field";
 export { FieldType } from "./schema/FieldType";
 export { FieldTypeBoolean } from "./schema/FieldTypeBoolean";
 export { Model } from "./schema/Model";
-export { default as merge } from './merge';
+export { default as merge } from "./merge";

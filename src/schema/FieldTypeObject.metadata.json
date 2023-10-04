@@ -67,10 +67,11 @@
   },
   "FieldTypeArray": {
     "kind": "type",
-    "id": -1012899955,
+    "id": -1484357677,
     "globalName": "fieldTypeObject.FieldTypeArray",
     "name": "FieldTypeArray",
     "params": [
+      { "name": "name", "type": { "type": "generic", "value": "string" } },
       {
         "name": "flags",
         "type": {
@@ -161,10 +162,11 @@
     },
     {
       "kind": "type",
-      "id": -1012899955,
+      "id": -1484357677,
       "globalName": "fieldTypeObject.FieldTypeArray",
       "name": "FieldTypeArray",
       "params": [
+        { "name": "name", "type": { "type": "generic", "value": "string" } },
         {
           "name": "flags",
           "type": {

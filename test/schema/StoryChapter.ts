@@ -15,6 +15,10 @@ export interface IStoryChapter {
     value: ObjectId;
   };
 }
+export enum StoryChapterInitialContentIdType {
+  Paragraph = 0,
+  UI = 1,
+}
 export interface IStoryChapterPopulated {
   users: IUser[];
   stories: IStory[];
@@ -29,23 +33,26 @@ export class StoryChapterModel {
     private readonly contentParagraphs: Collection<IContentParagraph>,
     private readonly contentUserInterfaces: Collection<IContentUserInterface>,
   ) {}
-  public async find(value: Filter<IStoryChapter>) {
+  public find(value: Filter<IStoryChapter>) {
     return this.storyChapters.find(value);
   }
-  public async findOne(value: Filter<IStoryChapter>) {
+  public findOne(value: Filter<IStoryChapter>) {
     return this.storyChapters.findOne(value);
   }
-  public async deleteOne(value: Filter<IStoryChapter>) {
+  public deleteOne(value: Filter<IStoryChapter>) {
     return this.storyChapters.deleteOne(value);
   }
-  public async deleteMany(value: Filter<IStoryChapter>) {
+  public deleteMany(value: Filter<IStoryChapter>) {
     return this.storyChapters.deleteMany(value);
   }
-  public async updateOne(filter: Filter<IStoryChapter>, update: UpdateFilter<IStoryChapter> | Partial<IStoryChapter>) {
+  public updateOne(filter: Filter<IStoryChapter>, update: UpdateFilter<IStoryChapter> | Partial<IStoryChapter>) {
     return this.storyChapters.updateOne(filter, update);
   }
-  public async updateMany(filter: Filter<IStoryChapter>, update: UpdateFilter<IStoryChapter> | Partial<IStoryChapter>) {
+  public updateMany(filter: Filter<IStoryChapter>, update: UpdateFilter<IStoryChapter> | Partial<IStoryChapter>) {
     return this.storyChapters.updateMany(filter, update);
+  }
+  public countDocuments() {
+    return this.storyChapters.countDocuments();
   }
   public async populate(value: IStoryChapter, entities: ("User" | "Story" | "ContentParagraph" | "ContentUserInterface")[] = ["User", "Story", "ContentParagraph", "ContentUserInterface"]) {
     const populated: IStoryChapterPopulated = {

@@ -21,7 +21,7 @@
   "scripts": {
     "prepublishOnly": "npx tsc -b cli",
     "build:schema": "npx jsbuffer schema/main -o src/schema --indentation-size 2 --no-ts-config && npm run prettier",
-    "prettier": "npx prettier --write src"
+    "prettier": "npx prettier --write src/schema"
   },
   "version": "1.0.14",
   "main": "./src/index.js",

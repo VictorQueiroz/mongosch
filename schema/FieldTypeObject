@@ -20,6 +20,8 @@ export type FieldTypeArrayFlagMaxLength : FieldTypeArrayFlag {
 export type FieldTypeArrayFlagOptional : FieldTypeArrayFlag {}
 
 export type FieldTypeArray : FieldType {
+  // name of the type
+  string name;
   vector<FieldTypeArrayFlag> flags;
   FieldType arrayType;
 }

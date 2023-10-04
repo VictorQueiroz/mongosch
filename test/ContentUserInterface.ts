@@ -57,6 +57,7 @@ export function ContentUserInterfaceBase() {
         description: "Button rows",
         name: "buttonRows",
         fieldType: FieldTypeArray({
+          name: 'ButtonRows',
           flags: [],
           arrayType: ButtonRow()
         })

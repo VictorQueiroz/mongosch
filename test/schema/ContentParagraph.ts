@@ -20,6 +20,10 @@ export interface IContentParagraph {
     };
   };
 }
+export enum ContentParagraphNextContentValueType {
+  Paragraph = 0,
+  UI = 1,
+}
 export interface IContentParagraphPopulated {
   contentParagraphs: IContentParagraph[];
   contentUserInterfaces: IContentUserInterface[];
@@ -29,23 +33,26 @@ export class ContentParagraphModel {
     private readonly contentParagraphs: Collection<IContentParagraph>,
     private readonly contentUserInterfaces: Collection<IContentUserInterface>,
   ) {}
-  public async find(value: Filter<IContentParagraph>) {
+  public find(value: Filter<IContentParagraph>) {
     return this.contentParagraphs.find(value);
   }
-  public async findOne(value: Filter<IContentParagraph>) {
+  public findOne(value: Filter<IContentParagraph>) {
     return this.contentParagraphs.findOne(value);
   }
-  public async deleteOne(value: Filter<IContentParagraph>) {
+  public deleteOne(value: Filter<IContentParagraph>) {
     return this.contentParagraphs.deleteOne(value);
   }
-  public async deleteMany(value: Filter<IContentParagraph>) {
+  public deleteMany(value: Filter<IContentParagraph>) {
     return this.contentParagraphs.deleteMany(value);
   }
-  public async updateOne(filter: Filter<IContentParagraph>, update: UpdateFilter<IContentParagraph> | Partial<IContentParagraph>) {
+  public updateOne(filter: Filter<IContentParagraph>, update: UpdateFilter<IContentParagraph> | Partial<IContentParagraph>) {
     return this.contentParagraphs.updateOne(filter, update);
   }
-  public async updateMany(filter: Filter<IContentParagraph>, update: UpdateFilter<IContentParagraph> | Partial<IContentParagraph>) {
+  public updateMany(filter: Filter<IContentParagraph>, update: UpdateFilter<IContentParagraph> | Partial<IContentParagraph>) {
     return this.contentParagraphs.updateMany(filter, update);
+  }
+  public countDocuments() {
+    return this.contentParagraphs.countDocuments();
   }
   public async populate(value: IContentParagraph, entities: ("ContentParagraph" | "ContentUserInterface")[] = ["ContentParagraph", "ContentUserInterface"]) {
     const populated: IContentParagraphPopulated = {

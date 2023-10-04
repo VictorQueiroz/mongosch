@@ -165,7 +165,7 @@ export function decodeFieldTypeTrait(__d: IDeserializer) {
       value = tmp;
       break;
     }
-    case -1012899955: {
+    case -1484357677: {
       const tmp = decodeFieldTypeArray(__d);
       if (tmp === null) return null;
       value = tmp;
@@ -207,7 +207,7 @@ export function decodeFieldTypeTrait(__d: IDeserializer) {
       value = tmp;
       break;
     }
-    case -1602080957: {
+    case 326543358: {
       const tmp = decodeFieldTypeUnion(__d);
       if (tmp === null) return null;
       value = tmp;

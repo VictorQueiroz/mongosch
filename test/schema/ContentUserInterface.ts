@@ -25,6 +25,10 @@ export interface IContentUserInterface {
     };
   };
 }
+export enum ContentUserInterfaceNextContentValueType {
+  Paragraph = 0,
+  UI = 1,
+}
 export interface IContentUserInterfacePopulated {
   contentParagraphs: IContentParagraph[];
   contentUserInterfaces: IContentUserInterface[];
@@ -34,23 +38,26 @@ export class ContentUserInterfaceModel {
     private readonly contentUserInterfaces: Collection<IContentUserInterface>,
     private readonly contentParagraphs: Collection<IContentParagraph>,
   ) {}
-  public async find(value: Filter<IContentUserInterface>) {
+  public find(value: Filter<IContentUserInterface>) {
     return this.contentUserInterfaces.find(value);
   }
-  public async findOne(value: Filter<IContentUserInterface>) {
+  public findOne(value: Filter<IContentUserInterface>) {
     return this.contentUserInterfaces.findOne(value);
   }
-  public async deleteOne(value: Filter<IContentUserInterface>) {
+  public deleteOne(value: Filter<IContentUserInterface>) {
     return this.contentUserInterfaces.deleteOne(value);
   }
-  public async deleteMany(value: Filter<IContentUserInterface>) {
+  public deleteMany(value: Filter<IContentUserInterface>) {
     return this.contentUserInterfaces.deleteMany(value);
   }
-  public async updateOne(filter: Filter<IContentUserInterface>, update: UpdateFilter<IContentUserInterface> | Partial<IContentUserInterface>) {
+  public updateOne(filter: Filter<IContentUserInterface>, update: UpdateFilter<IContentUserInterface> | Partial<IContentUserInterface>) {
     return this.contentUserInterfaces.updateOne(filter, update);
   }
-  public async updateMany(filter: Filter<IContentUserInterface>, update: UpdateFilter<IContentUserInterface> | Partial<IContentUserInterface>) {
+  public updateMany(filter: Filter<IContentUserInterface>, update: UpdateFilter<IContentUserInterface> | Partial<IContentUserInterface>) {
     return this.contentUserInterfaces.updateMany(filter, update);
+  }
+  public countDocuments() {
+    return this.contentUserInterfaces.countDocuments();
   }
   public async populate(value: IContentUserInterface, entities: ("ContentParagraph" | "ContentUserInterface")[] = ["ContentParagraph", "ContentUserInterface"]) {
     const populated: IContentUserInterfacePopulated = {

@@ -508,6 +508,7 @@ export function updateFieldTypeArrayFlagOptional(
 }
 export interface FieldTypeArray {
   _name: "fieldTypeObject.FieldTypeArray";
+  name: string;
   flags: ReadonlyArray<Readonly<FieldTypeArrayFlag>>;
   arrayType: Readonly<FieldType>;
 }
@@ -522,12 +523,14 @@ export function isFieldTypeArray(value: unknown): value is FieldTypeArray {
     )
   )
     return false;
+  if (!("name" in value && ((__v0) => typeof __v0 === "string")(value["name"])))
+    return false;
   if (
     !(
       "flags" in value &&
-      ((__v0) =>
-        (Array.isArray(__v0) || __v0 instanceof Set) &&
-        Array.from(__v0).every((p) => isFieldTypeArrayFlagTrait(p)))(
+      ((__v1) =>
+        (Array.isArray(__v1) || __v1 instanceof Set) &&
+        Array.from(__v1).every((p) => isFieldTypeArrayFlagTrait(p)))(
         value["flags"]
       )
     )
@@ -536,13 +539,14 @@ export function isFieldTypeArray(value: unknown): value is FieldTypeArray {
   if (
     !(
       "arrayType" in value &&
-      ((__v1) => isFieldTypeTrait(__v1))(value["arrayType"])
+      ((__v2) => isFieldTypeTrait(__v2))(value["arrayType"])
     )
   )
     return false;
   return true;
 }
 export interface FieldTypeArrayInputParams {
+  name: string;
   flags: ReadonlyArray<Readonly<FieldTypeArrayFlag>>;
   arrayType: Readonly<FieldType>;
 }
@@ -551,26 +555,32 @@ export function FieldTypeArray(
 ): FieldTypeArray {
   return {
     _name: "fieldTypeObject.FieldTypeArray",
+    name: params["name"],
     flags: params["flags"],
     arrayType: params["arrayType"]
   };
 }
 export function encodeFieldTypeArray(__s: ISerializer, value: FieldTypeArray) {
-  __s.writeInt32(-1012899955);
+  __s.writeInt32(-1484357677);
+  /**
+   * encoding param: name
+   */
+  const __pv0 = value["name"];
+  __s.writeString(__pv0);
   /**
    * encoding param: flags
    */
-  const __pv0 = value["flags"];
-  const __l1 = __pv0.length;
-  __s.writeUint32(__l1);
-  for (const __item1 of __pv0) {
-    encodeFieldTypeArrayFlagTrait(__s, __item1);
+  const __pv1 = value["flags"];
+  const __l2 = __pv1.length;
+  __s.writeUint32(__l2);
+  for (const __item2 of __pv1) {
+    encodeFieldTypeArrayFlagTrait(__s, __item2);
   }
   /**
    * encoding param: arrayType
    */
-  const __pv2 = value["arrayType"];
-  encodeFieldTypeTrait(__s, __pv2);
+  const __pv3 = value["arrayType"];
+  encodeFieldTypeTrait(__s, __pv3);
 }
 export function decodeFieldTypeArray(
   __d: IDeserializer
@@ -579,28 +589,34 @@ export function decodeFieldTypeArray(
   /**
    * decode header
    */
-  if (__id !== -1012899955) return null;
+  if (__id !== -1484357677) return null;
+  let name: string;
   let flags: Array<FieldTypeArrayFlag>;
   let arrayType: FieldType;
   /**
+   * decoding param: name
+   */
+  name = __d.readString();
+  /**
    * decoding param: flags
    */
-  const __l1 = __d.readUint32();
-  const __o1 = new Array<FieldTypeArrayFlag>(__l1);
-  flags = __o1;
-  for (let __i1 = 0; __i1 < __l1; __i1++) {
-    const __tmp2 = decodeFieldTypeArrayFlagTrait(__d);
-    if (__tmp2 === null) return null;
-    __o1[__i1] = __tmp2;
+  const __l2 = __d.readUint32();
+  const __o2 = new Array<FieldTypeArrayFlag>(__l2);
+  flags = __o2;
+  for (let __i2 = 0; __i2 < __l2; __i2++) {
+    const __tmp3 = decodeFieldTypeArrayFlagTrait(__d);
+    if (__tmp3 === null) return null;
+    __o2[__i2] = __tmp3;
   }
   /**
    * decoding param: arrayType
    */
-  const tmp4 = decodeFieldTypeTrait(__d);
-  if (tmp4 === null) return null;
-  arrayType = tmp4;
+  const tmp5 = decodeFieldTypeTrait(__d);
+  if (tmp5 === null) return null;
+  arrayType = tmp5;
   return {
     _name: "fieldTypeObject.FieldTypeArray",
+    name,
     flags,
     arrayType
   };
@@ -609,6 +625,7 @@ export function defaultFieldTypeArray(
   params: Partial<FieldTypeArrayInputParams> = {}
 ): FieldTypeArray {
   return FieldTypeArray({
+    name: "",
     flags: [],
     arrayType: defaultFieldTypeTrait(),
     ...params
@@ -620,17 +637,21 @@ export function compareFieldTypeArray(
 ): boolean {
   return (
     /**
+     * compare parameter name
+     */
+    __a["name"] === __b["name"] &&
+    /**
      * compare parameter flags
      */
     __a["flags"].length === __b["flags"].length &&
-    Array.from(__a["flags"]).every((__originalItem0, __index0) =>
-      typeof __originalItem0 === "undefined"
+    Array.from(__a["flags"]).every((__originalItem1, __index1) =>
+      typeof __originalItem1 === "undefined"
         ? false
-        : ((__item0) =>
-            typeof __item0 === "undefined"
+        : ((__item1) =>
+            typeof __item1 === "undefined"
               ? false
-              : compareFieldTypeArrayFlagTrait(__originalItem0, __item0))(
-            Array.from(__b["flags"])[__index0]
+              : compareFieldTypeArrayFlagTrait(__originalItem1, __item1))(
+            Array.from(__b["flags"])[__index1]
           )
     ) &&
     /**
@@ -643,18 +664,26 @@ export function updateFieldTypeArray(
   value: FieldTypeArray,
   changes: Partial<FieldTypeArrayInputParams>
 ) {
+  if (typeof changes["name"] !== "undefined") {
+    if (!(changes["name"] === value["name"])) {
+      value = FieldTypeArray({
+        ...value,
+        name: changes["name"]
+      });
+    }
+  }
   if (typeof changes["flags"] !== "undefined") {
     if (
       !(
         changes["flags"].length === value["flags"].length &&
-        Array.from(changes["flags"]).every((__originalItem1, __index1) =>
-          typeof __originalItem1 === "undefined"
+        Array.from(changes["flags"]).every((__originalItem2, __index2) =>
+          typeof __originalItem2 === "undefined"
             ? false
-            : ((__item1) =>
-                typeof __item1 === "undefined"
+            : ((__item2) =>
+                typeof __item2 === "undefined"
                   ? false
-                  : compareFieldTypeArrayFlagTrait(__originalItem1, __item1))(
-                Array.from(value["flags"])[__index1]
+                  : compareFieldTypeArrayFlagTrait(__originalItem2, __item2))(
+                Array.from(value["flags"])[__index2]
               )
         )
       )

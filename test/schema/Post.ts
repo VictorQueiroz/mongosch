@@ -13,23 +13,26 @@ export class PostModel {
     private readonly posts: Collection<IPost>,
     private readonly users: Collection<IUser>,
   ) {}
-  public async find(value: Filter<IPost>) {
+  public find(value: Filter<IPost>) {
     return this.posts.find(value);
   }
-  public async findOne(value: Filter<IPost>) {
+  public findOne(value: Filter<IPost>) {
     return this.posts.findOne(value);
   }
-  public async deleteOne(value: Filter<IPost>) {
+  public deleteOne(value: Filter<IPost>) {
     return this.posts.deleteOne(value);
   }
-  public async deleteMany(value: Filter<IPost>) {
+  public deleteMany(value: Filter<IPost>) {
     return this.posts.deleteMany(value);
   }
-  public async updateOne(filter: Filter<IPost>, update: UpdateFilter<IPost> | Partial<IPost>) {
+  public updateOne(filter: Filter<IPost>, update: UpdateFilter<IPost> | Partial<IPost>) {
     return this.posts.updateOne(filter, update);
   }
-  public async updateMany(filter: Filter<IPost>, update: UpdateFilter<IPost> | Partial<IPost>) {
+  public updateMany(filter: Filter<IPost>, update: UpdateFilter<IPost> | Partial<IPost>) {
     return this.posts.updateMany(filter, update);
+  }
+  public countDocuments() {
+    return this.posts.countDocuments();
   }
   public async populate(value: IPost, entities: ("User")[] = ["User"]) {
     const populated: IPostPopulated = {

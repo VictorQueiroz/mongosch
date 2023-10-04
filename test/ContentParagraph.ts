@@ -57,6 +57,7 @@ export function ContentParagraphBase() {
         name: "paragraphs",
         fieldType: FieldTypeArray({
           flags: [],
+          name: 'Paragraphs',
           arrayType: Paragraph
         })
       })

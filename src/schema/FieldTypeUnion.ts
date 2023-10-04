@@ -10,6 +10,7 @@ import { compareFieldTypeTrait } from "./FieldType";
 export interface UnionItem {
   _name: "fieldTypeUnion.UnionItem";
   id: number;
+  name: string;
   fieldType: Readonly<FieldType>;
 }
 export function isUnionItem(value: unknown): value is UnionItem {
@@ -39,10 +40,12 @@ export function isUnionItem(value: unknown): value is UnionItem {
     )
   )
     return false;
+  if (!("name" in value && ((__v1) => typeof __v1 === "string")(value["name"])))
+    return false;
   if (
     !(
       "fieldType" in value &&
-      ((__v1) => isFieldTypeTrait(__v1))(value["fieldType"])
+      ((__v2) => isFieldTypeTrait(__v2))(value["fieldType"])
     )
   )
     return false;
@@ -50,49 +53,62 @@ export function isUnionItem(value: unknown): value is UnionItem {
 }
 export interface UnionItemInputParams {
   id: number;
+  name: string;
   fieldType: Readonly<FieldType>;
 }
 export function UnionItem(params: UnionItemInputParams): UnionItem {
   return {
     _name: "fieldTypeUnion.UnionItem",
     id: params["id"],
+    name: params["name"],
     fieldType: params["fieldType"]
   };
 }
 export function encodeUnionItem(__s: ISerializer, value: UnionItem) {
-  __s.writeInt32(-478070559);
+  __s.writeInt32(684885194);
   /**
    * encoding param: id
    */
   const __pv0 = value["id"];
   __s.writeInt32(__pv0);
   /**
+   * encoding param: name
+   */
+  const __pv1 = value["name"];
+  __s.writeString(__pv1);
+  /**
    * encoding param: fieldType
    */
-  const __pv1 = value["fieldType"];
-  encodeFieldTypeTrait(__s, __pv1);
+  const __pv2 = value["fieldType"];
+  encodeFieldTypeTrait(__s, __pv2);
 }
 export function decodeUnionItem(__d: IDeserializer): UnionItem | null {
   const __id = __d.readInt32();
   /**
    * decode header
    */
-  if (__id !== -478070559) return null;
+  if (__id !== 684885194) return null;
   let id: number;
+  let name: string;
   let fieldType: FieldType;
   /**
    * decoding param: id
    */
   id = __d.readInt32();
   /**
+   * decoding param: name
+   */
+  name = __d.readString();
+  /**
    * decoding param: fieldType
    */
-  const tmp3 = decodeFieldTypeTrait(__d);
-  if (tmp3 === null) return null;
-  fieldType = tmp3;
+  const tmp4 = decodeFieldTypeTrait(__d);
+  if (tmp4 === null) return null;
+  fieldType = tmp4;
   return {
     _name: "fieldTypeUnion.UnionItem",
     id,
+    name,
     fieldType
   };
 }
@@ -101,6 +117,7 @@ export function defaultUnionItem(
 ): UnionItem {
   return UnionItem({
     id: 0,
+    name: "",
     fieldType: defaultFieldTypeTrait(),
     ...params
   });
@@ -111,6 +128,10 @@ export function compareUnionItem(__a: UnionItem, __b: UnionItem): boolean {
      * compare parameter id
      */
     __a["id"] === __b["id"] &&
+    /**
+     * compare parameter name
+     */
+    __a["name"] === __b["name"] &&
     /**
      * compare parameter fieldType
      */
@@ -129,6 +150,14 @@ export function updateUnionItem(
       });
     }
   }
+  if (typeof changes["name"] !== "undefined") {
+    if (!(changes["name"] === value["name"])) {
+      value = UnionItem({
+        ...value,
+        name: changes["name"]
+      });
+    }
+  }
   if (typeof changes["fieldType"] !== "undefined") {
     if (!compareFieldTypeTrait(changes["fieldType"], value["fieldType"])) {
       value = UnionItem({
@@ -141,6 +170,7 @@ export function updateUnionItem(
 }
 export interface FieldTypeUnion {
   _name: "fieldTypeUnion.FieldTypeUnion";
+  name: string;
   items: ReadonlyArray<Readonly<UnionItem>>;
 }
 export function isFieldTypeUnion(value: unknown): value is FieldTypeUnion {
@@ -154,18 +184,21 @@ export function isFieldTypeUnion(value: unknown): value is FieldTypeUnion {
     )
   )
     return false;
+  if (!("name" in value && ((__v0) => typeof __v0 === "string")(value["name"])))
+    return false;
   if (
     !(
       "items" in value &&
-      ((__v0) =>
-        (Array.isArray(__v0) || __v0 instanceof Set) &&
-        Array.from(__v0).every((p) => isUnionItem(p)))(value["items"])
+      ((__v1) =>
+        (Array.isArray(__v1) || __v1 instanceof Set) &&
+        Array.from(__v1).every((p) => isUnionItem(p)))(value["items"])
     )
   )
     return false;
   return true;
 }
 export interface FieldTypeUnionInputParams {
+  name: string;
   items: ReadonlyArray<Readonly<UnionItem>>;
 }
 export function FieldTypeUnion(
@@ -173,19 +206,25 @@ export function FieldTypeUnion(
 ): FieldTypeUnion {
   return {
     _name: "fieldTypeUnion.FieldTypeUnion",
+    name: params["name"],
     items: params["items"]
   };
 }
 export function encodeFieldTypeUnion(__s: ISerializer, value: FieldTypeUnion) {
-  __s.writeInt32(-1602080957);
+  __s.writeInt32(326543358);
+  /**
+   * encoding param: name
+   */
+  const __pv0 = value["name"];
+  __s.writeString(__pv0);
   /**
    * encoding param: items
    */
-  const __pv0 = value["items"];
-  const __l1 = __pv0.length;
-  __s.writeUint32(__l1);
-  for (const __item1 of __pv0) {
-    encodeUnionItem(__s, __item1);
+  const __pv1 = value["items"];
+  const __l2 = __pv1.length;
+  __s.writeUint32(__l2);
+  for (const __item2 of __pv1) {
+    encodeUnionItem(__s, __item2);
   }
 }
 export function decodeFieldTypeUnion(
@@ -195,21 +234,27 @@ export function decodeFieldTypeUnion(
   /**
    * decode header
    */
-  if (__id !== -1602080957) return null;
+  if (__id !== 326543358) return null;
+  let name: string;
   let items: Array<UnionItem>;
+  /**
+   * decoding param: name
+   */
+  name = __d.readString();
   /**
    * decoding param: items
    */
-  const __l1 = __d.readUint32();
-  const __o1 = new Array<UnionItem>(__l1);
-  items = __o1;
-  for (let __i1 = 0; __i1 < __l1; __i1++) {
-    const __tmp2 = decodeUnionItem(__d);
-    if (__tmp2 === null) return null;
-    __o1[__i1] = __tmp2;
+  const __l2 = __d.readUint32();
+  const __o2 = new Array<UnionItem>(__l2);
+  items = __o2;
+  for (let __i2 = 0; __i2 < __l2; __i2++) {
+    const __tmp3 = decodeUnionItem(__d);
+    if (__tmp3 === null) return null;
+    __o2[__i2] = __tmp3;
   }
   return {
     _name: "fieldTypeUnion.FieldTypeUnion",
+    name,
     items
   };
 }
@@ -217,6 +262,7 @@ export function defaultFieldTypeUnion(
   params: Partial<FieldTypeUnionInputParams> = {}
 ): FieldTypeUnion {
   return FieldTypeUnion({
+    name: "",
     items: [],
     ...params
   });
@@ -227,17 +273,21 @@ export function compareFieldTypeUnion(
 ): boolean {
   return (
     /**
+     * compare parameter name
+     */
+    __a["name"] === __b["name"] &&
+    /**
      * compare parameter items
      */
     __a["items"].length === __b["items"].length &&
-    Array.from(__a["items"]).every((__originalItem0, __index0) =>
-      typeof __originalItem0 === "undefined"
+    Array.from(__a["items"]).every((__originalItem1, __index1) =>
+      typeof __originalItem1 === "undefined"
         ? false
-        : ((__item0) =>
-            typeof __item0 === "undefined"
+        : ((__item1) =>
+            typeof __item1 === "undefined"
               ? false
-              : compareUnionItem(__originalItem0, __item0))(
-            Array.from(__b["items"])[__index0]
+              : compareUnionItem(__originalItem1, __item1))(
+            Array.from(__b["items"])[__index1]
           )
     )
   );
@@ -246,18 +296,26 @@ export function updateFieldTypeUnion(
   value: FieldTypeUnion,
   changes: Partial<FieldTypeUnionInputParams>
 ) {
+  if (typeof changes["name"] !== "undefined") {
+    if (!(changes["name"] === value["name"])) {
+      value = FieldTypeUnion({
+        ...value,
+        name: changes["name"]
+      });
+    }
+  }
   if (typeof changes["items"] !== "undefined") {
     if (
       !(
         changes["items"].length === value["items"].length &&
-        Array.from(changes["items"]).every((__originalItem1, __index1) =>
-          typeof __originalItem1 === "undefined"
+        Array.from(changes["items"]).every((__originalItem2, __index2) =>
+          typeof __originalItem2 === "undefined"
             ? false
-            : ((__item1) =>
-                typeof __item1 === "undefined"
+            : ((__item2) =>
+                typeof __item2 === "undefined"
                   ? false
-                  : compareUnionItem(__originalItem1, __item1))(
-                Array.from(value["items"])[__index1]
+                  : compareUnionItem(__originalItem2, __item2))(
+                Array.from(value["items"])[__index2]
               )
         )
       )

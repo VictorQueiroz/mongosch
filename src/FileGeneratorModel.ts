@@ -2,6 +2,7 @@ import CodeStream from "textstreamjs";
 import { Model } from "./schema/Model";
 import { FieldType } from "./schema/FieldType";
 import { Field } from "./schema/Field";
+import { FieldTypeArray } from "./schema/FieldTypeObject";
 
 export function getModelClassName(model: Model) {
   return `${model.className}Model`;
@@ -17,6 +18,28 @@ function getModelInterfaceName(model: Model) {
 
 function getValidateFunctionName(model: Model) {
   return `validate${model.className}`;
+}
+
+function getEnumClassName(model: Model, fieldType: FieldType, paths: (Field | FieldTypeArray)[]) {
+  const suffixes = paths.map((p) => p.name[0].toUpperCase() + p.name.slice(1));
+  switch(fieldType._name) {
+    case "fieldTypeObject.FieldTypeArray":
+      suffixes.push(fieldType.name);
+      break;
+    case "fieldTypeModelReference.FieldTypeModelReference":
+    case "fieldTypeString.FieldTypeString":
+    case "fieldTypeObject.FieldTypeObject":
+    case "fieldTypeInteger.FieldTypeDouble":
+    case "fieldTypeInteger.FieldTypeInt64":
+    case "fieldTypeInteger.FieldTypeInt32":
+    case "fieldTypeDate.FieldTypeDate":
+    case "fieldTypeEnum.FieldTypeEnumString":
+    case "fieldTypeEnum.FieldTypeEnumInt":
+    case "fieldTypeUnion.FieldTypeUnion":
+    case "fieldTypeBinary.FieldTypeBinary":
+    case "fieldTypeBoolean.FieldTypeBoolean":
+  }
+  return `${model.className}${suffixes.join('')}Type`;
 }
 
 export interface IFileGeneratorModelImport {
@@ -96,6 +119,7 @@ export default class FileGeneratorModel extends CodeStream {
       },
       "}\n"
     );
+    this.#generateEnumClasses();
     this.write(
       `export interface ${getPopulatedInterfaceName(m)} {\n`,
       () => {
@@ -112,6 +136,55 @@ export default class FileGeneratorModel extends CodeStream {
     this.#generateModelClass();
     this.#generateFilterClass();
     this.#generateValidateFunction();
+  }
+  #generateEnumClasses() {
+    for(const f of this.#model.fields) {
+      this.#generateEnumClass(f.fieldType, [f]);
+    }
+  }
+  #generateEnumClass(fieldType: FieldType, paths: (Field | FieldTypeArray)[]) {
+    switch(fieldType._name) {
+      case "fieldTypeObject.FieldTypeObject":
+        for(const prop of fieldType.properties){
+          this.#generateEnumClass(prop.fieldType, [...paths, prop]);
+        }
+        break;
+      case "fieldTypeObject.FieldTypeArray":
+        this.#generateEnumClass(fieldType.arrayType, [...paths, fieldType]);
+        break;
+      case "fieldTypeModelReference.FieldTypeModelReference":
+      case "fieldTypeString.FieldTypeString":
+      case "fieldTypeInteger.FieldTypeDouble":
+      case "fieldTypeInteger.FieldTypeInt64":
+      case "fieldTypeInteger.FieldTypeInt32":
+      case "fieldTypeDate.FieldTypeDate":
+      case "fieldTypeBinary.FieldTypeBinary":
+      case "fieldTypeBoolean.FieldTypeBoolean":
+        break;
+      case "fieldTypeUnion.FieldTypeUnion":
+        this.write(
+          `export enum ${getEnumClassName(this.#model, fieldType, paths)} {\n`,
+          () => {
+            for(const i of fieldType.items) {
+              this.write(`${i.name} = ${i.id},\n`);
+            }
+          },
+          "}\n"
+        );
+        break;
+      case "fieldTypeEnum.FieldTypeEnumString":
+      case "fieldTypeEnum.FieldTypeEnumInt":
+        this.write(
+          `export enum ${getEnumClassName(this.#model, fieldType, paths)} {\n`,
+          () => {
+            for(const i of fieldType.fields) {
+              this.write(`${i.name} = ${typeof i.value === 'string' ? `"${i.value}"` : i.value},\n`);
+            }
+          },
+          "}\n"
+        );
+        break;
+    }
   }
   #populateModelSetFromFieldType(fieldType: FieldType) {
     switch (fieldType._name) {
