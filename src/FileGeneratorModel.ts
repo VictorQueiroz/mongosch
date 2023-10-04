@@ -204,7 +204,7 @@ export default class FileGeneratorModel extends CodeStream {
             this.write(
               "if(!result.acknowledged) {\n",
               () => {
-                this.write("return null;\n");
+                this.write("return { error: 'Record creation not acknowledged' };\n");
               },
               "}\n"
             );
