@@ -180,6 +180,23 @@ export default class FileGeneratorModel extends CodeStream {
             "}\n"
           );
         }
+        for(const method of ['updateOne', 'updateMany']) {
+          this.write(
+            `public async ${method}(filter: Filter<${getModelInterfaceName(
+              m
+            )}>, update: UpdateFilter<${getModelInterfaceName(
+              m
+            )}> | Partial<${getModelInterfaceName(
+              m
+            )}>) {\n`,
+            () => {
+              this.write(
+                `return this.${this.#model.collectionName}.${method}(filter, update);\n`
+              );
+            },
+            "}\n"
+          );
+        }
         if (this.#referencedModels.size) {
           this.#generatePopulateMethod();
         }
