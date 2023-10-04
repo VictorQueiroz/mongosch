@@ -1,5 +1,5 @@
 import {IUser} from './User';
-import {ObjectId, Filter, Collection} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
 export interface IStory {
   name: string;
   authorId: ObjectId;
@@ -23,6 +23,12 @@ export class StoryModel {
   }
   public async deleteMany(value: Filter<IStory>) {
     return this.stories.deleteMany(value);
+  }
+  public async updateOne(filter: Filter<IStory>, update: UpdateFilter<IStory> | Partial<IStory>) {
+    return this.stories.updateOne(filter, update);
+  }
+  public async updateMany(filter: Filter<IStory>, update: UpdateFilter<IStory> | Partial<IStory>) {
+    return this.stories.updateMany(filter, update);
   }
   public async populate(value: IStory, entities: ("User")[] = ["User"]) {
     const populated: IStoryPopulated = {
@@ -48,7 +54,7 @@ export class StoryModel {
     }
     const result = await this.stories.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
-      return null;
+      return { error: 'Record creation not acknowledged' };
     }
     return result.insertedId;
   }

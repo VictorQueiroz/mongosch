@@ -2,7 +2,7 @@ import {IUser} from './User';
 import {IStory} from './Story';
 import {IContentParagraph} from './ContentParagraph';
 import {IContentUserInterface} from './ContentUserInterface';
-import {ObjectId, Filter, Collection} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
 export interface IStoryChapter {
   name: string;
   authorId: ObjectId;
@@ -40,6 +40,12 @@ export class StoryChapterModel {
   }
   public async deleteMany(value: Filter<IStoryChapter>) {
     return this.storyChapters.deleteMany(value);
+  }
+  public async updateOne(filter: Filter<IStoryChapter>, update: UpdateFilter<IStoryChapter> | Partial<IStoryChapter>) {
+    return this.storyChapters.updateOne(filter, update);
+  }
+  public async updateMany(filter: Filter<IStoryChapter>, update: UpdateFilter<IStoryChapter> | Partial<IStoryChapter>) {
+    return this.storyChapters.updateMany(filter, update);
   }
   public async populate(value: IStoryChapter, entities: ("User" | "Story" | "ContentParagraph" | "ContentUserInterface")[] = ["User", "Story", "ContentParagraph", "ContentUserInterface"]) {
     const populated: IStoryChapterPopulated = {
@@ -93,7 +99,7 @@ export class StoryChapterModel {
     }
     const result = await this.storyChapters.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
-      return null;
+      return { error: 'Record creation not acknowledged' };
     }
     return result.insertedId;
   }

@@ -1,5 +1,5 @@
 import {IContentUserInterface} from './ContentUserInterface';
-import {ObjectId, Filter, Collection} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
 export interface IContentParagraph {
   paragraphs: ReadonlyArray<{
     sentences: ReadonlyArray<{
@@ -41,6 +41,12 @@ export class ContentParagraphModel {
   public async deleteMany(value: Filter<IContentParagraph>) {
     return this.contentParagraphs.deleteMany(value);
   }
+  public async updateOne(filter: Filter<IContentParagraph>, update: UpdateFilter<IContentParagraph> | Partial<IContentParagraph>) {
+    return this.contentParagraphs.updateOne(filter, update);
+  }
+  public async updateMany(filter: Filter<IContentParagraph>, update: UpdateFilter<IContentParagraph> | Partial<IContentParagraph>) {
+    return this.contentParagraphs.updateMany(filter, update);
+  }
   public async populate(value: IContentParagraph, entities: ("ContentParagraph" | "ContentUserInterface")[] = ["ContentParagraph", "ContentUserInterface"]) {
     const populated: IContentParagraphPopulated = {
       contentParagraphs: [],
@@ -81,7 +87,7 @@ export class ContentParagraphModel {
     }
     const result = await this.contentParagraphs.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
-      return null;
+      return { error: 'Record creation not acknowledged' };
     }
     return result.insertedId;
   }

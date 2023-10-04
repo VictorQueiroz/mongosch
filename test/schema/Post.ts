@@ -1,5 +1,5 @@
 import {IUser} from './User';
-import {ObjectId, Filter, Collection} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
 export interface IPost {
   title: string;
   authorId: ObjectId;
@@ -25,6 +25,12 @@ export class PostModel {
   public async deleteMany(value: Filter<IPost>) {
     return this.posts.deleteMany(value);
   }
+  public async updateOne(filter: Filter<IPost>, update: UpdateFilter<IPost> | Partial<IPost>) {
+    return this.posts.updateOne(filter, update);
+  }
+  public async updateMany(filter: Filter<IPost>, update: UpdateFilter<IPost> | Partial<IPost>) {
+    return this.posts.updateMany(filter, update);
+  }
   public async populate(value: IPost, entities: ("User")[] = ["User"]) {
     const populated: IPostPopulated = {
       users: [],
@@ -49,7 +55,7 @@ export class PostModel {
     }
     const result = await this.posts.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
-      return null;
+      return { error: 'Record creation not acknowledged' };
     }
     return result.insertedId;
   }
