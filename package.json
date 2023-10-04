@@ -23,6 +23,7 @@
     "prettier": "npx prettier --write src"
   },
   "version": "1.0.4",
+  "main":"./src/index.js",
   "dependencies": {
     "cachecraft": "^1.0.1",
     "textstreamjs": "^0.0.4"
