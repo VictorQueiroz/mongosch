@@ -558,6 +558,12 @@ export default class FileGeneratorModel extends CodeStream {
   #preprocessFields(fieldTypes: ReadonlyArray<FieldType>) {
     for (const fieldType of fieldTypes) {
       switch (fieldType._name) {
+        case 'fieldTypeBinary.FieldTypeBinary':
+          this.#import({
+            exports: ['Binary'],
+            path: 'mongodb'
+          })
+          break;
         case "fieldTypeString.FieldTypeString":
           break;
         case "fieldTypeModelReference.FieldTypeModelReference":
@@ -592,6 +598,9 @@ export default class FileGeneratorModel extends CodeStream {
   }
   #generateFieldTypeCode(fieldType: FieldType) {
     switch (fieldType._name) {
+      case 'fieldTypeBinary.FieldTypeBinary':
+        this.append('Binary');
+        break;
       case "fieldTypeString.FieldTypeString":
         this.append(`string`);
         break;
