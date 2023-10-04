@@ -22,8 +22,8 @@
     "build:schema": "npx jsbuffer schema/main -o src/schema --indentation-size 2 --no-ts-config && npm run prettier",
     "prettier": "npx prettier --write src"
   },
-  "version": "1.0.4",
-  "main":"./src/index.js",
+  "version": "1.0.5",
+  "main": "./src/index.js",
   "dependencies": {
     "cachecraft": "^1.0.1",
     "textstreamjs": "^0.0.4"
