@@ -75,7 +75,7 @@ export default class FileGeneratorModel extends CodeStream {
     );
     this.#import({
       path: "mongodb",
-      exports: ["Collection", "Filter"]
+      exports: ["Collection", "Filter", "UpdateFilter"]
     });
     if (this.#referencedModels.size) {
       this.#import({
