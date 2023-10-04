@@ -19,7 +19,7 @@
     "mongosch": "./cli/index.js"
   },
   "scripts": {
-    "prepublishOnly": "npx tsc -b cli",
+    "prepublishOnly": "npx tsc -b cli --force",
     "build:schema": "npx jsbuffer schema/main -o src/schema --indentation-size 2 --no-ts-config && npm run prettier",
     "prettier": "npx prettier --write src/schema"
   },
