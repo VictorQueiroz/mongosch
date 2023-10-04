@@ -1,0 +1,41 @@
+import { Field } from "./Field";
+import { FieldType } from "./FieldType";
+import { FieldTypeFlagDefaultValue } from "./FieldTypeFlagDefaultValue";
+
+export trait FieldTypeIntegerFlag {
+  
+}
+
+export type FieldTypeIntegerFlagOptional : FieldTypeIntegerFlag {}
+
+export type FieldTypeIntegerFlagDefaultValueDouble : FieldTypeFlagDefaultValue, FieldTypeIntegerFlag {
+  double value;
+}
+
+export type FieldTypeIntegerFlagDefaultValueInt64 : FieldTypeFlagDefaultValue, FieldTypeIntegerFlag {
+  long value;
+}
+
+export type FieldTypeIntegerFlagDefaultValueInt32 : FieldTypeFlagDefaultValue, FieldTypeIntegerFlag {
+  int value;
+}
+
+export type FieldTypeIntegerFlagMin : FieldTypeIntegerFlag {
+  double value;
+}
+
+export type FieldTypeIntegerFlagMax : FieldTypeIntegerFlag {
+  double value;
+}
+
+export type FieldTypeDouble : FieldType {
+  vector<FieldTypeIntegerFlag> flags;
+}
+
+export type FieldTypeInt64 : FieldType {
+  vector<FieldTypeIntegerFlag> flags;
+}
+
+export type FieldTypeInt32 : FieldType {
+  vector<FieldTypeIntegerFlag> flags;
+}

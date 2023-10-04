@@ -1,0 +1,57 @@
+{
+  "Model": {
+    "kind": "type",
+    "id": -747051574,
+    "globalName": "model.Model",
+    "name": "Model",
+    "params": [
+      { "name": "className", "type": { "type": "generic", "value": "string" } },
+      {
+        "name": "collectionName",
+        "type": { "type": "generic", "value": "string" }
+      },
+      {
+        "name": "fields",
+        "type": {
+          "type": "template",
+          "template": "vector",
+          "value": {
+            "type": "externalType",
+            "name": "Field",
+            "relativePath": "./Field"
+          }
+        }
+      }
+    ]
+  },
+  "__all": [
+    {
+      "kind": "type",
+      "id": -747051574,
+      "globalName": "model.Model",
+      "name": "Model",
+      "params": [
+        {
+          "name": "className",
+          "type": { "type": "generic", "value": "string" }
+        },
+        {
+          "name": "collectionName",
+          "type": { "type": "generic", "value": "string" }
+        },
+        {
+          "name": "fields",
+          "type": {
+            "type": "template",
+            "template": "vector",
+            "value": {
+              "type": "externalType",
+              "name": "Field",
+              "relativePath": "./Field"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+import { Field } from "./Field";
+import { FieldType } from "./FieldType";
+
+export type FieldTypeObject : FieldType {
+  vector<Field> properties;
+}
+
+export trait FieldTypeArrayFlag {
+
+}
+
+export type FieldTypeArrayFlagMinLength : FieldTypeArrayFlag {
+  int value;
+}
+
+export type FieldTypeArrayFlagMaxLength : FieldTypeArrayFlag {
+  int value;
+}
+
+export type FieldTypeArrayFlagOptional : FieldTypeArrayFlag {}
+
+export type FieldTypeArray : FieldType {
+  vector<FieldTypeArrayFlag> flags;
+  FieldType arrayType;
+}

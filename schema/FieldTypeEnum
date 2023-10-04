@@ -1,0 +1,17 @@
+import { FieldType } from "./FieldType";
+
+export trait EnumField {}
+
+export type EnumFieldInt : EnumField {
+  string name;
+  int value;
+}
+
+export type EnumFieldString : EnumField {
+  string name;
+  string value;
+}
+
+export type FieldTypeEnum : FieldType {
+  vector<EnumField> fields;
+}

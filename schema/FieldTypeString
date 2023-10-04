@@ -1,0 +1,23 @@
+import { FieldType } from "./FieldType";
+import { FieldTypeFlagDefaultValue } from "./FieldTypeFlagDefaultValue";
+
+export trait FieldTypeStringFlag {}
+
+export type FieldTypeStringFlagDefaultValue : FieldTypeFlagDefaultValue {
+  string value;
+}
+
+// means the field can be null
+export type FieldTypeStringFlagOptional : FieldTypeStringFlag {}
+
+export type FieldTypeStringFlagMinLength : FieldTypeStringFlag {
+  int value;
+}
+
+export type FieldTypeStringFlagMaxLength : FieldTypeStringFlag {
+  int value;
+}
+
+export type FieldTypeString : FieldType {
+  vector<FieldTypeStringFlag> flags;
+}

@@ -1,0 +1,21 @@
+import "./Model";
+import "./FieldTypeModelReference";
+import "./FieldTypeString";
+import "./FieldTypeObject";
+import "./FieldTypeInteger";
+import "./FieldTypeDate";
+import "./FieldTypeEnum";
+import "./FieldTypeUnion";
+import "./FieldTypeBoolean";
+
+export trait Event {
+
+}
+
+export type EventUpdated : Event {
+
+}
+
+export type EventCreated : Event {
+
+}

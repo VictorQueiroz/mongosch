@@ -1,0 +1,70 @@
+{
+  "UnionItem": {
+    "kind": "type",
+    "id": -478070559,
+    "globalName": "fieldTypeUnion.UnionItem",
+    "name": "UnionItem",
+    "params": [
+      { "name": "id", "type": { "type": "generic", "value": "int" } },
+      {
+        "name": "fieldType",
+        "type": {
+          "type": "externalType",
+          "name": "FieldType",
+          "relativePath": "./FieldType"
+        }
+      }
+    ]
+  },
+  "FieldTypeUnion": {
+    "kind": "type",
+    "id": -1602080957,
+    "globalName": "fieldTypeUnion.FieldTypeUnion",
+    "name": "FieldTypeUnion",
+    "params": [
+      {
+        "name": "items",
+        "type": {
+          "type": "template",
+          "template": "vector",
+          "value": { "type": "internalType", "interfaceName": "UnionItem" }
+        }
+      }
+    ]
+  },
+  "__all": [
+    {
+      "kind": "type",
+      "id": -478070559,
+      "globalName": "fieldTypeUnion.UnionItem",
+      "name": "UnionItem",
+      "params": [
+        { "name": "id", "type": { "type": "generic", "value": "int" } },
+        {
+          "name": "fieldType",
+          "type": {
+            "type": "externalType",
+            "name": "FieldType",
+            "relativePath": "./FieldType"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": -1602080957,
+      "globalName": "fieldTypeUnion.FieldTypeUnion",
+      "name": "FieldTypeUnion",
+      "params": [
+        {
+          "name": "items",
+          "type": {
+            "type": "template",
+            "template": "vector",
+            "value": { "type": "internalType", "interfaceName": "UnionItem" }
+          }
+        }
+      ]
+    }
+  ]
+}

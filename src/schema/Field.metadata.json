@@ -1,0 +1,54 @@
+{
+  "Field": {
+    "kind": "type",
+    "id": -106707621,
+    "globalName": "field.Field",
+    "name": "Field",
+    "params": [
+      { "name": "name", "type": { "type": "generic", "value": "string" } },
+      {
+        "name": "description",
+        "type": {
+          "type": "template",
+          "template": "optional",
+          "value": { "type": "generic", "value": "string" }
+        }
+      },
+      {
+        "name": "fieldType",
+        "type": {
+          "type": "externalType",
+          "name": "FieldType",
+          "relativePath": "./FieldType"
+        }
+      }
+    ]
+  },
+  "__all": [
+    {
+      "kind": "type",
+      "id": -106707621,
+      "globalName": "field.Field",
+      "name": "Field",
+      "params": [
+        { "name": "name", "type": { "type": "generic", "value": "string" } },
+        {
+          "name": "description",
+          "type": {
+            "type": "template",
+            "template": "optional",
+            "value": { "type": "generic", "value": "string" }
+          }
+        },
+        {
+          "name": "fieldType",
+          "type": {
+            "type": "externalType",
+            "name": "FieldType",
+            "relativePath": "./FieldType"
+          }
+        }
+      ]
+    }
+  ]
+}

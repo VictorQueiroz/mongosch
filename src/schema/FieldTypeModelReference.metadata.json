@@ -1,0 +1,36 @@
+{
+  "FieldTypeModelReference": {
+    "kind": "type",
+    "id": -1200777270,
+    "globalName": "fieldTypeModelReference.FieldTypeModelReference",
+    "name": "FieldTypeModelReference",
+    "params": [
+      {
+        "name": "model",
+        "type": {
+          "type": "externalType",
+          "name": "Model",
+          "relativePath": "./Model"
+        }
+      }
+    ]
+  },
+  "__all": [
+    {
+      "kind": "type",
+      "id": -1200777270,
+      "globalName": "fieldTypeModelReference.FieldTypeModelReference",
+      "name": "FieldTypeModelReference",
+      "params": [
+        {
+          "name": "model",
+          "type": {
+            "type": "externalType",
+            "name": "Model",
+            "relativePath": "./Model"
+          }
+        }
+      ]
+    }
+  ]
+}

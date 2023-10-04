@@ -1,0 +1,6 @@
+import { FieldType } from "./FieldType";
+import { Model } from "./Model";
+
+export type FieldTypeModelReference : FieldType {
+  Model model;
+}

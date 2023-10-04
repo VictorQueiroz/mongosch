@@ -1,0 +1,7 @@
+import { FieldType } from "./FieldType";
+
+export type Field {
+  string name;
+  optional<string> description;
+  FieldType fieldType;
+}

@@ -1,0 +1,11 @@
+import { FieldType } from "./FieldType";
+
+export trait FieldTypeBooleanFlags {
+
+}
+
+export type FieldTypeBooleanFlagsOptional : FieldTypeBooleanFlags {}
+
+export type FieldTypeBoolean : FieldType {
+  vector<FieldTypeBooleanFlags> flags;
+}
