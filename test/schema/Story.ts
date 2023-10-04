@@ -18,7 +18,7 @@ export class StoryModel {
   public async findOne(value: Filter<IStory>) {
     return this.stories.findOne(value);
   }
-  public async populate(value: IStory) {
+  public async populate(value: IStory, entities: ("User")[] = ["User"]) {
     const populated: IStoryPopulated = {
       users: [],
     }
@@ -26,11 +26,13 @@ export class StoryModel {
       users: new Array<ObjectId>(),
     }
     ids.users.push(value.authorId);
-    populated.users.push(...(await this.users.find({
-      _id: {
-        $in: ids.users
-      }
-    }).toArray()));
+    await Promise.all([
+      (async (list) => populated.users.push(...(await list)))(entities.includes("User") ? this.users.find({
+        _id: {
+          $in: ids.users
+        }
+      }).toArray() : Promise.resolve([])),
+    ]);
     return populated;
   }
   public async insert(value: IStory) {

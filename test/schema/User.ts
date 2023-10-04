@@ -14,13 +14,6 @@ export class UserModel {
   public async findOne(value: Filter<IUser>) {
     return this.users.findOne(value);
   }
-  public async populate(value: IUser) {
-    const populated: IUserPopulated = {
-    }
-    const ids = {
-    }
-    return populated;
-  }
   public async insert(value: IUser) {
     const validationErr = validateUser(value);
     if(validationErr !== null) {

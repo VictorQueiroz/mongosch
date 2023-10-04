@@ -19,7 +19,7 @@ export class PostModel {
   public async findOne(value: Filter<IPost>) {
     return this.posts.findOne(value);
   }
-  public async populate(value: IPost) {
+  public async populate(value: IPost, entities: ("User")[] = ["User"]) {
     const populated: IPostPopulated = {
       users: [],
     }
@@ -27,11 +27,13 @@ export class PostModel {
       users: new Array<ObjectId>(),
     }
     ids.users.push(value.authorId);
-    populated.users.push(...(await this.users.find({
-      _id: {
-        $in: ids.users
-      }
-    }).toArray()));
+    await Promise.all([
+      (async (list) => populated.users.push(...(await list)))(entities.includes("User") ? this.users.find({
+        _id: {
+          $in: ids.users
+        }
+      }).toArray() : Promise.resolve([])),
+    ]);
     return populated;
   }
   public async insert(value: IPost) {

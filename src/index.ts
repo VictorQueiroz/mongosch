@@ -178,57 +178,9 @@ class FileGeneratorModel extends CodeStream {
             "}\n"
           );
         }
-        this.write(
-          `public async populate(value: ${getModelInterfaceName(m)}) {\n`,
-          () => {
-            this.write(
-              `const populated: ${getPopulatedInterfaceName(m)} = {\n`,
-              () => {
-                for (const m of this.#referencedModels) {
-                  this.write(`${m.collectionName}: [],\n`);
-                }
-              },
-              "}\n"
-            );
-            this.write(
-              `const ids = {\n`,
-              () => {
-                for (const m of this.#referencedModels) {
-                  this.write(`${m.collectionName}: new Array<ObjectId>(),\n`);
-                }
-              },
-              "}\n"
-            );
-            let depth = 0;
-            for (const field of this.#model.fields) {
-              depth = this.#generatePopulateExpressions(
-                field.fieldType,
-                ["value"],
-                field.name,
-                depth + 1
-              );
-            }
-
-            for (const m of this.#referencedModels) {
-              this.write(
-                `populated.${m.collectionName}.push(...(await this.${m.collectionName}.find({\n`,
-                () => {
-                  this.write(
-                    "_id: {\n",
-                    () => {
-                      this.write(`$in: ids.${m.collectionName}\n`);
-                    },
-                    "}\n"
-                  );
-                },
-                "}).toArray()));\n"
-              );
-            }
-
-            this.write("return populated;\n");
-          },
-          "}\n"
-        );
+        if (this.#referencedModels.size) {
+          this.#generatePopulateMethod();
+        }
         this.write(
           `public async insert(value: ${getModelInterfaceName(m)}) {\n`,
           () => {
@@ -258,6 +210,75 @@ class FileGeneratorModel extends CodeStream {
           },
           "}\n"
         );
+      },
+      "}\n"
+    );
+  }
+  #generatePopulateMethod() {
+    const m = this.#model;
+    const entityNames = Array.from(this.#referencedModels.values()).map(
+      (m) => m.className
+    );
+    this.write(
+      `public async populate(value: ${getModelInterfaceName(
+        m
+      )}, entities: (${entityNames
+        .map((name) => `"${name}"`)
+        .join(" | ")})[] = [${entityNames
+        .map((n) => `"${n}"`)
+        .join(", ")}]) {\n`,
+      () => {
+        this.write(
+          `const populated: ${getPopulatedInterfaceName(m)} = {\n`,
+          () => {
+            for (const m of this.#referencedModels) {
+              this.write(`${m.collectionName}: [],\n`);
+            }
+          },
+          "};\n"
+        );
+        this.write(
+          `const ids = {\n`,
+          () => {
+            for (const m of this.#referencedModels) {
+              this.write(`${m.collectionName}: new Array<ObjectId>(),\n`);
+            }
+          },
+          "};\n"
+        );
+        let depth = 0;
+        for (const field of this.#model.fields) {
+          depth = this.#generatePopulateExpressions(
+            field.fieldType,
+            ["value"],
+            field.name,
+            depth + 1
+          );
+        }
+
+        this.write(
+          "await Promise.all([\n",
+          () => {
+            for (const m of this.#referencedModels) {
+              this.write(
+                `(async (list) => populated.${m.collectionName}.push(...(await list)))(entities.includes("${m.className}") ? this.${m.collectionName}.find({\n`,
+                () => {
+                  this.write(
+                    "_id: {\n",
+                    () => {
+                      this.write(`$in: ids.${m.collectionName}\n`);
+                    },
+                    "}\n"
+                  );
+                },
+                "}).toArray() : Promise.resolve([])),\n"
+              );
+            }
+          },
+          "]);\n"
+        );
+
+        this.write("return populated;\n");
       },
       "}\n"
     );

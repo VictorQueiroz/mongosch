@@ -40,7 +40,7 @@ export class ContentUserInterfaceModel {
   public async findOne(value: Filter<IContentUserInterface>) {
     return this.contentUserInterfaces.findOne(value);
   }
-  public async populate(value: IContentUserInterface) {
+  public async populate(value: IContentUserInterface, entities: ("ContentParagraph" | "ContentUserInterface")[] = ["ContentParagraph", "ContentUserInterface"]) {
     const populated: IContentUserInterfacePopulated = {
       contentParagraphs: [],
       contentUserInterfaces: [],
@@ -59,16 +59,18 @@ export class ContentUserInterfaceModel {
     if(value.nextContent.value.id === 1) {
       ids.contentUserInterfaces.push(value.nextContent.value.value);
     }
-    populated.contentParagraphs.push(...(await this.contentParagraphs.find({
-      _id: {
-        $in: ids.contentParagraphs
-      }
-    }).toArray()));
-    populated.contentUserInterfaces.push(...(await this.contentUserInterfaces.find({
-      _id: {
-        $in: ids.contentUserInterfaces
-      }
-    }).toArray()));
+    await Promise.all([
+      (async (list) => populated.contentParagraphs.push(...(await list)))(entities.includes("ContentParagraph") ? this.contentParagraphs.find({
+        _id: {
+          $in: ids.contentParagraphs
+        }
+      }).toArray() : Promise.resolve([])),
+      (async (list) => populated.contentUserInterfaces.push(...(await list)))(entities.includes("ContentUserInterface") ? this.contentUserInterfaces.find({
+        _id: {
+          $in: ids.contentUserInterfaces
+        }
+      }).toArray() : Promise.resolve([])),
+    ]);
     return populated;
   }
   public async insert(value: IContentUserInterface) {
