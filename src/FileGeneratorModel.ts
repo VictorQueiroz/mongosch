@@ -169,7 +169,7 @@ export default class FileGeneratorModel extends CodeStream {
         );
         for (const method of ["find", "findOne", "deleteOne", "deleteMany"]) {
           this.write(
-            `public async ${method}(value: Filter<${getModelInterfaceName(
+            `public ${method}(value: Filter<${getModelInterfaceName(
               m
             )}>) {\n`,
             () => {
@@ -182,7 +182,7 @@ export default class FileGeneratorModel extends CodeStream {
         }
         for(const method of ['updateOne', 'updateMany']) {
           this.write(
-            `public async ${method}(filter: Filter<${getModelInterfaceName(
+            `public ${method}(filter: Filter<${getModelInterfaceName(
               m
             )}>, update: UpdateFilter<${getModelInterfaceName(
               m
@@ -192,6 +192,17 @@ export default class FileGeneratorModel extends CodeStream {
             () => {
               this.write(
                 `return this.${this.#model.collectionName}.${method}(filter, update);\n`
+              );
+            },
+            "}\n"
+          );
+        }
+        for(const method of ['countDocuments']) {
+          this.write(
+            `public ${method}() {\n`,
+            () => {
+              this.write(
+                `return this.${this.#model.collectionName}.${method}();\n`
               );
             },
             "}\n"
