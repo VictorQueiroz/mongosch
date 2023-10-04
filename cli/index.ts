@@ -3,7 +3,7 @@ import fs from "fs";
 import assert from "assert";
 import { Model, isModel } from "../src/schema/Model";
 import { getNamedArgument, getString } from "cli-argument-helper";
-import FileGeneratorManager from "../src";
+import FileGeneratorManager from "../src/FileGeneratorManager";
 
 async function getModelsFromInputFile(inputFile: string) {
   const models = new Array<Model>();
