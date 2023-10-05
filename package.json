@@ -21,6 +21,8 @@
   "scripts": {
     "prepublishOnly": "npx tsc -b cli --force",
     "build:schema": "npx jsbuffer schema/main -o src/schema --indentation-size 2 --no-ts-config && npm run prettier",
+    "build:models": "npx ts-node --project cli/tsconfig.json cli --input test/model-definitions.ts -o test/schema",
+    "build:models:fast": "TS_NODE_TRANSPILE_ONLY=1 npm run build:models",
     "prettier": "npx prettier --write src/schema"
   },
   "version": "1.0.18",

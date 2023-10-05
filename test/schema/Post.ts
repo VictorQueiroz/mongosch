@@ -63,27 +63,6 @@ export class PostModel {
     return result.insertedId;
   }
 }
-export class PostFilter {
-  readonly #filter: Filter<PostModel> = {};
-  /**
-    * Matches title with all exact parameters
-    */
-  public title(value: string) {
-    this.#filter['title'] = value;
-  }
-  /**
-    * Matches authorId with all exact parameters
-    */
-  public authorId(value: ObjectId) {
-    this.#filter['authorId'] = value;
-  }
-  /**
-    * Matches createdAt with all exact parameters
-    */
-  public createdAt(value: Date) {
-    this.#filter['createdAt'] = value;
-  }
-}
 export function validatePost(value: IPost) {
   const value0 = value['title'];
   if(!(typeof value0 === 'string')) {

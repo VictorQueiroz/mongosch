@@ -10,6 +10,7 @@ import {
   FieldTypeEnumString
 } from "./schema/FieldTypeEnum";
 import { FieldTypeUnion } from "./schema/FieldTypeUnion";
+import Exception from "./Exception";
 
 export function getModelClassName(model: Model) {
   return `${model.className}Model`;
@@ -27,7 +28,11 @@ function getValidateFunctionName(model: Model) {
   return `validate${model.className}`;
 }
 
-function getEnumClassName(model: Model, path: PathItem[]) {
+function getEnumValuesConstantName(model: Model, path: PathItem[]) {
+  return joinModelAndPath(model, path, "Values");
+}
+
+function joinModelAndPath(model: Model, path: PathItem[], lastSuffix: string) {
   const suffixes = path
     .reduce((a, b) => {
       if ("name" in b) {
@@ -36,24 +41,11 @@ function getEnumClassName(model: Model, path: PathItem[]) {
       return a;
     }, new Array<string>())
     .map((p) => `${p[0].toUpperCase()}${p.slice(1)}`);
-  // switch(fieldType._name) {
-  //   case "fieldTypeEnum.FieldTypeEnumString":
-  //   case "fieldTypeEnum.FieldTypeEnumInt":
-  //   case "fieldTypeUnion.FieldTypeUnion":
-  //   case "fieldTypeObject.FieldTypeArray":
-  //     suffixes.push(fieldType.name);
-  //     break;
-  //   case "fieldTypeModelReference.FieldTypeModelReference":
-  //   case "fieldTypeString.FieldTypeString":
-  //   case "fieldTypeObject.FieldTypeObject":
-  //   case "fieldTypeInteger.FieldTypeDouble":
-  //   case "fieldTypeInteger.FieldTypeInt64":
-  //   case "fieldTypeInteger.FieldTypeInt32":
-  //   case "fieldTypeDate.FieldTypeDate":
-  //   case "fieldTypeBinary.FieldTypeBinary":
-  //   case "fieldTypeBoolean.FieldTypeBoolean":
-  // }
-  return `${model.className}${suffixes.join("")}Type`;
+  return `${model.className}${suffixes.join("")}${lastSuffix}`;
+}
+
+function getEnumClassName(model: Model, path: PathItem[]) {
+  return joinModelAndPath(model, path, "Type");
 }
 
 export interface IFileGeneratorModelImport {
@@ -68,6 +60,7 @@ export default class FileGeneratorModel extends CodeStream {
   readonly #manager;
   readonly #imports: IFileGeneratorModelImport[];
   readonly #referencedModels = new Set<Model>();
+  readonly #pathByFieldTypeMap = new Map<FieldType, PathItem[]>();
   #modelClassArguments = new Array<Model>();
   public constructor({
     parent,
@@ -122,6 +115,11 @@ export default class FileGeneratorModel extends CodeStream {
         exports: ["ObjectId"]
       });
     }
+    for (const f of this.#model.fields) {
+      this.#iterateWithPath(f.fieldType, [f.fieldType], (fieldType, path) => {
+        this.#pathByFieldTypeMap.set(fieldType, [...path]);
+      });
+    }
   }
   public generate() {
     const m = this.#model;
@@ -155,21 +153,47 @@ export default class FileGeneratorModel extends CodeStream {
   }
   #generateEnumClasses() {
     for (const f of this.#model.fields) {
-      this.#generateEnumClass(f.fieldType, [f]);
+      this.#generateEnumClass(f.fieldType);
     }
   }
-  #generateEnumClass(fieldType: FieldType, paths: PathItem[]) {
+  #fieldTypePathOrFailure(fieldType: FieldType) {
+    const path = this.#pathByFieldTypeMap.get(fieldType);
+    if (!path) {
+      throw new Exception(
+        `Failed to find path for field type: ${fieldType._name}`
+      );
+    }
+    return path;
+  }
+  #generateEnumClass(fieldType: FieldType) {
+    const fieldTypePath = this.#fieldTypePathOrFailure(fieldType);
+    switch (fieldType._name) {
+      case "fieldTypeEnum.FieldTypeEnumString":
+      case "fieldTypeEnum.FieldTypeEnumInt":
+        this.write(
+          `export const ${getEnumValuesConstantName(
+            this.#model,
+            fieldTypePath
+          )} = [\n`,
+          () => {
+            for (const i of fieldType.fields) {
+              this.write(
+                `${typeof i.value === "string" ? `"${i.value}"` : i.value},\n`
+              );
+            }
+          },
+          "];\n"
+        );
+        break;
+    }
     switch (fieldType._name) {
       case "fieldTypeObject.FieldTypeObject":
         for (const prop of fieldType.properties) {
-          this.#generateEnumClass(prop.fieldType, [...paths, prop.fieldType]);
+          this.#generateEnumClass(prop.fieldType);
         }
         break;
       case "fieldTypeObject.FieldTypeArray":
-        this.#generateEnumClass(fieldType.arrayType, [
-          ...paths,
-          fieldType.arrayType
-        ]);
+        this.#generateEnumClass(fieldType.arrayType);
         break;
       case "fieldTypeModelReference.FieldTypeModelReference":
       case "fieldTypeString.FieldTypeString":
@@ -182,7 +206,7 @@ export default class FileGeneratorModel extends CodeStream {
         break;
       case "fieldTypeUnion.FieldTypeUnion":
         this.write(
-          `export enum ${getEnumClassName(this.#model, paths)} {\n`,
+          `export enum ${getEnumClassName(this.#model, fieldTypePath)} {\n`,
           () => {
             for (const i of fieldType.items) {
               this.write(`${i.name} = ${i.id},\n`);
@@ -194,7 +218,7 @@ export default class FileGeneratorModel extends CodeStream {
       case "fieldTypeEnum.FieldTypeEnumString":
       case "fieldTypeEnum.FieldTypeEnumInt":
         this.write(
-          `export enum ${getEnumClassName(this.#model, paths)} {\n`,
+          `export enum ${getEnumClassName(this.#model, fieldTypePath)} {\n`,
           () => {
             for (const i of fieldType.fields) {
               this.write(
@@ -209,16 +233,39 @@ export default class FileGeneratorModel extends CodeStream {
         break;
     }
   }
+  #iterateWithPath(
+    fieldType: FieldType,
+    path: PathItem[],
+    fn: (fieldType: FieldType, path: PathItem[]) => void
+  ) {
+    fn(fieldType, path);
+    switch (fieldType._name) {
+      case "fieldTypeObject.FieldTypeObject":
+        for (const prop of fieldType.properties) {
+          this.#iterateWithPath(prop.fieldType, [...path, prop.fieldType], fn);
+        }
+        break;
+      case "fieldTypeObject.FieldTypeArray":
+        this.#iterateWithPath(
+          fieldType.arrayType,
+          [...path, fieldType.arrayType],
+          fn
+        );
+        break;
+      case "fieldTypeUnion.FieldTypeUnion":
+        for (const f of fieldType.items) {
+          this.#iterateWithPath(f.fieldType, [...path, f.fieldType], fn);
+        }
+        break;
+    }
+  }
   #populateModelSetFromFieldType(fieldType: FieldType) {
     switch (fieldType._name) {
       case "fieldTypeModelReference.FieldTypeModelReference":
         const fileGenerator = this.#manager.resolve(fieldType.model);
         this.#import({
           fileGenerator,
-          exports: [
-            getModelInterfaceName(fieldType.model)
-            // getModelClassName(fieldType.model)
-          ]
+          exports: [getModelInterfaceName(fieldType.model)]
         });
         this.#referencedModels.add(fieldType.model);
         break;
@@ -651,7 +698,12 @@ export default class FileGeneratorModel extends CodeStream {
           `switch(${value}.id) {\n`,
           () => {
             for (const i of fieldType.items) {
-              this.write(`case ${i.id}:\n`);
+              this.write(
+                `case ${getEnumClassName(
+                  this.#model,
+                  this.#fieldTypePathOrFailure(fieldType)
+                )}.${i.name}:\n`
+              );
               this.indentBlock(() => {
                 depth = this.#generateFieldValidationExpression(
                   i.fieldType,
@@ -672,41 +724,73 @@ export default class FileGeneratorModel extends CodeStream {
         );
         break;
       case "fieldTypeEnum.FieldTypeEnumInt":
-      case "fieldTypeEnum.FieldTypeEnumString":
-        this.write(
-          "if(\n",
-          () => {
-            for (const i of fieldType.fields) {
-              this.write(
-                `${value} === ${
-                  typeof i.value === "string" ? `"${i.value}"` : i.value
-                } || \n`
-              );
-            }
-            this.write("false\n");
-          },
-          ") {\n"
-        );
-        this.indentBlock(() => {
-          this.write(
-            `return {\n`,
-            () => {
-              let values = fieldType.fields.map((f) => f.value);
-              if (fieldType.fields.length > 10) {
-                values = [...values.slice(0, 10), "..."];
-              }
-              const oneOfStr = values
-                .map((i) => (typeof i === "string" ? `"${i}"` : i))
-                .join(", ");
-              this.write(
-                `error: \`Expected ${value} to be one of ${oneOfStr}\`\n`
-              );
-            },
-            "}\n"
+      case "fieldTypeEnum.FieldTypeEnumString": {
+        const fieldTypePath = this.#pathByFieldTypeMap.get(fieldType);
+        if (!fieldTypePath) {
+          throw new Exception(
+            `Failed to find field type path for field type: ${fieldType._name}`
           );
-        });
-        this.write("}\n");
+        }
+        this.write(
+          `if(!${getEnumValuesConstantName(
+            this.#model,
+            fieldTypePath
+          )}.includes(${value})) {\n`,
+          () => {
+            let values = fieldType.fields.map((f) => f.value);
+            if (fieldType.fields.length > 10) {
+              values = [...values.slice(0, 10), "..."];
+            }
+            const oneOfStr = values
+              .map((i) => (typeof i === "string" ? `"${i}"` : i))
+              .join(", ");
+            this.write(
+              "return {\n",
+              () => {
+                this.write(
+                  `error: \`Expected ${value} to be one of ${oneOfStr}\`\n`
+                );
+              },
+              "};\n"
+            );
+          },
+          "}\n"
+        );
+        // this.write(
+        //   "if(\n",
+        //   () => {
+        //     for (const i of fieldType.fields) {
+        //       this.write(
+        //         `${value} === ${
+        //           typeof i.value === "string" ? `"${i.value}"` : i.value
+        //         } || \n`
+        //       );
+        //     }
+        //     this.write("false\n");
+        //   },
+        //   ") {\n"
+        // );
+        // this.indentBlock(() => {
+        //   this.write(
+        //     `return {\n`,
+        //     () => {
+        //       let values = fieldType.fields.map((f) => f.value);
+        //       if (fieldType.fields.length > 10) {
+        //         values = [...values.slice(0, 10), "..."];
+        //       }
+        //       const oneOfStr = values
+        //         .map((i) => (typeof i === "string" ? `"${i}"` : i))
+        //         .join(", ");
+        //       this.write(
+        //         `error: \`Expected ${value} to be one of ${oneOfStr}\`\n`
+        //       );
+        //     },
+        //     "}\n"
+        //   );
+        // });
+        // this.write("}\n");
         break;
+      }
     }
     return depth;
   }
@@ -817,10 +901,14 @@ export default class FileGeneratorModel extends CodeStream {
         this.append("boolean");
         break;
       case "fieldTypeUnion.FieldTypeUnion":
+        const unionEnumType = getEnumClassName(
+          this.#model,
+          this.#fieldTypePathOrFailure(fieldType)
+        );
         for (const i of fieldType.items) {
           this.append("{\n");
           this.indentBlock(() => {
-            this.write(`id: ${i.id};\n`);
+            this.write(`id: ${unionEnumType}.${i.name};\n`);
             this.write(`value: `);
             this.#generateFieldTypeCode(i.fieldType, [...path, fieldType]);
             this.append(";\n");
@@ -833,19 +921,7 @@ export default class FileGeneratorModel extends CodeStream {
         break;
       case "fieldTypeEnum.FieldTypeEnumString":
       case "fieldTypeEnum.FieldTypeEnumInt": {
-        // this.append(`${getEnumClassName(this.#model, path)}`);
-        for (const i of fieldType.fields) {
-          switch (fieldType._name) {
-            case "fieldTypeEnum.FieldTypeEnumString":
-              this.append(`"${i.value}"`);
-              break;
-            case "fieldTypeEnum.FieldTypeEnumInt":
-              this.append(`${i.value}`);
-          }
-          if (i !== fieldType.fields[fieldType.fields.length - 1]) {
-            this.append(" | ");
-          }
-        }
+        this.append(`${getEnumClassName(this.#model, path)}`);
         break;
       }
     }

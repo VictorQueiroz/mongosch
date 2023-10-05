@@ -8,14 +8,14 @@ export interface IStoryChapter {
   authorId: ObjectId;
   storyId: ObjectId;
   initialContentId: {
-    id: 0;
+    id: StoryChapterReferenceType.Paragraph;
     value: ObjectId;
   } | {
-    id: 1;
+    id: StoryChapterReferenceType.UI;
     value: ObjectId;
   };
 }
-export enum StoryChapterInitialContentIdType {
+export enum StoryChapterReferenceType {
   Paragraph = 0,
   UI = 1,
 }
@@ -111,39 +111,6 @@ export class StoryChapterModel {
     return result.insertedId;
   }
 }
-export class StoryChapterFilter {
-  readonly #filter: Filter<StoryChapterModel> = {};
-  /**
-    * Matches name with all exact parameters
-    */
-  public name(value: string) {
-    this.#filter['name'] = value;
-  }
-  /**
-    * Matches authorId with all exact parameters
-    */
-  public authorId(value: ObjectId) {
-    this.#filter['authorId'] = value;
-  }
-  /**
-    * Matches storyId with all exact parameters
-    */
-  public storyId(value: ObjectId) {
-    this.#filter['storyId'] = value;
-  }
-  /**
-    * Matches initialContentId with all exact parameters
-    */
-  public initialContentId(value: {
-    id: 0;
-    value: ObjectId;
-  } | {
-    id: 1;
-    value: ObjectId;
-  }) {
-    this.#filter['initialContentId'] = value;
-  }
-}
 export function validateStoryChapter(value: IStoryChapter) {
   const value0 = value['name'];
   if(!(typeof value0 === 'string')) {
@@ -165,17 +132,17 @@ export function validateStoryChapter(value: IStoryChapter) {
   }
   const value3 = value['initialContentId'];
   switch(value3.id) {
-    case 0:
-      if(!(value3 instanceof ObjectId)) {
+    case StoryChapterReferenceType.Paragraph:
+      if(!(value3.value instanceof ObjectId)) {
         return {
-          error: `Expected value3 to be an instance of ObjectId, but got typeof value3 instead`
+          error: `Expected value3.value to be an instance of ObjectId, but got typeof value3.value instead`
         }
       }
       break;
-    case 1:
-      if(!(value3 instanceof ObjectId)) {
+    case StoryChapterReferenceType.UI:
+      if(!(value3.value instanceof ObjectId)) {
         return {
-          error: `Expected value3 to be an instance of ObjectId, but got typeof value3 instead`
+          error: `Expected value3.value to be an instance of ObjectId, but got typeof value3.value instead`
         }
       }
       break;

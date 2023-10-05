@@ -17,15 +17,15 @@ export interface IContentUserInterface {
       code: string;
     };
     value: {
-      id: 0;
+      id: ContentUserInterfaceConditionalReferenceType.Paragraph;
       value: ObjectId;
     } | {
-      id: 1;
+      id: ContentUserInterfaceConditionalReferenceType.UI;
       value: ObjectId;
     };
   };
 }
-export enum ContentUserInterfaceNextContentReferenceType {
+export enum ContentUserInterfaceConditionalReferenceType {
   Paragraph = 0,
   UI = 1,
 }
@@ -104,42 +104,6 @@ export class ContentUserInterfaceModel {
     return result.insertedId;
   }
 }
-export class ContentUserInterfaceFilter {
-  readonly #filter: Filter<ContentUserInterfaceModel> = {};
-  /**
-    * Matches buttonRows with all exact parameters
-    */
-  public buttonRows(value: ReadonlyArray<{
-    buttons: ReadonlyArray<{
-      condition: {
-        code: string;
-      };
-      title: string;
-      onClick: {
-        code: string;
-      };
-    }>;
-  }>) {
-    this.#filter['buttonRows'] = value;
-  }
-  /**
-    * Matches nextContent with all exact parameters
-    */
-  public nextContent(value: {
-    condition: {
-      code: string;
-    };
-    value: {
-      id: 0;
-      value: ObjectId;
-    } | {
-      id: 1;
-      value: ObjectId;
-    };
-  }) {
-    this.#filter['nextContent'] = value;
-  }
-}
 export function validateContentUserInterface(value: IContentUserInterface) {
   const value0 = value['buttonRows'];
   if(!(Array.isArray(value0))) {
@@ -178,17 +142,17 @@ export function validateContentUserInterface(value: IContentUserInterface) {
     }
   }
   switch(value9['value'].id) {
-    case 0:
-      if(!(value9['value'] instanceof ObjectId)) {
+    case ContentUserInterfaceConditionalReferenceType.Paragraph:
+      if(!(value9['value'].value instanceof ObjectId)) {
         return {
-          error: `Expected value9['value'] to be an instance of ObjectId, but got typeof value9['value'] instead`
+          error: `Expected value9['value'].value to be an instance of ObjectId, but got typeof value9['value'].value instead`
         }
       }
       break;
-    case 1:
-      if(!(value9['value'] instanceof ObjectId)) {
+    case ContentUserInterfaceConditionalReferenceType.UI:
+      if(!(value9['value'].value instanceof ObjectId)) {
         return {
-          error: `Expected value9['value'] to be an instance of ObjectId, but got typeof value9['value'] instead`
+          error: `Expected value9['value'].value to be an instance of ObjectId, but got typeof value9['value'].value instead`
         }
       }
       break;

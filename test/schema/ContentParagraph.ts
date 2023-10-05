@@ -12,15 +12,15 @@ export interface IContentParagraph {
       code: string;
     };
     value: {
-      id: 0;
+      id: ContentParagraphConditionalReferenceType.Paragraph;
       value: ObjectId;
     } | {
-      id: 1;
+      id: ContentParagraphConditionalReferenceType.UI;
       value: ObjectId;
     };
   };
 }
-export enum ContentParagraphNextContentReferenceType {
+export enum ContentParagraphConditionalReferenceType {
   Paragraph = 0,
   UI = 1,
 }
@@ -99,37 +99,6 @@ export class ContentParagraphModel {
     return result.insertedId;
   }
 }
-export class ContentParagraphFilter {
-  readonly #filter: Filter<ContentParagraphModel> = {};
-  /**
-    * Matches paragraphs with all exact parameters
-    */
-  public paragraphs(value: ReadonlyArray<{
-    sentences: ReadonlyArray<{
-      value: string;
-      duration: number;
-    }>;
-  }>) {
-    this.#filter['paragraphs'] = value;
-  }
-  /**
-    * Matches nextContent with all exact parameters
-    */
-  public nextContent(value: {
-    condition: {
-      code: string;
-    };
-    value: {
-      id: 0;
-      value: ObjectId;
-    } | {
-      id: 1;
-      value: ObjectId;
-    };
-  }) {
-    this.#filter['nextContent'] = value;
-  }
-}
 export function validateContentParagraph(value: IContentParagraph) {
   const value0 = value['paragraphs'];
   if(!(Array.isArray(value0))) {
@@ -163,17 +132,17 @@ export function validateContentParagraph(value: IContentParagraph) {
     }
   }
   switch(value6['value'].id) {
-    case 0:
-      if(!(value6['value'] instanceof ObjectId)) {
+    case ContentParagraphConditionalReferenceType.Paragraph:
+      if(!(value6['value'].value instanceof ObjectId)) {
         return {
-          error: `Expected value6['value'] to be an instance of ObjectId, but got typeof value6['value'] instead`
+          error: `Expected value6['value'].value to be an instance of ObjectId, but got typeof value6['value'].value instead`
         }
       }
       break;
-    case 1:
-      if(!(value6['value'] instanceof ObjectId)) {
+    case ContentParagraphConditionalReferenceType.UI:
+      if(!(value6['value'].value instanceof ObjectId)) {
         return {
-          error: `Expected value6['value'] to be an instance of ObjectId, but got typeof value6['value'] instead`
+          error: `Expected value6['value'].value to be an instance of ObjectId, but got typeof value6['value'].value instead`
         }
       }
       break;

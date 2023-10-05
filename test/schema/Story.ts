@@ -62,21 +62,6 @@ export class StoryModel {
     return result.insertedId;
   }
 }
-export class StoryFilter {
-  readonly #filter: Filter<StoryModel> = {};
-  /**
-    * Matches name with all exact parameters
-    */
-  public name(value: string) {
-    this.#filter['name'] = value;
-  }
-  /**
-    * Matches authorId with all exact parameters
-    */
-  public authorId(value: ObjectId) {
-    this.#filter['authorId'] = value;
-  }
-}
 export function validateStory(value: IStory) {
   const value0 = value['name'];
   if(!(typeof value0 === 'string')) {
