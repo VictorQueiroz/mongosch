@@ -25,7 +25,7 @@ export interface IContentUserInterface {
     };
   };
 }
-export enum ContentUserInterfaceNextContentValueType {
+export enum ContentUserInterfaceNextContentReferenceType {
   Paragraph = 0,
   UI = 1,
 }
@@ -176,6 +176,22 @@ export function validateContentUserInterface(value: IContentUserInterface) {
     return {
       error: `Expected value9['condition']['code'] to be a string, but got ${typeof value9['condition']['code']} instead`
     }
+  }
+  switch(value9['value'].id) {
+    case 0:
+      if(!(value9['value'] instanceof ObjectId)) {
+        return {
+          error: `Expected value9['value'] to be an instance of ObjectId, but got typeof value9['value'] instead`
+        }
+      }
+      break;
+    case 1:
+      if(!(value9['value'] instanceof ObjectId)) {
+        return {
+          error: `Expected value9['value'] to be an instance of ObjectId, but got typeof value9['value'] instead`
+        }
+      }
+      break;
   }
   return null;
 }

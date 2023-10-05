@@ -14,6 +14,7 @@ import { defaultFieldTypeTrait } from "./FieldType";
 import { compareFieldTypeTrait } from "./FieldType";
 export interface FieldTypeObject {
   _name: "fieldTypeObject.FieldTypeObject";
+  name: string;
   properties: ReadonlyArray<Readonly<Field>>;
 }
 export function isFieldTypeObject(value: unknown): value is FieldTypeObject {
@@ -27,18 +28,21 @@ export function isFieldTypeObject(value: unknown): value is FieldTypeObject {
     )
   )
     return false;
+  if (!("name" in value && ((__v0) => typeof __v0 === "string")(value["name"])))
+    return false;
   if (
     !(
       "properties" in value &&
-      ((__v0) =>
-        (Array.isArray(__v0) || __v0 instanceof Set) &&
-        Array.from(__v0).every((p) => isField(p)))(value["properties"])
+      ((__v1) =>
+        (Array.isArray(__v1) || __v1 instanceof Set) &&
+        Array.from(__v1).every((p) => isField(p)))(value["properties"])
     )
   )
     return false;
   return true;
 }
 export interface FieldTypeObjectInputParams {
+  name: string;
   properties: ReadonlyArray<Readonly<Field>>;
 }
 export function FieldTypeObject(
@@ -46,6 +50,7 @@ export function FieldTypeObject(
 ): FieldTypeObject {
   return {
     _name: "fieldTypeObject.FieldTypeObject",
+    name: params["name"],
     properties: params["properties"]
   };
 }
@@ -53,15 +58,20 @@ export function encodeFieldTypeObject(
   __s: ISerializer,
   value: FieldTypeObject
 ) {
-  __s.writeInt32(1901329349);
+  __s.writeInt32(1729791785);
+  /**
+   * encoding param: name
+   */
+  const __pv0 = value["name"];
+  __s.writeString(__pv0);
   /**
    * encoding param: properties
    */
-  const __pv0 = value["properties"];
-  const __l1 = __pv0.length;
-  __s.writeUint32(__l1);
-  for (const __item1 of __pv0) {
-    encodeField(__s, __item1);
+  const __pv1 = value["properties"];
+  const __l2 = __pv1.length;
+  __s.writeUint32(__l2);
+  for (const __item2 of __pv1) {
+    encodeField(__s, __item2);
   }
 }
 export function decodeFieldTypeObject(
@@ -71,21 +81,27 @@ export function decodeFieldTypeObject(
   /**
    * decode header
    */
-  if (__id !== 1901329349) return null;
+  if (__id !== 1729791785) return null;
+  let name: string;
   let properties: Array<Field>;
+  /**
+   * decoding param: name
+   */
+  name = __d.readString();
   /**
    * decoding param: properties
    */
-  const __l1 = __d.readUint32();
-  const __o1 = new Array<Field>(__l1);
-  properties = __o1;
-  for (let __i1 = 0; __i1 < __l1; __i1++) {
-    const tmp3 = decodeField(__d);
-    if (tmp3 === null) return null;
-    __o1[__i1] = tmp3;
+  const __l2 = __d.readUint32();
+  const __o2 = new Array<Field>(__l2);
+  properties = __o2;
+  for (let __i2 = 0; __i2 < __l2; __i2++) {
+    const tmp4 = decodeField(__d);
+    if (tmp4 === null) return null;
+    __o2[__i2] = tmp4;
   }
   return {
     _name: "fieldTypeObject.FieldTypeObject",
+    name,
     properties
   };
 }
@@ -93,6 +109,7 @@ export function defaultFieldTypeObject(
   params: Partial<FieldTypeObjectInputParams> = {}
 ): FieldTypeObject {
   return FieldTypeObject({
+    name: "",
     properties: [],
     ...params
   });
@@ -103,17 +120,21 @@ export function compareFieldTypeObject(
 ): boolean {
   return (
     /**
+     * compare parameter name
+     */
+    __a["name"] === __b["name"] &&
+    /**
      * compare parameter properties
      */
     __a["properties"].length === __b["properties"].length &&
-    Array.from(__a["properties"]).every((__originalItem0, __index0) =>
-      typeof __originalItem0 === "undefined"
+    Array.from(__a["properties"]).every((__originalItem1, __index1) =>
+      typeof __originalItem1 === "undefined"
         ? false
-        : ((__item0) =>
-            typeof __item0 === "undefined"
+        : ((__item1) =>
+            typeof __item1 === "undefined"
               ? false
-              : compareField(__originalItem0, __item0))(
-            Array.from(__b["properties"])[__index0]
+              : compareField(__originalItem1, __item1))(
+            Array.from(__b["properties"])[__index1]
           )
     )
   );
@@ -122,18 +143,26 @@ export function updateFieldTypeObject(
   value: FieldTypeObject,
   changes: Partial<FieldTypeObjectInputParams>
 ) {
+  if (typeof changes["name"] !== "undefined") {
+    if (!(changes["name"] === value["name"])) {
+      value = FieldTypeObject({
+        ...value,
+        name: changes["name"]
+      });
+    }
+  }
   if (typeof changes["properties"] !== "undefined") {
     if (
       !(
         changes["properties"].length === value["properties"].length &&
-        Array.from(changes["properties"]).every((__originalItem1, __index1) =>
-          typeof __originalItem1 === "undefined"
+        Array.from(changes["properties"]).every((__originalItem2, __index2) =>
+          typeof __originalItem2 === "undefined"
             ? false
-            : ((__item1) =>
-                typeof __item1 === "undefined"
+            : ((__item2) =>
+                typeof __item2 === "undefined"
                   ? false
-                  : compareField(__originalItem1, __item1))(
-                Array.from(value["properties"])[__index1]
+                  : compareField(__originalItem2, __item2))(
+                Array.from(value["properties"])[__index2]
               )
         )
       )

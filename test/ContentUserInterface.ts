@@ -13,6 +13,7 @@ import Script from "./Script";
 
 function Button() {
   return FieldTypeObject({
+    name: "Button",
     properties: [
       Field({
         name: "condition",
@@ -36,6 +37,7 @@ function Button() {
 
 function ButtonRow() {
   return FieldTypeObject({
+    name: "ButtonRow",
     properties: [
       Field({
         name: "buttons",

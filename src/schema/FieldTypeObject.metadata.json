@@ -1,10 +1,11 @@
 {
   "FieldTypeObject": {
     "kind": "type",
-    "id": 1901329349,
+    "id": 1729791785,
     "globalName": "fieldTypeObject.FieldTypeObject",
     "name": "FieldTypeObject",
     "params": [
+      { "name": "name", "type": { "type": "generic", "value": "string" } },
       {
         "name": "properties",
         "type": {
@@ -96,10 +97,11 @@
   "__all": [
     {
       "kind": "type",
-      "id": 1901329349,
+      "id": 1729791785,
       "globalName": "fieldTypeObject.FieldTypeObject",
       "name": "FieldTypeObject",
       "params": [
+        { "name": "name", "type": { "type": "generic", "value": "string" } },
         {
           "name": "properties",
           "type": {

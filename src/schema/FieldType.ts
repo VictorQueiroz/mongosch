@@ -159,7 +159,7 @@ export function decodeFieldTypeTrait(__d: IDeserializer) {
       value = tmp;
       break;
     }
-    case 1901329349: {
+    case 1729791785: {
       const tmp = decodeFieldTypeObject(__d);
       if (tmp === null) return null;
       value = tmp;
@@ -195,13 +195,13 @@ export function decodeFieldTypeTrait(__d: IDeserializer) {
       value = tmp;
       break;
     }
-    case -1783599301: {
+    case 190447988: {
       const tmp = decodeFieldTypeEnumString(__d);
       if (tmp === null) return null;
       value = tmp;
       break;
     }
-    case 1838761574: {
+    case -1825507865: {
       const tmp = decodeFieldTypeEnumInt(__d);
       if (tmp === null) return null;
       value = tmp;

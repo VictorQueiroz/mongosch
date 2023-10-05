@@ -164,5 +164,21 @@ export function validateStoryChapter(value: IStoryChapter) {
     }
   }
   const value3 = value['initialContentId'];
+  switch(value3.id) {
+    case 0:
+      if(!(value3 instanceof ObjectId)) {
+        return {
+          error: `Expected value3 to be an instance of ObjectId, but got typeof value3 instead`
+        }
+      }
+      break;
+    case 1:
+      if(!(value3 instanceof ObjectId)) {
+        return {
+          error: `Expected value3 to be an instance of ObjectId, but got typeof value3 instead`
+        }
+      }
+      break;
+  }
   return null;
 }

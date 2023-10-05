@@ -14,6 +14,7 @@ import merge from "../src/merge";
 import ContentBase from "./Content";
 
 const Sentence = FieldTypeObject({
+  name: 'Sentence',
   properties: [
     Field({
       description: "Sentence.",
@@ -36,6 +37,7 @@ const Sentence = FieldTypeObject({
 });
 
 const Paragraph = FieldTypeObject({
+  name: 'Paragraph',
   properties: [
     Field({
       name: "sentences",

@@ -3,6 +3,7 @@ import { FieldTypeObject } from "../src/schema/FieldTypeObject";
 import { defaultFieldTypeString } from "../src/schema/FieldTypeString";
 
 const Script = FieldTypeObject({
+  name: 'Script',
   properties: [
     Field({
       name: "code",

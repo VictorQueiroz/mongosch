@@ -5,11 +5,13 @@ import { defaultFieldTypeString } from "../src/schema/FieldTypeString";
 import {getCountries} from "libphonenumber-js";
 
 const Phone = FieldTypeObject({
+  name: 'Phone',
   properties: [
     Field({
       name: "countryCode",
       description: "Country code of the phone",
       fieldType: FieldTypeEnumString({
+        name: 'CountryCode',
         fields: getCountries().map(country => EnumFieldString({
           value: country,
           name: country

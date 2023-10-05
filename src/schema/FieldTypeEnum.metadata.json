@@ -21,10 +21,11 @@
   },
   "FieldTypeEnumString": {
     "kind": "type",
-    "id": -1783599301,
+    "id": 190447988,
     "globalName": "fieldTypeEnum.FieldTypeEnumString",
     "name": "FieldTypeEnumString",
     "params": [
+      { "name": "name", "type": { "type": "generic", "value": "string" } },
       {
         "name": "fields",
         "type": {
@@ -40,10 +41,11 @@
   },
   "FieldTypeEnumInt": {
     "kind": "type",
-    "id": 1838761574,
+    "id": -1825507865,
     "globalName": "fieldTypeEnum.FieldTypeEnumInt",
     "name": "FieldTypeEnumInt",
     "params": [
+      { "name": "name", "type": { "type": "generic", "value": "string" } },
       {
         "name": "fields",
         "type": {
@@ -77,10 +79,11 @@
     },
     {
       "kind": "type",
-      "id": -1783599301,
+      "id": 190447988,
       "globalName": "fieldTypeEnum.FieldTypeEnumString",
       "name": "FieldTypeEnumString",
       "params": [
+        { "name": "name", "type": { "type": "generic", "value": "string" } },
         {
           "name": "fields",
           "type": {
@@ -96,10 +99,11 @@
     },
     {
       "kind": "type",
-      "id": 1838761574,
+      "id": -1825507865,
       "globalName": "fieldTypeEnum.FieldTypeEnumInt",
       "name": "FieldTypeEnumInt",
       "params": [
+        { "name": "name", "type": { "type": "generic", "value": "string" } },
         {
           "name": "fields",
           "type": {

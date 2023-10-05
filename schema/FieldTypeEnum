@@ -11,9 +11,11 @@ export type EnumFieldString {
 }
 
 export type FieldTypeEnumString : FieldType {
+  string name;
   vector<EnumFieldString> fields;
 }
 
 export type FieldTypeEnumInt : FieldType {
+  string name;
   vector<EnumFieldInt> fields;
 }

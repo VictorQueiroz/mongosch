@@ -2,6 +2,7 @@ import { Field } from "./Field";
 import { FieldType } from "./FieldType";
 
 export type FieldTypeObject : FieldType {
+  string name;
   vector<Field> properties;
 }
 

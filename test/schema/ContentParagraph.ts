@@ -20,7 +20,7 @@ export interface IContentParagraph {
     };
   };
 }
-export enum ContentParagraphNextContentValueType {
+export enum ContentParagraphNextContentReferenceType {
   Paragraph = 0,
   UI = 1,
 }
@@ -161,6 +161,22 @@ export function validateContentParagraph(value: IContentParagraph) {
     return {
       error: `Expected value6['condition']['code'] to be a string, but got ${typeof value6['condition']['code']} instead`
     }
+  }
+  switch(value6['value'].id) {
+    case 0:
+      if(!(value6['value'] instanceof ObjectId)) {
+        return {
+          error: `Expected value6['value'] to be an instance of ObjectId, but got typeof value6['value'] instead`
+        }
+      }
+      break;
+    case 1:
+      if(!(value6['value'] instanceof ObjectId)) {
+        return {
+          error: `Expected value6['value'] to be an instance of ObjectId, but got typeof value6['value'] instead`
+        }
+      }
+      break;
   }
   return null;
 }

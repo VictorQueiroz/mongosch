@@ -13,10 +13,10 @@ export enum ContentType {
 
 export function ContentRef() {
   return FieldTypeUnion({
-    name: 'ContentType',
+    name: "Reference",
     items: [
       UnionItem({
-        name: 'Paragraph',
+        name: "Paragraph",
         id: ContentType.Paragraph,
         fieldType: FieldTypeModelReference({
           model: ContentParagraphBase()
@@ -24,7 +24,7 @@ export function ContentRef() {
       }),
       UnionItem({
         id: ContentType.UserInterface,
-        name: 'UI',
+        name: "UI",
         fieldType: FieldTypeModelReference({
           model: ContentUserInterfaceBase()
         })

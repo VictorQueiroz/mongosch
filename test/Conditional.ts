@@ -5,6 +5,7 @@ import Script from "./Script";
 
 export function Conditional<T extends FieldType>(fieldType: T) {
   return FieldTypeObject({
+    name: 'Conditional',
     properties: [
       Field({
         name: "condition",
