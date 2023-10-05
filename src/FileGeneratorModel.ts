@@ -655,7 +655,7 @@ export default class FileGeneratorModel extends CodeStream {
               this.indentBlock(() => {
                 depth = this.#generateFieldValidationExpression(
                   i.fieldType,
-                  value,
+                  `${value}.value`,
                   depth + 1
                 );
                 this.write("break;\n");
