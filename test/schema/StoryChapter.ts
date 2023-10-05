@@ -8,14 +8,14 @@ export interface IStoryChapter {
   authorId: ObjectId;
   storyId: ObjectId;
   initialContentId: {
-    id: StoryChapterReferenceType.Paragraph;
+    id: StoryChapterType.Paragraph;
     value: ObjectId;
   } | {
-    id: StoryChapterReferenceType.UI;
+    id: StoryChapterType.UI;
     value: ObjectId;
   };
 }
-export enum StoryChapterReferenceType {
+export enum StoryChapterType {
   Paragraph = 0,
   UI = 1,
 }
@@ -132,14 +132,14 @@ export function validateStoryChapter(value: IStoryChapter) {
   }
   const value3 = value['initialContentId'];
   switch(value3.id) {
-    case StoryChapterReferenceType.Paragraph:
+    case StoryChapterType.Paragraph:
       if(!(value3.value instanceof ObjectId)) {
         return {
           error: `Expected value3.value to be an instance of ObjectId, but got typeof value3.value instead`
         }
       }
       break;
-    case StoryChapterReferenceType.UI:
+    case StoryChapterType.UI:
       if(!(value3.value instanceof ObjectId)) {
         return {
           error: `Expected value3.value to be an instance of ObjectId, but got typeof value3.value instead`
