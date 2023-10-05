@@ -1,12 +1,12 @@
 import {Collection, Filter, UpdateFilter} from 'mongodb';
 export interface IUser {
   phone: {
-    countryCode: UserPhoneCountryCodeType;
+    countryCode: UserPhonePhoneCountryCodeType;
     nationalNumber: string;
   };
   createdAt: Date;
 }
-export const UserPhoneCountryCodeValues = [
+export const UserPhonePhoneCountryCodeValues = [
   "AC",
   "AD",
   "AE",
@@ -253,7 +253,7 @@ export const UserPhoneCountryCodeValues = [
   "ZM",
   "ZW",
 ];
-export enum UserPhoneCountryCodeType {
+export enum UserPhonePhoneCountryCodeType {
   AC = "AC",
   AD = "AD",
   AE = "AE",
@@ -541,7 +541,7 @@ export class UserModel {
 }
 export function validateUser(value: IUser) {
   const value0 = value['phone'];
-  if(!UserPhoneCountryCodeValues.includes(value0['countryCode'])) {
+  if(!UserPhonePhoneCountryCodeValues.includes(value0['countryCode'])) {
     return {
       error: `Expected value0['countryCode'] to be one of "AC", "AD", "AE", "AF", "AG", "AI", "AL", "AM", "AO", "AR", "..."`
     };

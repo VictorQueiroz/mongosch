@@ -2,14 +2,7 @@ import CodeStream from "textstreamjs";
 import { Model } from "./schema/Model";
 import { FieldType } from "./schema/FieldType";
 import { Field } from "./schema/Field";
-import { FieldTypeArray, FieldTypeObject } from "./schema/FieldTypeObject";
-import {
-  EnumFieldInt,
-  EnumFieldString,
-  FieldTypeEnumInt,
-  FieldTypeEnumString
-} from "./schema/FieldTypeEnum";
-import { FieldTypeUnion } from "./schema/FieldTypeUnion";
+import { UnionItem } from "./schema/FieldTypeUnion";
 import Exception from "./Exception";
 
 export function getModelClassName(model: Model) {
@@ -53,7 +46,7 @@ export interface IFileGeneratorModelImport {
   exports: string[];
 }
 
-type PathItem = Field | FieldType;
+type PathItem = Field | FieldType | UnionItem;
 
 export default class FileGeneratorModel extends CodeStream {
   readonly #model;
@@ -116,7 +109,7 @@ export default class FileGeneratorModel extends CodeStream {
       });
     }
     for (const f of this.#model.fields) {
-      this.#iterateWithPath(f.fieldType, [], (fieldType, path) => {
+      this.#iterateWithPath(f.fieldType, [f], (fieldType, path) => {
         this.#pathByFieldTypeMap.set(fieldType, [...path]);
       });
     }
@@ -156,23 +149,24 @@ export default class FileGeneratorModel extends CodeStream {
     path: PathItem[],
     fn: (fieldType: FieldType, path: PathItem[]) => void
   ) {
+    const currentPath = [...path, fieldType];
     fn(fieldType, path);
     switch (fieldType._name) {
       case "fieldTypeObject.FieldTypeObject":
         for (const prop of fieldType.properties) {
-          this.#iterateWithPath(prop.fieldType, [...path, fieldType, prop], fn);
+          this.#iterateWithPath(prop.fieldType, [...currentPath, prop], fn);
         }
         break;
       case "fieldTypeObject.FieldTypeArray":
         this.#iterateWithPath(
           fieldType.arrayType,
-          [...path, fieldType.arrayType],
+          [...currentPath, fieldType.arrayType],
           fn
         );
         break;
       case "fieldTypeUnion.FieldTypeUnion":
         for (const f of fieldType.items) {
-          this.#iterateWithPath(f.fieldType, [...path, f.fieldType], fn);
+          this.#iterateWithPath(f.fieldType, [...currentPath, f], fn);
         }
         break;
     }

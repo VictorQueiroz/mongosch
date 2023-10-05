@@ -12,15 +12,15 @@ export interface IContentParagraph {
       code: string;
     };
     value: {
-      id: ContentParagraphConditionalValueType.Paragraph;
+      id: ContentParagraphNextContentConditionalValueType.Paragraph;
       value: ObjectId;
     } | {
-      id: ContentParagraphConditionalValueType.UI;
+      id: ContentParagraphNextContentConditionalValueType.UI;
       value: ObjectId;
     };
   };
 }
-export enum ContentParagraphConditionalValueType {
+export enum ContentParagraphNextContentConditionalValueType {
   Paragraph = 0,
   UI = 1,
 }
@@ -132,14 +132,14 @@ export function validateContentParagraph(value: IContentParagraph) {
     }
   }
   switch(value6['value'].id) {
-    case ContentParagraphConditionalValueType.Paragraph:
+    case ContentParagraphNextContentConditionalValueType.Paragraph:
       if(!(value6['value'].value instanceof ObjectId)) {
         return {
           error: `Expected value6['value'].value to be an instance of ObjectId, but got typeof value6['value'].value instead`
         }
       }
       break;
-    case ContentParagraphConditionalValueType.UI:
+    case ContentParagraphNextContentConditionalValueType.UI:
       if(!(value6['value'].value instanceof ObjectId)) {
         return {
           error: `Expected value6['value'].value to be an instance of ObjectId, but got typeof value6['value'].value instead`

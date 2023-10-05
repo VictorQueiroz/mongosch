@@ -4,18 +4,20 @@ import {IContentParagraph} from './ContentParagraph';
 import {IContentUserInterface} from './ContentUserInterface';
 import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
 export interface IStoryChapter {
-  name: string;
-  authorId: ObjectId;
+  title: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: ObjectId;
   storyId: ObjectId;
   initialContentId: {
-    id: StoryChapterType.Paragraph;
+    id: StoryChapterInitialContentIdType.Paragraph;
     value: ObjectId;
   } | {
-    id: StoryChapterType.UI;
+    id: StoryChapterInitialContentIdType.UI;
     value: ObjectId;
   };
 }
-export enum StoryChapterType {
+export enum StoryChapterInitialContentIdType {
   Paragraph = 0,
   UI = 1,
 }
@@ -67,7 +69,7 @@ export class StoryChapterModel {
       contentParagraphs: new Array<ObjectId>(),
       contentUserInterfaces: new Array<ObjectId>(),
     };
-    ids.users.push(value.authorId);
+    ids.users.push(value.userId);
     ids.stories.push(value.storyId);
     if(value.initialContentId.id === 0) {
       ids.contentParagraphs.push(value.initialContentId.value);
@@ -112,37 +114,49 @@ export class StoryChapterModel {
   }
 }
 export function validateStoryChapter(value: IStoryChapter) {
-  const value0 = value['name'];
+  const value0 = value['title'];
   if(!(typeof value0 === 'string')) {
     return {
       error: `Expected value0 to be a string, but got ${typeof value0} instead`
     }
   }
-  const value1 = value['authorId'];
-  if(!(value1 instanceof ObjectId)) {
+  const value1 = value['createdAt'];
+  if(!(value1 instanceof Date)) {
     return {
-      error: `Expected value1 to be an instance of ObjectId, but got typeof value1 instead`
+      error: `Expected value1 to be of type Date, but got "${typeof value1}" instead`
     }
   }
-  const value2 = value['storyId'];
-  if(!(value2 instanceof ObjectId)) {
+  const value2 = value['updatedAt'];
+  if(!(value2 instanceof Date)) {
     return {
-      error: `Expected value2 to be an instance of ObjectId, but got typeof value2 instead`
+      error: `Expected value2 to be of type Date, but got "${typeof value2}" instead`
     }
   }
-  const value3 = value['initialContentId'];
-  switch(value3.id) {
-    case StoryChapterType.Paragraph:
-      if(!(value3.value instanceof ObjectId)) {
+  const value3 = value['userId'];
+  if(!(value3 instanceof ObjectId)) {
+    return {
+      error: `Expected value3 to be an instance of ObjectId, but got typeof value3 instead`
+    }
+  }
+  const value4 = value['storyId'];
+  if(!(value4 instanceof ObjectId)) {
+    return {
+      error: `Expected value4 to be an instance of ObjectId, but got typeof value4 instead`
+    }
+  }
+  const value5 = value['initialContentId'];
+  switch(value5.id) {
+    case StoryChapterInitialContentIdType.Paragraph:
+      if(!(value5.value instanceof ObjectId)) {
         return {
-          error: `Expected value3.value to be an instance of ObjectId, but got typeof value3.value instead`
+          error: `Expected value5.value to be an instance of ObjectId, but got typeof value5.value instead`
         }
       }
       break;
-    case StoryChapterType.UI:
-      if(!(value3.value instanceof ObjectId)) {
+    case StoryChapterInitialContentIdType.UI:
+      if(!(value5.value instanceof ObjectId)) {
         return {
-          error: `Expected value3.value to be an instance of ObjectId, but got typeof value3.value instead`
+          error: `Expected value5.value to be an instance of ObjectId, but got typeof value5.value instead`
         }
       }
       break;

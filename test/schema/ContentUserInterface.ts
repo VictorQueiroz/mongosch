@@ -17,15 +17,15 @@ export interface IContentUserInterface {
       code: string;
     };
     value: {
-      id: ContentUserInterfaceConditionalValueType.Paragraph;
+      id: ContentUserInterfaceNextContentConditionalValueType.Paragraph;
       value: ObjectId;
     } | {
-      id: ContentUserInterfaceConditionalValueType.UI;
+      id: ContentUserInterfaceNextContentConditionalValueType.UI;
       value: ObjectId;
     };
   };
 }
-export enum ContentUserInterfaceConditionalValueType {
+export enum ContentUserInterfaceNextContentConditionalValueType {
   Paragraph = 0,
   UI = 1,
 }
@@ -142,14 +142,14 @@ export function validateContentUserInterface(value: IContentUserInterface) {
     }
   }
   switch(value9['value'].id) {
-    case ContentUserInterfaceConditionalValueType.Paragraph:
+    case ContentUserInterfaceNextContentConditionalValueType.Paragraph:
       if(!(value9['value'].value instanceof ObjectId)) {
         return {
           error: `Expected value9['value'].value to be an instance of ObjectId, but got typeof value9['value'].value instead`
         }
       }
       break;
-    case ContentUserInterfaceConditionalValueType.UI:
+    case ContentUserInterfaceNextContentConditionalValueType.UI:
       if(!(value9['value'].value instanceof ObjectId)) {
         return {
           error: `Expected value9['value'].value to be an instance of ObjectId, but got typeof value9['value'].value instead`
