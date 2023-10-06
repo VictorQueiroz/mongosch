@@ -8,15 +8,3 @@ import "./FieldTypeEnum";
 import "./FieldTypeUnion";
 import "./FieldTypeBinary";
 import "./FieldTypeBoolean";
-
-export trait Event {
-
-}
-
-export type EventUpdated : Event {
-
-}
-
-export type EventCreated : Event {
-
-}

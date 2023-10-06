@@ -1,5 +1,9 @@
 import {IUser} from './User';
 import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
+export interface IInputStory {
+  name: string;
+  authorId: ObjectId;
+}
 export interface IStory {
   name: string;
   authorId: ObjectId;
@@ -25,9 +29,15 @@ export class StoryModel {
     return this.stories.deleteMany(value);
   }
   public updateOne(filter: Filter<IStory>, update: UpdateFilter<IStory> | Partial<IStory>) {
+    if("$set" in update) {
+    } else {
+    }
     return this.stories.updateOne(filter, update);
   }
   public updateMany(filter: Filter<IStory>, update: UpdateFilter<IStory> | Partial<IStory>) {
+    if("$set" in update) {
+    } else {
+    }
     return this.stories.updateMany(filter, update);
   }
   public countDocuments() {
@@ -50,11 +60,12 @@ export class StoryModel {
     ]);
     return populated;
   }
-  public async insertOne(value: IStory) {
+  public async insertOne(value: IInputStory) {
     const validationErr = validateStory(value);
     if(validationErr !== null) {
       return validationErr;
     }
+    let completeValue: IStory;
     const result = await this.stories.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
       return { error: 'Record creation not acknowledged' };
@@ -62,7 +73,7 @@ export class StoryModel {
     return result.insertedId;
   }
 }
-export function validateStory(value: IStory) {
+export function validateStory(value: IInputStory) {
   const value0 = value['name'];
   if(!(typeof value0 === 'string')) {
     return {

@@ -4,21 +4,30 @@ import { FieldType } from "./schema/FieldType";
 import { Field } from "./schema/Field";
 import { UnionItem } from "./schema/FieldTypeUnion";
 import Exception from "./Exception";
+import { Event, EventOnCreate, compareEventTrait } from "./schema/Event";
 
 export function getModelClassName(model: Model) {
   return `${model.className}Model`;
 }
 
+function upperFirst(value: string) {
+  return `${value.substring(0, 1).toUpperCase()}${value.substring(1)}`;
+}
+
 function getPopulatedInterfaceName(model: Model) {
-  return `I${model.className}Populated`;
+  return `I${upperFirst(model.className)}Populated`;
 }
 
 function getModelInterfaceName(model: Model) {
-  return `I${model.className}`;
+  return `I${upperFirst(model.className)}`;
+}
+
+function getModelInputInterfaceName(model: Model) {
+  return `IInput${upperFirst(model.className)}`;
 }
 
 function getValidateFunctionName(model: Model) {
-  return `validate${model.className}`;
+  return `validate${upperFirst(model.className)}`;
 }
 
 function getEnumValuesConstantName(model: Model, path: PathItem[]) {
@@ -39,6 +48,14 @@ function joinModelAndPath(model: Model, path: PathItem[], lastSuffix: string) {
 
 function getEnumClassName(model: Model, path: PathItem[]) {
   return joinModelAndPath(model, path, "Type");
+}
+
+export interface IGenerateFieldsOptions {
+  /**
+   * whether or not to process flags, defaults to false
+   */
+  flags: boolean;
+  fields: ReadonlyArray<Field>;
 }
 
 export interface IFileGeneratorModelImport {
@@ -105,7 +122,7 @@ export default class FileGeneratorModel extends CodeStream {
     if (this.#referencedModels.size) {
       this.#import({
         path: "mongodb",
-        exports: ["ObjectId"]
+        exports: ["ObjectId", "WithId"]
       });
     }
     for (const f of this.#model.fields) {
@@ -120,9 +137,22 @@ export default class FileGeneratorModel extends CodeStream {
       this.write(`import {${i.exports.join(", ")}} from '${i.path}';\n`);
     }
     this.write(
+      `export interface ${getModelInputInterfaceName(m)} {\n`,
+      () => {
+        this.#generateFields({
+          fields: m.fields,
+          flags: true
+        });
+      },
+      "}\n"
+    );
+    this.write(
       `export interface ${getModelInterfaceName(m)} {\n`,
       () => {
-        this.#generateFields(m.fields);
+        this.#generateFields({
+          fields: m.fields,
+          flags: false
+        });
       },
       "}\n"
     );
@@ -135,7 +165,9 @@ export default class FileGeneratorModel extends CodeStream {
           propNames.set(model.collectionName, model);
         }
         for (const [collectionName, model] of propNames) {
-          this.write(`${collectionName}: ${getModelInterfaceName(model)}[];\n`);
+          this.write(
+            `${collectionName}: WithId<${getModelInterfaceName(model)}>[];\n`
+          );
         }
       },
       "}\n"
@@ -324,6 +356,29 @@ export default class FileGeneratorModel extends CodeStream {
             )}> | Partial<${getModelInterfaceName(m)}>) {\n`,
             () => {
               this.write(
+                'if("$set" in update) {\n',
+                () => {
+                  this.#generateModelDataChangingCode(
+                    m.fields,
+                    [],
+                    EventOnCreate(),
+                    'update["$set"]',
+                    'update["$set"]'
+                  );
+                },
+                "} else {\n"
+              );
+              this.indentBlock(() => {
+                this.#generateModelDataChangingCode(
+                  m.fields,
+                  [],
+                  EventOnCreate(),
+                  "update",
+                  "update"
+                );
+              });
+              this.write("}\n");
+              this.write(
                 `return this.${
                   this.#model.collectionName
                 }.${method}(filter, update);\n`
@@ -347,7 +402,7 @@ export default class FileGeneratorModel extends CodeStream {
           this.#generatePopulateMethod();
         }
         this.write(
-          `public async insertOne(value: ${getModelInterfaceName(m)}) {\n`,
+          `public async insertOne(value: ${getModelInputInterfaceName(m)}) {\n`,
           () => {
             this.write(
               `const validationErr = ${getValidateFunctionName(m)}(value);\n`
@@ -358,6 +413,14 @@ export default class FileGeneratorModel extends CodeStream {
                 this.write(`return validationErr;\n`);
               },
               "}\n"
+            );
+            this.write(`let completeValue: ${getModelInterfaceName(m)};\n`);
+            this.#generateModelDataChangingCode(
+              m.fields,
+              [],
+              EventOnCreate(),
+              "value",
+              "value"
             );
             this.write(
               `const result = await this.${
@@ -380,6 +443,61 @@ export default class FileGeneratorModel extends CodeStream {
       },
       "}\n"
     );
+  }
+  #generateModelDataChangingCode(
+    fields: ReadonlyArray<Field>,
+    path: Field[] = [],
+    event: Event,
+    value: string,
+    spreadObject: string
+  ) {
+    for (const f of fields) {
+      const { fieldType } = f;
+      switch (fieldType._name) {
+        case "fieldTypeDate.FieldTypeDate":
+          this.write(
+            `${value} = {\n`,
+            () => {
+              this.write(`...${spreadObject},\n`);
+              for (const flag of fieldType.flags) {
+                switch (flag._name) {
+                  case "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent":
+                    if (!compareEventTrait(event, flag.event)) {
+                      continue;
+                    }
+                    this.write(`${f.name}: new Date()\n`);
+                    break;
+                  case "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate":
+                    this.write(`${f.name}: new Date()\n`);
+                    break;
+                }
+              }
+            },
+            "}\n"
+          );
+          break;
+        case "fieldTypeObject.FieldTypeObject":
+          this.#generateModelDataChangingCode(
+            fieldType.properties,
+            [...path, f],
+            event,
+            value,
+            spreadObject
+          );
+          break;
+        case "fieldTypeObject.FieldTypeArray":
+        case "fieldTypeModelReference.FieldTypeModelReference":
+        case "fieldTypeString.FieldTypeString":
+        case "fieldTypeInteger.FieldTypeDouble":
+        case "fieldTypeInteger.FieldTypeInt64":
+        case "fieldTypeInteger.FieldTypeInt32":
+        case "fieldTypeEnum.FieldTypeEnumString":
+        case "fieldTypeEnum.FieldTypeEnumInt":
+        case "fieldTypeUnion.FieldTypeUnion":
+        case "fieldTypeBinary.FieldTypeBinary":
+        case "fieldTypeBoolean.FieldTypeBoolean":
+      }
+    }
   }
   #generatePopulateMethod() {
     const m = this.#model;
@@ -551,7 +669,7 @@ export default class FileGeneratorModel extends CodeStream {
     this.write(
       `export function ${getValidateFunctionName(
         m
-      )}(value: ${getModelInterfaceName(m)}) {\n`,
+      )}(value: ${getModelInputInterfaceName(m)}) {\n`,
       () => {
         for (const f of m.fields) {
           const fieldValueVarName = `value${depth}`;
@@ -648,12 +766,24 @@ export default class FileGeneratorModel extends CodeStream {
           );
         }
         break;
-      case "fieldTypeDate.FieldTypeDate":
-        this.#generateValidationIf(
-          `${value} instanceof Date`,
-          `Expected ${value} to be of type Date, but got "\${typeof ${value}}" instead`
-        );
+      case "fieldTypeDate.FieldTypeDate": {
+        let skipCheck = false;
+        for (const flag of fieldType.flags) {
+          switch (flag._name) {
+            case "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate":
+            case "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent":
+              skipCheck = true;
+              break;
+          }
+        }
+        if (skipCheck) {
+          this.#generateValidationIf(
+            `${value} instanceof Date`,
+            `Expected ${value} to be of type Date, but got "\${typeof ${value}}" instead`
+          );
+        }
         break;
+      }
       case "fieldTypeObject.FieldTypeArray": {
         this.#generateValidationIf(
           `Array.isArray(${value})`,
@@ -853,11 +983,48 @@ export default class FileGeneratorModel extends CodeStream {
       }
     }
   }
-  #generateFields(fields: ReadonlyArray<Field>) {
+  #generateFields({ fields, flags = false }: IGenerateFieldsOptions) {
     for (const f of fields) {
-      this.write(`${f.name}: `);
+      this.write(`${f.name}`);
+      if (flags) {
+        this.#generateAfterFieldNameCode(f);
+      }
+      this.append(": ");
       this.#generateFieldTypeCode(f.fieldType);
       this.append(";\n");
+    }
+  }
+  #generateAfterFieldNameCode(f: Field) {
+    const { fieldType } = f;
+    switch (fieldType._name) {
+      case "fieldTypeDate.FieldTypeDate":
+        let writtenOptionalQuestionMark = false;
+        for (const flag of fieldType.flags) {
+          switch (flag._name) {
+            case "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate":
+            case "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent":
+              if (writtenOptionalQuestionMark) {
+                continue;
+              }
+              this.append("?");
+              writtenOptionalQuestionMark = true;
+              break;
+          }
+        }
+        break;
+      case "fieldTypeModelReference.FieldTypeModelReference":
+      case "fieldTypeString.FieldTypeString":
+      case "fieldTypeObject.FieldTypeObject":
+      case "fieldTypeObject.FieldTypeArray":
+      case "fieldTypeInteger.FieldTypeDouble":
+      case "fieldTypeInteger.FieldTypeInt64":
+      case "fieldTypeInteger.FieldTypeInt32":
+      case "fieldTypeEnum.FieldTypeEnumString":
+      case "fieldTypeEnum.FieldTypeEnumInt":
+      case "fieldTypeUnion.FieldTypeUnion":
+      case "fieldTypeBinary.FieldTypeBinary":
+      case "fieldTypeBoolean.FieldTypeBoolean":
+        break;
     }
   }
   #generateFieldTypeCode(fieldType: FieldType) {
@@ -874,7 +1041,10 @@ export default class FileGeneratorModel extends CodeStream {
       case "fieldTypeObject.FieldTypeObject":
         this.append(`{\n`);
         this.indentBlock(() => {
-          this.#generateFields(fieldType.properties);
+          this.#generateFields({
+            fields: fieldType.properties,
+            flags: false
+          });
         });
         this.write("}");
         break;

@@ -1,5 +1,10 @@
 import {IUser} from './User';
 import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
+export interface IInputPost {
+  title: string;
+  authorId: ObjectId;
+  createdAt: Date;
+}
 export interface IPost {
   title: string;
   authorId: ObjectId;
@@ -26,9 +31,27 @@ export class PostModel {
     return this.posts.deleteMany(value);
   }
   public updateOne(filter: Filter<IPost>, update: UpdateFilter<IPost> | Partial<IPost>) {
+    if("$set" in update) {
+      update["$set"] = {
+        ...update["$set"],
+      }
+    } else {
+      update = {
+        ...update,
+      }
+    }
     return this.posts.updateOne(filter, update);
   }
   public updateMany(filter: Filter<IPost>, update: UpdateFilter<IPost> | Partial<IPost>) {
+    if("$set" in update) {
+      update["$set"] = {
+        ...update["$set"],
+      }
+    } else {
+      update = {
+        ...update,
+      }
+    }
     return this.posts.updateMany(filter, update);
   }
   public countDocuments() {
@@ -51,10 +74,14 @@ export class PostModel {
     ]);
     return populated;
   }
-  public async insertOne(value: IPost) {
+  public async insertOne(value: IInputPost) {
     const validationErr = validatePost(value);
     if(validationErr !== null) {
       return validationErr;
+    }
+    let completeValue: IPost;
+    value = {
+      ...value,
     }
     const result = await this.posts.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
@@ -63,7 +90,7 @@ export class PostModel {
     return result.insertedId;
   }
 }
-export function validatePost(value: IPost) {
+export function validatePost(value: IInputPost) {
   const value0 = value['title'];
   if(!(typeof value0 === 'string')) {
     return {
@@ -77,10 +104,5 @@ export function validatePost(value: IPost) {
     }
   }
   const value2 = value['createdAt'];
-  if(!(value2 instanceof Date)) {
-    return {
-      error: `Expected value2 to be of type Date, but got "${typeof value2}" instead`
-    }
-  }
   return null;
 }

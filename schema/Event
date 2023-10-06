@@ -1,0 +1,7 @@
+export trait Event {
+
+}
+
+export type EventOnCreate : Event {}
+
+export type EventOnUpdate : Event {}

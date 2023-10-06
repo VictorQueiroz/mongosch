@@ -1,18 +1,1 @@
-{
-  "FieldTypeBinary": {
-    "kind": "type",
-    "id": -1706328239,
-    "globalName": "fieldTypeBinary.FieldTypeBinary",
-    "name": "FieldTypeBinary",
-    "params": []
-  },
-  "__all": [
-    {
-      "kind": "type",
-      "id": -1706328239,
-      "globalName": "fieldTypeBinary.FieldTypeBinary",
-      "name": "FieldTypeBinary",
-      "params": []
-    }
-  ]
-}
+{"FieldTypeBinary":{"kind":"type","id":-1706328239,"globalName":"fieldTypeBinary.FieldTypeBinary","name":"FieldTypeBinary","params":[]},"__all":[{"kind":"type","id":-1706328239,"globalName":"fieldTypeBinary.FieldTypeBinary","name":"FieldTypeBinary","params":[]}]}

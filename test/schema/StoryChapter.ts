@@ -3,6 +3,20 @@ import {IStory} from './Story';
 import {IContentParagraph} from './ContentParagraph';
 import {IContentUserInterface} from './ContentUserInterface';
 import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
+export interface IInputStoryChapter {
+  title: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: ObjectId;
+  storyId: ObjectId;
+  initialContentId: {
+    id: StoryChapterInitialContentIdType.Paragraph;
+    value: ObjectId;
+  } | {
+    id: StoryChapterInitialContentIdType.UI;
+    value: ObjectId;
+  };
+}
 export interface IStoryChapter {
   title: string;
   createdAt: Date;
@@ -48,9 +62,39 @@ export class StoryChapterModel {
     return this.storyChapters.deleteMany(value);
   }
   public updateOne(filter: Filter<IStoryChapter>, update: UpdateFilter<IStoryChapter> | Partial<IStoryChapter>) {
+    if("$set" in update) {
+      update["$set"] = {
+        ...update["$set"],
+      }
+      update["$set"] = {
+        ...update["$set"],
+      }
+    } else {
+      update = {
+        ...update,
+      }
+      update = {
+        ...update,
+      }
+    }
     return this.storyChapters.updateOne(filter, update);
   }
   public updateMany(filter: Filter<IStoryChapter>, update: UpdateFilter<IStoryChapter> | Partial<IStoryChapter>) {
+    if("$set" in update) {
+      update["$set"] = {
+        ...update["$set"],
+      }
+      update["$set"] = {
+        ...update["$set"],
+      }
+    } else {
+      update = {
+        ...update,
+      }
+      update = {
+        ...update,
+      }
+    }
     return this.storyChapters.updateMany(filter, update);
   }
   public countDocuments() {
@@ -101,10 +145,17 @@ export class StoryChapterModel {
     ]);
     return populated;
   }
-  public async insertOne(value: IStoryChapter) {
+  public async insertOne(value: IInputStoryChapter) {
     const validationErr = validateStoryChapter(value);
     if(validationErr !== null) {
       return validationErr;
+    }
+    let completeValue: IStoryChapter;
+    value = {
+      ...value,
+    }
+    value = {
+      ...value,
     }
     const result = await this.storyChapters.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
@@ -113,7 +164,7 @@ export class StoryChapterModel {
     return result.insertedId;
   }
 }
-export function validateStoryChapter(value: IStoryChapter) {
+export function validateStoryChapter(value: IInputStoryChapter) {
   const value0 = value['title'];
   if(!(typeof value0 === 'string')) {
     return {
@@ -121,17 +172,7 @@ export function validateStoryChapter(value: IStoryChapter) {
     }
   }
   const value1 = value['createdAt'];
-  if(!(value1 instanceof Date)) {
-    return {
-      error: `Expected value1 to be of type Date, but got "${typeof value1}" instead`
-    }
-  }
   const value2 = value['updatedAt'];
-  if(!(value2 instanceof Date)) {
-    return {
-      error: `Expected value2 to be of type Date, but got "${typeof value2}" instead`
-    }
-  }
   const value3 = value['userId'];
   if(!(value3 instanceof ObjectId)) {
     return {

@@ -1,5 +1,27 @@
 import {IContentUserInterface} from './ContentUserInterface';
 import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
+export interface IInputContentParagraph {
+  paragraphs: ReadonlyArray<{
+    sentences: ReadonlyArray<{
+      value: string;
+      duration: number;
+    }>;
+  }>;
+  nextContent: {
+    condition: {
+      code: string;
+    };
+    value: {
+      id: ContentParagraphNextContentConditionalValueType.Paragraph;
+      value: ObjectId;
+    } | {
+      id: ContentParagraphNextContentConditionalValueType.UI;
+      value: ObjectId;
+    };
+  };
+  createdAt?: Date;
+  updatedAt?: Date;
+}
 export interface IContentParagraph {
   paragraphs: ReadonlyArray<{
     sentences: ReadonlyArray<{
@@ -19,6 +41,8 @@ export interface IContentParagraph {
       value: ObjectId;
     };
   };
+  createdAt: Date;
+  updatedAt: Date;
 }
 export enum ContentParagraphNextContentConditionalValueType {
   Paragraph = 0,
@@ -46,9 +70,47 @@ export class ContentParagraphModel {
     return this.contentParagraphs.deleteMany(value);
   }
   public updateOne(filter: Filter<IContentParagraph>, update: UpdateFilter<IContentParagraph> | Partial<IContentParagraph>) {
+    if("$set" in update) {
+      update["$set"] = {
+        ...update["$set"],
+        createdAt: new Date()
+      }
+      update["$set"] = {
+        ...update["$set"],
+        updatedAt: new Date()
+      }
+    } else {
+      update = {
+        ...update,
+        createdAt: new Date()
+      }
+      update = {
+        ...update,
+        updatedAt: new Date()
+      }
+    }
     return this.contentParagraphs.updateOne(filter, update);
   }
   public updateMany(filter: Filter<IContentParagraph>, update: UpdateFilter<IContentParagraph> | Partial<IContentParagraph>) {
+    if("$set" in update) {
+      update["$set"] = {
+        ...update["$set"],
+        createdAt: new Date()
+      }
+      update["$set"] = {
+        ...update["$set"],
+        updatedAt: new Date()
+      }
+    } else {
+      update = {
+        ...update,
+        createdAt: new Date()
+      }
+      update = {
+        ...update,
+        updatedAt: new Date()
+      }
+    }
     return this.contentParagraphs.updateMany(filter, update);
   }
   public countDocuments() {
@@ -87,10 +149,19 @@ export class ContentParagraphModel {
     ]);
     return populated;
   }
-  public async insertOne(value: IContentParagraph) {
+  public async insertOne(value: IInputContentParagraph) {
     const validationErr = validateContentParagraph(value);
     if(validationErr !== null) {
       return validationErr;
+    }
+    let completeValue: IContentParagraph;
+    value = {
+      ...value,
+      createdAt: new Date()
+    }
+    value = {
+      ...value,
+      updatedAt: new Date()
     }
     const result = await this.contentParagraphs.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
@@ -99,7 +170,7 @@ export class ContentParagraphModel {
     return result.insertedId;
   }
 }
-export function validateContentParagraph(value: IContentParagraph) {
+export function validateContentParagraph(value: IInputContentParagraph) {
   const value0 = value['paragraphs'];
   if(!(Array.isArray(value0))) {
     return {
@@ -146,6 +217,18 @@ export function validateContentParagraph(value: IContentParagraph) {
         }
       }
       break;
+  }
+  const value12 = value['createdAt'];
+  if(!(value12 instanceof Date)) {
+    return {
+      error: `Expected value12 to be of type Date, but got "${typeof value12}" instead`
+    }
+  }
+  const value13 = value['updatedAt'];
+  if(!(value13 instanceof Date)) {
+    return {
+      error: `Expected value13 to be of type Date, but got "${typeof value13}" instead`
+    }
   }
   return null;
 }

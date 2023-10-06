@@ -1,5 +1,32 @@
 import {IContentParagraph} from './ContentParagraph';
 import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
+export interface IInputContentUserInterface {
+  buttonRows: ReadonlyArray<{
+    buttons: ReadonlyArray<{
+      condition: {
+        code: string;
+      };
+      title: string;
+      onClick: {
+        code: string;
+      };
+    }>;
+  }>;
+  nextContent: {
+    condition: {
+      code: string;
+    };
+    value: {
+      id: ContentUserInterfaceNextContentConditionalValueType.Paragraph;
+      value: ObjectId;
+    } | {
+      id: ContentUserInterfaceNextContentConditionalValueType.UI;
+      value: ObjectId;
+    };
+  };
+  createdAt?: Date;
+  updatedAt?: Date;
+}
 export interface IContentUserInterface {
   buttonRows: ReadonlyArray<{
     buttons: ReadonlyArray<{
@@ -24,6 +51,8 @@ export interface IContentUserInterface {
       value: ObjectId;
     };
   };
+  createdAt: Date;
+  updatedAt: Date;
 }
 export enum ContentUserInterfaceNextContentConditionalValueType {
   Paragraph = 0,
@@ -51,9 +80,47 @@ export class ContentUserInterfaceModel {
     return this.contentUserInterfaces.deleteMany(value);
   }
   public updateOne(filter: Filter<IContentUserInterface>, update: UpdateFilter<IContentUserInterface> | Partial<IContentUserInterface>) {
+    if("$set" in update) {
+      update["$set"] = {
+        ...update["$set"],
+        createdAt: new Date()
+      }
+      update["$set"] = {
+        ...update["$set"],
+        updatedAt: new Date()
+      }
+    } else {
+      update = {
+        ...update,
+        createdAt: new Date()
+      }
+      update = {
+        ...update,
+        updatedAt: new Date()
+      }
+    }
     return this.contentUserInterfaces.updateOne(filter, update);
   }
   public updateMany(filter: Filter<IContentUserInterface>, update: UpdateFilter<IContentUserInterface> | Partial<IContentUserInterface>) {
+    if("$set" in update) {
+      update["$set"] = {
+        ...update["$set"],
+        createdAt: new Date()
+      }
+      update["$set"] = {
+        ...update["$set"],
+        updatedAt: new Date()
+      }
+    } else {
+      update = {
+        ...update,
+        createdAt: new Date()
+      }
+      update = {
+        ...update,
+        updatedAt: new Date()
+      }
+    }
     return this.contentUserInterfaces.updateMany(filter, update);
   }
   public countDocuments() {
@@ -92,11 +159,21 @@ export class ContentUserInterfaceModel {
     ]);
     return populated;
   }
-  public async insertOne(value: IContentUserInterface) {
+  public async insertOne(value: IInputContentUserInterface) {
     const validationErr = validateContentUserInterface(value);
     if(validationErr !== null) {
       return validationErr;
     }
+    let completeValue: IContentUserInterface;
+    value = {
+      ...value,
+      createdAt: new Date()
+    }
+    value = {
+      ...value,
+      updatedAt: new Date()
+    }
+    completeValue = value;
     const result = await this.contentUserInterfaces.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
       return { error: 'Record creation not acknowledged' };
@@ -104,7 +181,7 @@ export class ContentUserInterfaceModel {
     return result.insertedId;
   }
 }
-export function validateContentUserInterface(value: IContentUserInterface) {
+export function validateContentUserInterface(value: IInputContentUserInterface) {
   const value0 = value['buttonRows'];
   if(!(Array.isArray(value0))) {
     return {
@@ -156,6 +233,18 @@ export function validateContentUserInterface(value: IContentUserInterface) {
         }
       }
       break;
+  }
+  const value15 = value['createdAt'];
+  if(!(value15 instanceof Date)) {
+    return {
+      error: `Expected value15 to be of type Date, but got "${typeof value15}" instead`
+    }
+  }
+  const value16 = value['updatedAt'];
+  if(!(value16 instanceof Date)) {
+    return {
+      error: `Expected value16 to be of type Date, but got "${typeof value16}" instead`
+    }
   }
   return null;
 }

@@ -1,4 +1,10 @@
+import { EventOnCreate, EventOnUpdate } from "../src/schema/Event";
 import { Field } from "../src/schema/Field";
+import {
+  FieldTypeDateFlagDefaultValueCurrentDate,
+  FieldTypeDateFlagUpdateOnEvent,
+  defaultFieldTypeDate
+} from "../src/schema/FieldTypeDate";
 import { FieldTypeModelReference } from "../src/schema/FieldTypeModelReference";
 import { FieldTypeUnion, UnionItem } from "../src/schema/FieldTypeUnion";
 import { Model } from "../src/schema/Model";
@@ -43,6 +49,25 @@ export default function ContentBase() {
         description:
           "Next content after the content is fully processed by the client.",
         fieldType: Conditional(ContentRef())
+      }),
+      Field({
+        name: "createdAt",
+        description: "Content creation date.",
+        fieldType: defaultFieldTypeDate({
+          flags: [FieldTypeDateFlagDefaultValueCurrentDate()]
+        })
+      }),
+      Field({
+        name: "updatedAt",
+        description: "Content creation date.",
+        fieldType: defaultFieldTypeDate({
+          flags: [
+            FieldTypeDateFlagDefaultValueCurrentDate(),
+            FieldTypeDateFlagUpdateOnEvent({
+              event: EventOnUpdate()
+            })
+          ]
+        })
       })
     ]
   });

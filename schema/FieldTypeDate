@@ -1,4 +1,5 @@
 import { Field } from "./Field";
+import { Event } from "./Event";
 import { FieldType } from "./FieldType";
 import { FieldTypeFlagDefaultValue } from "./FieldTypeFlagDefaultValue";
 
@@ -6,13 +7,10 @@ export trait FieldTypeDateFlag {
   
 }
 
-export type FieldTypeFlagDefaultValueDate : FieldTypeDateFlag {
-  // date with milliseconds
-  long date;
-}
+export type FieldTypeDateFlagDefaultValueCurrentDate : FieldTypeDateFlag {}
 
-export type FieldTypeDateFlagOptional : FieldTypeDateFlag {
-  
+export type FieldTypeDateFlagUpdateOnEvent : FieldTypeDateFlag {
+  Event event;
 }
 
 export type FieldTypeDate : FieldType {

@@ -1,4 +1,11 @@
 import {Collection, Filter, UpdateFilter} from 'mongodb';
+export interface IInputUser {
+  phone: {
+    countryCode: UserPhonePhoneCountryCodeType;
+    nationalNumber: string;
+  };
+  createdAt: Date;
+}
 export interface IUser {
   phone: {
     countryCode: UserPhonePhoneCountryCodeType;
@@ -519,18 +526,40 @@ export class UserModel {
     return this.users.deleteMany(value);
   }
   public updateOne(filter: Filter<IUser>, update: UpdateFilter<IUser> | Partial<IUser>) {
+    if("$set" in update) {
+      update["$set"] = {
+        ...update["$set"],
+      }
+    } else {
+      update = {
+        ...update,
+      }
+    }
     return this.users.updateOne(filter, update);
   }
   public updateMany(filter: Filter<IUser>, update: UpdateFilter<IUser> | Partial<IUser>) {
+    if("$set" in update) {
+      update["$set"] = {
+        ...update["$set"],
+      }
+    } else {
+      update = {
+        ...update,
+      }
+    }
     return this.users.updateMany(filter, update);
   }
   public countDocuments() {
     return this.users.countDocuments();
   }
-  public async insertOne(value: IUser) {
+  public async insertOne(value: IInputUser) {
     const validationErr = validateUser(value);
     if(validationErr !== null) {
       return validationErr;
+    }
+    let completeValue: IUser;
+    value = {
+      ...value,
     }
     const result = await this.users.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
@@ -539,7 +568,7 @@ export class UserModel {
     return result.insertedId;
   }
 }
-export function validateUser(value: IUser) {
+export function validateUser(value: IInputUser) {
   const value0 = value['phone'];
   if(!UserPhonePhoneCountryCodeValues.includes(value0['countryCode'])) {
     return {
@@ -552,10 +581,5 @@ export function validateUser(value: IUser) {
     }
   }
   const value3 = value['createdAt'];
-  if(!(value3 instanceof Date)) {
-    return {
-      error: `Expected value3 to be of type Date, but got "${typeof value3}" instead`
-    }
-  }
   return null;
 }
