@@ -768,24 +768,12 @@ export default class FileGeneratorModel extends CodeStream {
           );
         }
         break;
-      case "fieldTypeDate.FieldTypeDate": {
-        let skipCheck = false;
-        for (const flag of fieldType.flags) {
-          switch (flag._name) {
-            case "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate":
-            case "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent":
-              skipCheck = true;
-              break;
-          }
-        }
-        if (skipCheck) {
-          this.#generateValidationIf(
-            `${value} instanceof Date`,
-            `Expected ${value} to be of type Date, but got "\${typeof ${value}}" instead`
-          );
-        }
+      case "fieldTypeDate.FieldTypeDate":
+        this.#generateValidationIf(
+          `${value} instanceof Date`,
+          `Expected ${value} to be of type Date, but got "\${typeof ${value}}" instead`
+        );
         break;
-      }
       case "fieldTypeObject.FieldTypeArray": {
         this.#generateValidationIf(
           `Array.isArray(${value})`,
