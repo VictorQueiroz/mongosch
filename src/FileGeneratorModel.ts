@@ -50,6 +50,40 @@ function getEnumClassName(model: Model, path: PathItem[]) {
   return joinModelAndPath(model, path, "Type");
 }
 
+function hasModelReference(fieldType: FieldType) {
+  switch (fieldType._name) {
+    case "fieldTypeModelReference.FieldTypeModelReference":
+      return true;
+    case "fieldTypeObject.FieldTypeObject":
+      for (const f of fieldType.properties) {
+        if (hasModelReference(f.fieldType)) {
+          return true;
+        }
+      }
+      break;
+    case "fieldTypeObject.FieldTypeArray":
+      return hasModelReference(fieldType.arrayType);
+    case "fieldTypeString.FieldTypeString":
+    case "fieldTypeInteger.FieldTypeDouble":
+    case "fieldTypeInteger.FieldTypeInt64":
+    case "fieldTypeInteger.FieldTypeInt32":
+    case "fieldTypeDate.FieldTypeDate":
+    case "fieldTypeEnum.FieldTypeEnumString":
+    case "fieldTypeEnum.FieldTypeEnumInt":
+      break;
+    case "fieldTypeUnion.FieldTypeUnion":
+      for (const f of fieldType.items) {
+        if (hasModelReference(f.fieldType)) {
+          return true;
+        }
+      }
+      break;
+    case "fieldTypeBinary.FieldTypeBinary":
+    case "fieldTypeBoolean.FieldTypeBoolean":
+  }
+  return false;
+}
+
 export interface IGenerateFieldsOptions {
   /**
    * whether or not to process flags, defaults to false
@@ -576,6 +610,9 @@ export default class FileGeneratorModel extends CodeStream {
     propertyKey: string,
     depth: number
   ) {
+    if (!hasModelReference(fieldType)) {
+      return depth;
+    }
     const currentPath = [...previousPath, propertyKey];
     switch (fieldType._name) {
       case "fieldTypeModelReference.FieldTypeModelReference":
