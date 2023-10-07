@@ -1,5 +1,5 @@
 import {IUser} from './User';
-import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
 export interface IInputStory {
   name: string;
   authorId: ObjectId;
@@ -9,7 +9,7 @@ export interface IStory {
   authorId: ObjectId;
 }
 export interface IStoryPopulated {
-  users: IUser[];
+  users: WithId<IUser>[];
 }
 export class StoryModel {
   public constructor(
@@ -60,12 +60,11 @@ export class StoryModel {
     ]);
     return populated;
   }
-  public async insertOne(value: IInputStory) {
+  public async insertOne(value: OptionalId<IStory>) {
     const validationErr = validateStory(value);
     if(validationErr !== null) {
       return validationErr;
     }
-    let completeValue: IStory;
     const result = await this.stories.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
       return { error: 'Record creation not acknowledged' };
@@ -73,7 +72,7 @@ export class StoryModel {
     return result.insertedId;
   }
 }
-export function validateStory(value: IInputStory) {
+export function validateStory(value: IStory) {
   const value0 = value['name'];
   if(!(typeof value0 === 'string')) {
     return {

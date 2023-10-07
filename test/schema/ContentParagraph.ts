@@ -1,5 +1,5 @@
 import {IContentUserInterface} from './ContentUserInterface';
-import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
 export interface IInputContentParagraph {
   paragraphs: ReadonlyArray<{
     sentences: ReadonlyArray<{
@@ -49,8 +49,8 @@ export enum ContentParagraphNextContentConditionalValueType {
   UI = 1,
 }
 export interface IContentParagraphPopulated {
-  contentParagraphs: IContentParagraph[];
-  contentUserInterfaces: IContentUserInterface[];
+  contentParagraphs: WithId<IContentParagraph>[];
+  contentUserInterfaces: WithId<IContentUserInterface>[];
 }
 export class ContentParagraphModel {
   public constructor(
@@ -149,19 +149,10 @@ export class ContentParagraphModel {
     ]);
     return populated;
   }
-  public async insertOne(value: IInputContentParagraph) {
+  public async insertOne(value: OptionalId<IContentParagraph>) {
     const validationErr = validateContentParagraph(value);
     if(validationErr !== null) {
       return validationErr;
-    }
-    let completeValue: IContentParagraph;
-    value = {
-      ...value,
-      createdAt: new Date()
-    }
-    value = {
-      ...value,
-      updatedAt: new Date()
     }
     const result = await this.contentParagraphs.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
@@ -170,7 +161,7 @@ export class ContentParagraphModel {
     return result.insertedId;
   }
 }
-export function validateContentParagraph(value: IInputContentParagraph) {
+export function validateContentParagraph(value: IContentParagraph) {
   const value0 = value['paragraphs'];
   if(!(Array.isArray(value0))) {
     return {

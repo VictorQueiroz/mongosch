@@ -2,7 +2,7 @@ import {IUser} from './User';
 import {IStory} from './Story';
 import {IContentParagraph} from './ContentParagraph';
 import {IContentUserInterface} from './ContentUserInterface';
-import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
 export interface IInputStoryChapter {
   title: string;
   createdAt: Date;
@@ -36,10 +36,10 @@ export enum StoryChapterInitialContentIdType {
   UI = 1,
 }
 export interface IStoryChapterPopulated {
-  users: IUser[];
-  stories: IStory[];
-  contentParagraphs: IContentParagraph[];
-  contentUserInterfaces: IContentUserInterface[];
+  users: WithId<IUser>[];
+  stories: WithId<IStory>[];
+  contentParagraphs: WithId<IContentParagraph>[];
+  contentUserInterfaces: WithId<IContentUserInterface>[];
 }
 export class StoryChapterModel {
   public constructor(
@@ -145,17 +145,10 @@ export class StoryChapterModel {
     ]);
     return populated;
   }
-  public async insertOne(value: IInputStoryChapter) {
+  public async insertOne(value: OptionalId<IStoryChapter>) {
     const validationErr = validateStoryChapter(value);
     if(validationErr !== null) {
       return validationErr;
-    }
-    let completeValue: IStoryChapter;
-    value = {
-      ...value,
-    }
-    value = {
-      ...value,
     }
     const result = await this.storyChapters.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
@@ -164,7 +157,7 @@ export class StoryChapterModel {
     return result.insertedId;
   }
 }
-export function validateStoryChapter(value: IInputStoryChapter) {
+export function validateStoryChapter(value: IStoryChapter) {
   const value0 = value['title'];
   if(!(typeof value0 === 'string')) {
     return {

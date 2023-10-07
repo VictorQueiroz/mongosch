@@ -1,4 +1,4 @@
-import {Collection, Filter, UpdateFilter} from 'mongodb';
+import {Collection, Filter, UpdateFilter, OptionalId} from 'mongodb';
 export interface IInputUser {
   phone: {
     countryCode: UserPhonePhoneCountryCodeType;
@@ -552,14 +552,10 @@ export class UserModel {
   public countDocuments() {
     return this.users.countDocuments();
   }
-  public async insertOne(value: IInputUser) {
+  public async insertOne(value: OptionalId<IUser>) {
     const validationErr = validateUser(value);
     if(validationErr !== null) {
       return validationErr;
-    }
-    let completeValue: IUser;
-    value = {
-      ...value,
     }
     const result = await this.users.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
@@ -568,7 +564,7 @@ export class UserModel {
     return result.insertedId;
   }
 }
-export function validateUser(value: IInputUser) {
+export function validateUser(value: IUser) {
   const value0 = value['phone'];
   if(!UserPhonePhoneCountryCodeValues.includes(value0['countryCode'])) {
     return {

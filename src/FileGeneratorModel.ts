@@ -117,7 +117,7 @@ export default class FileGeneratorModel extends CodeStream {
     );
     this.#import({
       path: "mongodb",
-      exports: ["Collection", "Filter", "UpdateFilter"]
+      exports: ["Collection", "Filter", "UpdateFilter", "OptionalId"]
     });
     if (this.#referencedModels.size) {
       this.#import({
@@ -402,7 +402,9 @@ export default class FileGeneratorModel extends CodeStream {
           this.#generatePopulateMethod();
         }
         this.write(
-          `public async insertOne(value: ${getModelInputInterfaceName(m)}) {\n`,
+          `public async insertOne(value: OptionalId<${getModelInterfaceName(
+            m
+          )}>) {\n`,
           () => {
             this.write(
               `const validationErr = ${getValidateFunctionName(m)}(value);\n`
@@ -414,14 +416,14 @@ export default class FileGeneratorModel extends CodeStream {
               },
               "}\n"
             );
-            this.write(`let completeValue: ${getModelInterfaceName(m)};\n`);
-            this.#generateModelDataChangingCode(
-              m.fields,
-              [],
-              EventOnCreate(),
-              "value",
-              "value"
-            );
+            // this.write(`let completeValue: ${getModelInterfaceName(m)};\n`);
+            // this.#generateModelDataChangingCode(
+            //   m.fields,
+            //   [],
+            //   EventOnCreate(),
+            //   "value",
+            //   "value"
+            // );
             this.write(
               `const result = await this.${
                 this.#model.collectionName
@@ -669,7 +671,7 @@ export default class FileGeneratorModel extends CodeStream {
     this.write(
       `export function ${getValidateFunctionName(
         m
-      )}(value: ${getModelInputInterfaceName(m)}) {\n`,
+      )}(value: ${getModelInterfaceName(m)}) {\n`,
       () => {
         for (const f of m.fields) {
           const fieldValueVarName = `value${depth}`;

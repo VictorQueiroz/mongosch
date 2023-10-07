@@ -1,5 +1,5 @@
 import {IUser} from './User';
-import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
 export interface IInputPost {
   title: string;
   authorId: ObjectId;
@@ -11,7 +11,7 @@ export interface IPost {
   createdAt: Date;
 }
 export interface IPostPopulated {
-  users: IUser[];
+  users: WithId<IUser>[];
 }
 export class PostModel {
   public constructor(
@@ -74,14 +74,10 @@ export class PostModel {
     ]);
     return populated;
   }
-  public async insertOne(value: IInputPost) {
+  public async insertOne(value: OptionalId<IPost>) {
     const validationErr = validatePost(value);
     if(validationErr !== null) {
       return validationErr;
-    }
-    let completeValue: IPost;
-    value = {
-      ...value,
     }
     const result = await this.posts.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
@@ -90,7 +86,7 @@ export class PostModel {
     return result.insertedId;
   }
 }
-export function validatePost(value: IInputPost) {
+export function validatePost(value: IPost) {
   const value0 = value['title'];
   if(!(typeof value0 === 'string')) {
     return {

@@ -1,5 +1,5 @@
 import {IContentParagraph} from './ContentParagraph';
-import {ObjectId, Filter, Collection, UpdateFilter} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
 export interface IInputContentUserInterface {
   buttonRows: ReadonlyArray<{
     buttons: ReadonlyArray<{
@@ -59,8 +59,8 @@ export enum ContentUserInterfaceNextContentConditionalValueType {
   UI = 1,
 }
 export interface IContentUserInterfacePopulated {
-  contentParagraphs: IContentParagraph[];
-  contentUserInterfaces: IContentUserInterface[];
+  contentParagraphs: WithId<IContentParagraph>[];
+  contentUserInterfaces: WithId<IContentUserInterface>[];
 }
 export class ContentUserInterfaceModel {
   public constructor(
@@ -159,21 +159,11 @@ export class ContentUserInterfaceModel {
     ]);
     return populated;
   }
-  public async insertOne(value: IInputContentUserInterface) {
+  public async insertOne(value: OptionalId<IContentUserInterface>) {
     const validationErr = validateContentUserInterface(value);
     if(validationErr !== null) {
       return validationErr;
     }
-    let completeValue: IContentUserInterface;
-    value = {
-      ...value,
-      createdAt: new Date()
-    }
-    value = {
-      ...value,
-      updatedAt: new Date()
-    }
-    completeValue = value;
     const result = await this.contentUserInterfaces.insertOne(value, { forceServerObjectId: false });
     if(!result.acknowledged) {
       return { error: 'Record creation not acknowledged' };
@@ -181,7 +171,7 @@ export class ContentUserInterfaceModel {
     return result.insertedId;
   }
 }
-export function validateContentUserInterface(value: IInputContentUserInterface) {
+export function validateContentUserInterface(value: IContentUserInterface) {
   const value0 = value['buttonRows'];
   if(!(Array.isArray(value0))) {
     return {
