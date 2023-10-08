@@ -136,7 +136,7 @@ export class StoryChapterModel {
   public countDocuments() {
     return this.storyChapters.countDocuments();
   }
-  public async populate(value: IStoryChapter, entities: ("User" | "Story" | "ContentParagraph" | "ContentUserInterface")[] = ["User", "Story", "ContentParagraph", "ContentUserInterface"]) {
+  public async populate(value: IStoryChapter | ReadonlyArray<IStoryChapter>, entities: ("User" | "Story" | "ContentParagraph" | "ContentUserInterface")[] = ["User", "Story", "ContentParagraph", "ContentUserInterface"]) {
     const populated: IStoryChapterPopulated = {
       users: [],
       stories: [],
@@ -149,13 +149,16 @@ export class StoryChapterModel {
       contentParagraphs: new Array<ObjectId>(),
       contentUserInterfaces: new Array<ObjectId>(),
     };
-    ids.users.push(value.userId);
-    ids.stories.push(value.storyId);
-    if(value.initialContentId.id === 0) {
-      ids.contentParagraphs.push(value.initialContentId.value);
-    }
-    if(value.initialContentId.id === 1) {
-      ids.contentUserInterfaces.push(value.initialContentId.value);
+    const entitiesArray = Array.isArray(value) ? value : [value];
+    for(const item of entitiesArray) {
+      ids.users.push(item.userId);
+      ids.stories.push(item.storyId);
+      if(item.initialContentId.id === 0) {
+        ids.contentParagraphs.push(item.initialContentId.value);
+      }
+      if(item.initialContentId.id === 1) {
+        ids.contentUserInterfaces.push(item.initialContentId.value);
+      }
     }
     await Promise.all([
       (async (list) => populated.users.push(...(await list)))(entities.includes("User") ? this.users.find({

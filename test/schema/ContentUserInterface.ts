@@ -204,7 +204,7 @@ export class ContentUserInterfaceModel {
   public countDocuments() {
     return this.contentUserInterfaces.countDocuments();
   }
-  public async populate(value: IContentUserInterface, entities: ("ContentParagraph" | "ContentUserInterface")[] = ["ContentParagraph", "ContentUserInterface"]) {
+  public async populate(value: IContentUserInterface | ReadonlyArray<IContentUserInterface>, entities: ("ContentParagraph" | "ContentUserInterface")[] = ["ContentParagraph", "ContentUserInterface"]) {
     const populated: IContentUserInterfacePopulated = {
       contentParagraphs: [],
       contentUserInterfaces: [],
@@ -213,11 +213,14 @@ export class ContentUserInterfaceModel {
       contentParagraphs: new Array<ObjectId>(),
       contentUserInterfaces: new Array<ObjectId>(),
     };
-    if(value.nextContent.value.id === 0) {
-      ids.contentParagraphs.push(value.nextContent.value.value);
-    }
-    if(value.nextContent.value.id === 1) {
-      ids.contentUserInterfaces.push(value.nextContent.value.value);
+    const entitiesArray = Array.isArray(value) ? value : [value];
+    for(const item of entitiesArray) {
+      if(item.nextContent.value.id === 0) {
+        ids.contentParagraphs.push(item.nextContent.value.value);
+      }
+      if(item.nextContent.value.id === 1) {
+        ids.contentUserInterfaces.push(item.nextContent.value.value);
+      }
     }
     await Promise.all([
       (async (list) => populated.contentParagraphs.push(...(await list)))(entities.includes("ContentParagraph") ? this.contentParagraphs.find({

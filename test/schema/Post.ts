@@ -75,14 +75,17 @@ export class PostModel {
   public countDocuments() {
     return this.posts.countDocuments();
   }
-  public async populate(value: IPost, entities: ("User")[] = ["User"]) {
+  public async populate(value: IPost | ReadonlyArray<IPost>, entities: ("User")[] = ["User"]) {
     const populated: IPostPopulated = {
       users: [],
     };
     const ids = {
       users: new Array<ObjectId>(),
     };
-    ids.users.push(value.authorId);
+    const entitiesArray = Array.isArray(value) ? value : [value];
+    for(const item of entitiesArray) {
+      ids.users.push(item.authorId);
+    }
     await Promise.all([
       (async (list) => populated.users.push(...(await list)))(entities.includes("User") ? this.users.find({
         _id: {

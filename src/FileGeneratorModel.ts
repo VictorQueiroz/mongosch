@@ -540,10 +540,9 @@ export default class FileGeneratorModel extends CodeStream {
     const entityNames = Array.from(this.#referencedModels.values()).map(
       (m) => m.className
     );
+    const valueArgumentType = `${getModelInterfaceName(m)}`;
     this.write(
-      `public async populate(value: ${getModelInterfaceName(
-        m
-      )}, entities: (${entityNames
+      `public async populate(value: ${valueArgumentType} | ReadonlyArray<${valueArgumentType}>, entities: (${entityNames
         .map((name) => `"${name}"`)
         .join(" | ")})[] = [${entityNames
         .map((n) => `"${n}"`)
@@ -567,15 +566,26 @@ export default class FileGeneratorModel extends CodeStream {
           },
           "};\n"
         );
+        this.write(
+          `const entitiesArray = Array.isArray(value) ? value : [value];\n`
+        );
+
         let depth = 0;
-        for (const field of this.#model.fields) {
-          depth = this.#generatePopulateExpressions(
-            field.fieldType,
-            ["value"],
-            field.name,
-            depth + 1
-          );
-        }
+
+        this.write(
+          `for(const item of entitiesArray) {\n`,
+          () => {
+            for (const field of this.#model.fields) {
+              depth = this.#generatePopulateExpressions(
+                field.fieldType,
+                ["item"],
+                field.name,
+                depth + 1
+              );
+            }
+          },
+          "}\n"
+        );
 
         this.write(
           "await Promise.all([\n",
