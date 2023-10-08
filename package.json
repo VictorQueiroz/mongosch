@@ -26,6 +26,7 @@
     "prettier": "npx prettier --write src/schema"
   },
   "version": "1.0.29",
+  "license": "MIT",
   "main": "./src/index.js",
   "dependencies": {
     "cachecraft": "^1.0.1",
