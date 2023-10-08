@@ -5,6 +5,14 @@ import { Field } from "./schema/Field";
 import { UnionItem } from "./schema/FieldTypeUnion";
 import Exception from "./Exception";
 import { Event, EventOnCreate, compareEventTrait } from "./schema/Event";
+import { FieldTypeObject } from "./schema/FieldTypeObject";
+
+interface IGenerateValidationFieldsOptions {
+  /**
+   * whether or not to generate partial validation, defaults to false
+   */
+  partial: boolean;
+}
 
 export function getModelClassName(model: Model) {
   return `${model.className}Model`;
@@ -30,6 +38,10 @@ function getValidateFunctionName(model: Model) {
   return `validate${upperFirst(model.className)}`;
 }
 
+function getPartialValidateFunctionName(model: Model) {
+  return `partiallyValidate${upperFirst(model.className)}`;
+}
+
 function getEnumValuesConstantName(model: Model, path: PathItem[]) {
   return joinModelAndPath(model, path, "Values");
 }
@@ -44,6 +56,10 @@ function joinModelAndPath(model: Model, path: PathItem[], lastSuffix: string) {
     }, new Array<string>())
     .map((p) => `${p[0].toUpperCase()}${p.slice(1)}`);
   return `${model.className}${suffixes.join("")}${lastSuffix}`;
+}
+
+function sanitize(value: string) {
+  return value.replace(/[^a-zA-Z0-9_$]+/g, "");
 }
 
 function getEnumClassName(model: Model, path: PathItem[]) {
@@ -61,7 +77,7 @@ function hasModelReference(fieldType: FieldType) {
         }
       }
       break;
-    case "fieldTypeObject.FieldTypeArray":
+    case "fieldTypeArray.FieldTypeArray":
       return hasModelReference(fieldType.arrayType);
     case "fieldTypeString.FieldTypeString":
     case "fieldTypeInteger.FieldTypeDouble":
@@ -223,7 +239,7 @@ export default class FileGeneratorModel extends CodeStream {
           this.#iterateWithPath(prop.fieldType, [...currentPath, prop], fn);
         }
         break;
-      case "fieldTypeObject.FieldTypeArray":
+      case "fieldTypeArray.FieldTypeArray":
         this.#iterateWithPath(
           fieldType.arrayType,
           [...currentPath, fieldType.arrayType],
@@ -278,7 +294,7 @@ export default class FileGeneratorModel extends CodeStream {
           this.#generateEnumClass(prop.fieldType);
         }
         break;
-      case "fieldTypeObject.FieldTypeArray":
+      case "fieldTypeArray.FieldTypeArray":
         this.#generateEnumClass(fieldType.arrayType);
         break;
       case "fieldTypeModelReference.FieldTypeModelReference":
@@ -334,7 +350,7 @@ export default class FileGeneratorModel extends CodeStream {
           this.#populateModelSetFromFieldType(f.fieldType);
         }
         break;
-      case "fieldTypeObject.FieldTypeArray":
+      case "fieldTypeArray.FieldTypeArray":
         this.#populateModelSetFromFieldType(fieldType.arrayType);
         break;
       case "fieldTypeUnion.FieldTypeUnion":
@@ -383,7 +399,7 @@ export default class FileGeneratorModel extends CodeStream {
         }
         for (const method of ["updateOne", "updateMany"]) {
           this.write(
-            `public ${method}(filter: Filter<${getModelInterfaceName(
+            `public async ${method}(filter: Filter<${getModelInterfaceName(
               m
             )}>, update: UpdateFilter<${getModelInterfaceName(
               m
@@ -392,31 +408,63 @@ export default class FileGeneratorModel extends CodeStream {
               this.write(
                 'if("$set" in update) {\n',
                 () => {
-                  this.#generateModelDataChangingCode(
-                    m.fields,
-                    [],
-                    EventOnCreate(),
-                    'update["$set"]',
-                    'update["$set"]'
+                  this.write(
+                    `const validation = ${getPartialValidateFunctionName(
+                      m
+                    )}(update['$set']);\n`
                   );
+                  this.write(
+                    `if(validation !== null) {\n`,
+                    () => {
+                      this.write("return validation;\n");
+                    },
+                    "}\n"
+                  );
+                  // this.#generateModelDataChangingCode(
+                  //   m.fields,
+                  //   [],
+                  //   EventOnCreate(),
+                  //   'update["$set"]',
+                  //   'update["$set"]'
+                  // );
                 },
                 "} else {\n"
               );
               this.indentBlock(() => {
-                this.#generateModelDataChangingCode(
-                  m.fields,
-                  [],
-                  EventOnCreate(),
-                  "update",
-                  "update"
+                this.write(
+                  `const validation = ${getPartialValidateFunctionName(
+                    m
+                  )}(update);\n`
                 );
+                this.write(
+                  `if(validation !== null) {\n`,
+                  () => {
+                    this.write("return validation;\n");
+                  },
+                  "}\n"
+                );
+                // this.#generateModelDataChangingCode(
+                //   m.fields,
+                //   [],
+                //   EventOnCreate(),
+                //   "update",
+                //   "update"
+                // );
               });
               this.write("}\n");
               this.write(
-                `return this.${
+                `const result = await this.${
                   this.#model.collectionName
                 }.${method}(filter, update);\n`
               );
+              this.write(
+                `if(!result.acknowledged) {\n`,
+                () => {
+                  this.write("return null;\n");
+                },
+                "}\n"
+              );
+              this.write("return { success: result };\n");
             },
             "}\n"
           );
@@ -435,6 +483,23 @@ export default class FileGeneratorModel extends CodeStream {
         if (this.#referencedModels.size) {
           this.#generatePopulateMethod();
         }
+        this.write(
+          `public async add(value: OptionalId<${getModelInterfaceName(
+            m
+          )}>) {\n`,
+          () => {
+            this.write("const result = await this.insertOne(value);\n");
+            this.write(
+              `if('error' in result) {\n`,
+              () => {
+                this.write("return result;\n");
+              },
+              "}\n"
+            );
+            this.write(`return this.findOne({_id: result});\n`);
+          },
+          "}\n"
+        );
         this.write(
           `public async insertOne(value: OptionalId<${getModelInterfaceName(
             m
@@ -521,7 +586,7 @@ export default class FileGeneratorModel extends CodeStream {
             spreadObject
           );
           break;
-        case "fieldTypeObject.FieldTypeArray":
+        case "fieldTypeArray.FieldTypeArray":
         case "fieldTypeModelReference.FieldTypeModelReference":
         case "fieldTypeString.FieldTypeString":
         case "fieldTypeInteger.FieldTypeDouble":
@@ -658,7 +723,7 @@ export default class FileGeneratorModel extends CodeStream {
           );
         }
         break;
-      case "fieldTypeObject.FieldTypeArray": {
+      case "fieldTypeArray.FieldTypeArray": {
         const itemVarName = `arrayElement_${depth}`;
         this.write(
           `for(const ${itemVarName} of ${currentPath.join(".")}) {\n`,
@@ -716,23 +781,70 @@ export default class FileGeneratorModel extends CodeStream {
     const m = this.#model;
     let depth = 0;
     this.write(
-      `export function ${getValidateFunctionName(
-        m
-      )}(value: ${getModelInterfaceName(m)}) {\n`,
+      `export function ${getValidateFunctionName(m)}(value: unknown) {\n`,
       () => {
-        for (const f of m.fields) {
-          const fieldValueVarName = `value${depth}`;
-          this.write(`const ${fieldValueVarName} = value['${f.name}'];\n`);
-          depth = this.#generateFieldValidationExpression(
-            f.fieldType,
-            fieldValueVarName,
-            depth + 1
-          );
-        }
+        depth = this.#generateValidationFields(m, "value", depth, {
+          partial: false
+        });
         this.write("return null;\n");
       },
       "}\n"
     );
+    this.write(
+      `export function ${getPartialValidateFunctionName(
+        m
+      )}(value: unknown) {\n`,
+      () => {
+        depth = this.#generateValidationFields(m, "value", depth, {
+          partial: true
+        });
+        this.write("return null;\n");
+      },
+      "}\n"
+    );
+  }
+  #generateValidationFields(
+    m: Model | FieldTypeObject,
+    value: string,
+    depth: number,
+    options: IGenerateValidationFieldsOptions
+  ) {
+    let props: ReadonlyArray<Field>;
+    switch (m._name) {
+      case "model.Model":
+        props = m.fields;
+        break;
+      case "fieldTypeObject.FieldTypeObject":
+        props = m.properties;
+        break;
+    }
+    this.#generateValidationIf(
+      `typeof ${value} === 'object' && ${value} !== null`,
+      `Expected "${value}" to be an object, but got typeof \${typeof ${value}} instead`
+    );
+    for (const f of props) {
+      const generate = () => {
+        depth = this.#generateFieldValidationExpression(
+          f.fieldType,
+          value,
+          `'${f.name}'`,
+          depth + 1,
+          options
+        );
+      };
+      if (options.partial) {
+        this.write(
+          `if('${f.name}' in ${value}) {\n`,
+          () => {
+            generate();
+          },
+          "}\n"
+        );
+      } else {
+        generate();
+      }
+    }
+    return depth;
   }
   #generateValidationIf(expression: string, error: string) {
     this.write(
@@ -756,14 +868,23 @@ export default class FileGeneratorModel extends CodeStream {
    */
   #generateFieldValidationExpression(
     fieldType: FieldType,
-    value: string,
-    depth: number
+    obj: string,
+    key: string,
+    depth: number,
+    options: IGenerateValidationFieldsOptions
   ) {
+    this.#generateValidationIf(
+      `${key} in ${obj}`,
+      `Expected "${obj}" to have a property named \${${key}}, but only the following properties were found: \${Object.keys(${obj})}`
+    );
+    const value = `${sanitize(obj)}${upperFirst(sanitize(key))}${depth}`;
+    const humanReadableProp = `${obj}.${sanitize(key)}`;
+    this.write(`const ${value} = ${obj}[${key}];\n`);
     switch (fieldType._name) {
       case "fieldTypeModelReference.FieldTypeModelReference":
         this.#generateValidationIf(
           `${value} instanceof ObjectId`,
-          `Expected ${value} to be an instance of ObjectId, but got typeof ${value} instead`
+          `Expected ${humanReadableProp} to be an instance of ObjectId, but got typeof ${value} instead`
         );
         break;
       case "fieldTypeString.FieldTypeString":
@@ -773,12 +894,12 @@ export default class FileGeneratorModel extends CodeStream {
         if (isOptional) {
           this.#generateValidationIf(
             `typeof ${value} === 'string' || ${value} === null`,
-            `Expected ${value} to be a string or null, but got \${typeof ${value}} instead`
+            `Expected ${humanReadableProp} to be a string or null, but got \${typeof ${value}} instead`
           );
         } else {
           this.#generateValidationIf(
             `typeof ${value} === 'string'`,
-            `Expected ${value} to be a string, but got \${typeof ${value}} instead`
+            `Expected ${humanReadableProp} to be a string, but got \${typeof ${value}} instead`
           );
         }
         if (fieldType.flags.length > 0) {
@@ -787,16 +908,29 @@ export default class FileGeneratorModel extends CodeStream {
             () => {
               for (const f of fieldType.flags) {
                 switch (f._name) {
+                  case "fieldTypeString.FieldTypeStringFlagMatchRegularExpression":
+                    try {
+                      new RegExp(f.value);
+                    } catch (reason) {
+                      throw new Exception(
+                        `Failed to parse regular expression ${f.value}: ${reason}`
+                      );
+                    }
+                    this.#generateValidationIf(
+                      `${f.value}.test(${value})`,
+                      `Expected ${humanReadableProp} to match ${f.value}, but it didn't`
+                    );
+                    break;
                   case "fieldTypeString.FieldTypeStringFlagMinLength":
                     this.#generateValidationIf(
                       `${value}.length >= ${f.value}`,
-                      `Expected ${value} string to have at least ${f.value} characters`
+                      `Expected ${humanReadableProp} string to have at least ${f.value} characters`
                     );
                     break;
                   case "fieldTypeString.FieldTypeStringFlagMaxLength":
                     this.#generateValidationIf(
                       `${value}.length <= ${f.value}`,
-                      `Expected ${value} string to have up to ${f.value} characters`
+                      `Expected ${humanReadableProp} string to have up to ${f.value} characters`
                     );
                     break;
                 }
@@ -807,33 +941,52 @@ export default class FileGeneratorModel extends CodeStream {
         }
         break;
       case "fieldTypeObject.FieldTypeObject":
-        for (const f of fieldType.properties) {
-          depth = this.#generateFieldValidationExpression(
-            f.fieldType,
-            `${value}['${f.name}']`,
-            depth + 1
-          );
-        }
+        depth = this.#generateValidationFields(
+          fieldType,
+          value,
+          depth,
+          options
+        );
         break;
       case "fieldTypeDate.FieldTypeDate":
         this.#generateValidationIf(
           `${value} instanceof Date`,
-          `Expected ${value} to be of type Date, but got "\${typeof ${value}}" instead`
+          `Expected ${humanReadableProp} to be of type Date, but got "\${typeof ${value}}" instead`
         );
+        for (const f of fieldType.flags) {
+          switch (f._name) {
+            case "fieldTypeDate.FieldTypeDateFlagFuture":
+              this.#generateValidationIf(
+                `${value}.getTime() > new Date().getTime()`,
+                `Expected ${humanReadableProp} to be in the future, but it's in the past`
+              );
+              break;
+            case "fieldTypeDate.FieldTypeDateFlagPast":
+              this.#generateValidationIf(
+                `${value}.getTime() < new Date().getTime()`,
+                `Expected ${humanReadableProp} to be in the future, but it's in the past`
+              );
+              break;
+            case "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate":
+            case "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent":
+          }
+        }
         break;
-      case "fieldTypeObject.FieldTypeArray": {
+      case "fieldTypeArray.FieldTypeArray": {
         this.#generateValidationIf(
           `Array.isArray(${value})`,
-          `Expected ${value} to be an array, but got "\${typeof ${value}}" instead`
+          `Expected ${humanReadableProp} to be an array, but got "\${typeof ${value}}" instead`
         );
-        const arrayItemVarName = `item${depth}`;
+        const indexVarName = `index${depth}`;
         this.write(
-          `for(const ${arrayItemVarName} of ${value}) {\n`,
+          `for(let ${indexVarName} = 0; ${indexVarName} < ${value}.length; ${indexVarName}++) {\n`,
           () => {
             depth = this.#generateFieldValidationExpression(
               fieldType.arrayType,
-              arrayItemVarName,
-              depth + 1
+              value,
+              indexVarName,
+              depth + 1,
+              options
             );
           },
           "}\n"
@@ -845,16 +998,24 @@ export default class FileGeneratorModel extends CodeStream {
       case "fieldTypeInteger.FieldTypeInt32":
         this.#generateValidationIf(
           `typeof ${value} === 'number'`,
-          `Expected ${value} to be number, but got "\${typeof ${value}}" instead`
+          `Expected ${humanReadableProp} to be number, but got "\${typeof ${value}}" instead`
         );
         break;
       case "fieldTypeBoolean.FieldTypeBoolean":
         this.#generateValidationIf(
           `typeof ${value} === 'boolean'`,
-          `Expected ${value} to be boolean, but got "\${typeof ${value}}" instead`
+          `Expected ${humanReadableProp} to be boolean, but got "\${typeof ${value}}" instead`
         );
         break;
       case "fieldTypeUnion.FieldTypeUnion":
+        this.#generateValidationIf(
+          `typeof ${value} === 'object' && ${value} !== null`,
+          `Expected ${humanReadableProp} to be an object, but got "\${typeof ${value}}" instead`
+        );
+        this.#generateValidationIf(
+          `'id' in ${value} && typeof ${value}.id === 'number'`,
+          `Expected ${humanReadableProp} to have a property named "id", but only the following properties were found: \${Object.keys(${value})}`
+        );
         this.write(
           `switch(${value}.id) {\n`,
           () => {
@@ -868,8 +1029,10 @@ export default class FileGeneratorModel extends CodeStream {
               this.indentBlock(() => {
                 depth = this.#generateFieldValidationExpression(
                   i.fieldType,
-                  `${value}.value`,
-                  depth + 1
+                  value,
+                  `'value'`,
+                  depth + 1,
+                  options
                 );
                 this.write("break;\n");
               });
@@ -881,11 +1044,19 @@ export default class FileGeneratorModel extends CodeStream {
       case "fieldTypeBinary.FieldTypeBinary":
         this.#generateValidationIf(
           `${value} instanceof Binary`,
-          `Expected ${value} to be an instance of Binary, but got "\${typeof ${value}}" instead`
+          `Expected ${humanReadableProp} to be an instance of Binary, but got "\${typeof ${value}}" instead`
         );
         break;
       case "fieldTypeEnum.FieldTypeEnumInt":
       case "fieldTypeEnum.FieldTypeEnumString": {
+        this.#generateValidationIf(
+          `typeof ${value} === '${
+            fieldType._name === "fieldTypeEnum.FieldTypeEnumInt"
+              ? "number"
+              : "string"
+          }'`,
+          `Expected ${humanReadableProp} to be an array, but got "\${typeof ${value}}" instead`
+        );
         const fieldTypePath = this.#pathByFieldTypeMap.get(fieldType);
         if (!fieldTypePath) {
           throw new Exception(
@@ -909,7 +1080,7 @@ export default class FileGeneratorModel extends CodeStream {
               "return {\n",
               () => {
                 this.write(
-                  `error: \`Expected ${value} to be one of ${oneOfStr}\`\n`
+                  `error: \`Expected ${humanReadableProp} to be one of ${oneOfStr}\`\n`
                 );
               },
               "};\n"
@@ -943,7 +1114,7 @@ export default class FileGeneratorModel extends CodeStream {
         //         .map((i) => (typeof i === "string" ? `"${i}"` : i))
         //         .join(", ");
         //       this.write(
-        //         `error: \`Expected ${value} to be one of ${oneOfStr}\`\n`
+        //         `error: \`Expected ${humanReadableProp} to be one of ${oneOfStr}\`\n`
         //       );
         //     },
         //     "}\n"
@@ -1006,7 +1177,7 @@ export default class FileGeneratorModel extends CodeStream {
         case "fieldTypeObject.FieldTypeObject":
           this.#preprocessFields(fieldType.properties.map((f) => f.fieldType));
           break;
-        case "fieldTypeObject.FieldTypeArray":
+        case "fieldTypeArray.FieldTypeArray":
           this.#preprocessFields([fieldType.arrayType]);
           break;
         case "fieldTypeInteger.FieldTypeDouble":
@@ -1055,7 +1226,7 @@ export default class FileGeneratorModel extends CodeStream {
       case "fieldTypeModelReference.FieldTypeModelReference":
       case "fieldTypeString.FieldTypeString":
       case "fieldTypeObject.FieldTypeObject":
-      case "fieldTypeObject.FieldTypeArray":
+      case "fieldTypeArray.FieldTypeArray":
       case "fieldTypeInteger.FieldTypeDouble":
       case "fieldTypeInteger.FieldTypeInt64":
       case "fieldTypeInteger.FieldTypeInt32":
@@ -1088,7 +1259,7 @@ export default class FileGeneratorModel extends CodeStream {
         });
         this.write("}");
         break;
-      case "fieldTypeObject.FieldTypeArray":
+      case "fieldTypeArray.FieldTypeArray":
         this.append("ReadonlyArray<");
         this.#generateFieldTypeCode(fieldType.arrayType);
         this.append(">");

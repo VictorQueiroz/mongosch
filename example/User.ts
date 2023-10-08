@@ -1,21 +1,27 @@
 import { Field, FieldTypeEnumString, FieldTypeObject, Model } from "../src";
 import { defaultFieldTypeDate } from "../src/schema/FieldTypeDate";
 import { EnumFieldString } from "../src/schema/FieldTypeEnum";
-import { defaultFieldTypeString } from "../src/schema/FieldTypeString";
-import {getCountries} from "libphonenumber-js";
+import {
+  FieldTypeString,
+  FieldTypeStringFlagMatchRegularExpression,
+  defaultFieldTypeString
+} from "../src/schema/FieldTypeString";
+import { getCountries } from "libphonenumber-js";
 
 const Phone = FieldTypeObject({
-  name: 'Phone',
+  name: "Phone",
   properties: [
     Field({
       name: "countryCode",
       description: "Country code of the phone",
       fieldType: FieldTypeEnumString({
-        name: 'CountryCode',
-        fields: getCountries().map(country => EnumFieldString({
-          value: country,
-          name: country
-        }))
+        name: "CountryCode",
+        fields: getCountries().map((country) =>
+          EnumFieldString({
+            value: country,
+            name: country
+          })
+        )
       })
     }),
     Field({
@@ -38,6 +44,17 @@ export default function User() {
         description: "Phone number",
         fieldType: Phone,
         name: "phone"
+      }),
+      Field({
+        description: "User email address",
+        fieldType: FieldTypeString({
+          flags: [
+            FieldTypeStringFlagMatchRegularExpression({
+              value: "/^[a-zA-Z0-9._%+-]+@(gmail.com|hotmail.com)$/"
+            })
+          ]
+        }),
+        name: "email"
       }),
       Field({
         description: "Date when the user was created",

@@ -1,6 +1,8 @@
 {
   "devDependencies": {
     "@types/node": "^18.18.0",
+    "ava": "^5.3.1",
+    "c8": "^8.0.1",
     "cli-argument-helper": "^0.0.8",
     "eslint": "^8.50.0",
     "jsbuffer": "^1.0.2",
@@ -8,6 +10,7 @@
     "mongodb": "^6.1.0",
     "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
+    "tsx": "^3.13.0",
     "typescript": "^5.2.2"
   },
   "files": [
@@ -18,10 +21,18 @@
   "bin": {
     "mongosch": "./cli/index.js"
   },
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "nodeArguments": [
+      "--loader=tsx"
+    ]
+  },
   "scripts": {
     "prepublishOnly": "npx tsc -b cli --force",
     "build:schema": "npx jsbuffer schema/main -o src/schema --indentation-size 2 --no-ts-config && npm run prettier",
-    "build:models": "npx ts-node --project cli/tsconfig.json cli --input test/model-definitions.ts -o test/schema",
+    "build:models": "npx ts-node --project cli/tsconfig.json cli --input example/model-definitions.ts -o example/schema",
     "build:models:fast": "TS_NODE_TRANSPILE_ONLY=1 npm run build:models",
     "prettier": "npx prettier --write src/schema"
   },
@@ -29,7 +40,6 @@
   "license": "MIT",
   "main": "./src/index.js",
   "dependencies": {
-    "cachecraft": "^1.0.1",
     "textstreamjs": "^0.0.4"
   }
 }

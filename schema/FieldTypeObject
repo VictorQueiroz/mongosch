@@ -5,24 +5,3 @@ export type FieldTypeObject : FieldType {
   string name;
   vector<Field> properties;
 }
-
-export trait FieldTypeArrayFlag {
-
-}
-
-export type FieldTypeArrayFlagMinLength : FieldTypeArrayFlag {
-  int value;
-}
-
-export type FieldTypeArrayFlagMaxLength : FieldTypeArrayFlag {
-  int value;
-}
-
-export type FieldTypeArrayFlagOptional : FieldTypeArrayFlag {}
-
-export type FieldTypeArray : FieldType {
-  // name of the type
-  string name;
-  vector<FieldTypeArrayFlag> flags;
-  FieldType arrayType;
-}

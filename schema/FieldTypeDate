@@ -7,6 +7,12 @@ export trait FieldTypeDateFlag {
   
 }
 
+// field can only be set to a date in the future
+export type FieldTypeDateFlagFuture : FieldTypeDateFlag {}
+
+// field can only be set to a date in the past
+export type FieldTypeDateFlagPast : FieldTypeDateFlag {}
+
 export type FieldTypeDateFlagDefaultValueCurrentDate : FieldTypeDateFlag {}
 
 export type FieldTypeDateFlagUpdateOnEvent : FieldTypeDateFlag {

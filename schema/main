@@ -7,4 +7,5 @@ import "./FieldTypeDate";
 import "./FieldTypeEnum";
 import "./FieldTypeUnion";
 import "./FieldTypeBinary";
+import "./FieldTypeArray";
 import "./FieldTypeBoolean";

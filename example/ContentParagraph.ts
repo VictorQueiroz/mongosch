@@ -3,18 +3,18 @@ import {
   FieldTypeIntegerFlagMin,
   defaultFieldTypeInt32
 } from "../src/schema/FieldTypeInteger";
-import {
-  FieldTypeArray,
-  FieldTypeObject,
-  defaultFieldTypeArray
-} from "../src/schema/FieldTypeObject";
+import { FieldTypeObject } from "../src/schema/FieldTypeObject";
 import { defaultFieldTypeString } from "../src/schema/FieldTypeString";
 import { Model } from "../src/schema/Model";
-import merge from "../src/merge";
+import mergeFields from "../src/mergeFields";
 import ContentBase from "./Content";
+import {
+  FieldTypeArray,
+  defaultFieldTypeArray
+} from "../src/schema/FieldTypeArray";
 
 const Sentence = FieldTypeObject({
-  name: 'Sentence',
+  name: "Sentence",
   properties: [
     Field({
       description: "Sentence.",
@@ -37,7 +37,7 @@ const Sentence = FieldTypeObject({
 });
 
 const Paragraph = FieldTypeObject({
-  name: 'Paragraph',
+  name: "Paragraph",
   properties: [
     Field({
       name: "sentences",
@@ -59,7 +59,7 @@ export function ContentParagraphBase() {
         name: "paragraphs",
         fieldType: FieldTypeArray({
           flags: [],
-          name: 'Paragraphs',
+          name: "Paragraphs",
           arrayType: Paragraph
         })
       })
@@ -68,5 +68,5 @@ export function ContentParagraphBase() {
 }
 
 export default function ContentParagraph() {
-  return merge(ContentParagraphBase(), ContentBase());
+  return mergeFields(ContentParagraphBase(), ContentBase());
 }

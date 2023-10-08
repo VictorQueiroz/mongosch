@@ -1,10 +1,10 @@
-import merge from "../src/merge";
+import mergeFields from "../src/mergeFields";
 import { Field } from "../src/schema/Field";
 import {
   FieldTypeArray,
-  FieldTypeObject,
   defaultFieldTypeArray
-} from "../src/schema/FieldTypeObject";
+} from "../src/schema/FieldTypeArray";
+import { FieldTypeObject } from "../src/schema/FieldTypeObject";
 import { defaultFieldTypeString } from "../src/schema/FieldTypeString";
 import { Model, updateModel } from "../src/schema/Model";
 import ContentBase from "./Content";
@@ -59,7 +59,7 @@ export function ContentUserInterfaceBase() {
         description: "Button rows",
         name: "buttonRows",
         fieldType: FieldTypeArray({
-          name: 'ButtonRows',
+          name: "ButtonRows",
           flags: [],
           arrayType: ButtonRow()
         })
@@ -72,5 +72,5 @@ export function ContentUserInterfaceBase() {
  * This is what we pass to the compiler, to avoid circular dependencies.
  */
 export function ContentUserInterface() {
-  return merge(ContentUserInterfaceBase(), ContentBase());
+  return mergeFields(ContentUserInterfaceBase(), ContentBase());
 }

@@ -1,1 +1,294 @@
-{"FieldTypeIntegerFlag":{"kind":"trait","name":"FieldTypeIntegerFlag","nodes":[{"type":"externalType","name":"FieldTypeIntegerFlagOptional","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeIntegerFlagDefaultValueDouble","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeIntegerFlagDefaultValueInt64","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeIntegerFlagDefaultValueInt32","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeIntegerFlagMin","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeIntegerFlagMax","relativePath":"./FieldTypeInteger"}]},"FieldTypeIntegerFlagOptional":{"kind":"type","id":-1409939587,"globalName":"fieldTypeInteger.FieldTypeIntegerFlagOptional","name":"FieldTypeIntegerFlagOptional","params":[]},"FieldTypeIntegerFlagDefaultValueDouble":{"kind":"type","id":1991764510,"globalName":"fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble","name":"FieldTypeIntegerFlagDefaultValueDouble","params":[{"name":"value","type":{"type":"generic","value":"double"}}]},"FieldTypeIntegerFlagDefaultValueInt64":{"kind":"type","id":894668971,"globalName":"fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64","name":"FieldTypeIntegerFlagDefaultValueInt64","params":[{"name":"value","type":{"type":"generic","value":"long"}}]},"FieldTypeIntegerFlagDefaultValueInt32":{"kind":"type","id":1093984595,"globalName":"fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32","name":"FieldTypeIntegerFlagDefaultValueInt32","params":[{"name":"value","type":{"type":"generic","value":"int"}}]},"FieldTypeIntegerFlagMin":{"kind":"type","id":715142335,"globalName":"fieldTypeInteger.FieldTypeIntegerFlagMin","name":"FieldTypeIntegerFlagMin","params":[{"name":"value","type":{"type":"generic","value":"double"}}]},"FieldTypeIntegerFlagMax":{"kind":"type","id":-1160567723,"globalName":"fieldTypeInteger.FieldTypeIntegerFlagMax","name":"FieldTypeIntegerFlagMax","params":[{"name":"value","type":{"type":"generic","value":"double"}}]},"FieldTypeDouble":{"kind":"type","id":-1526483373,"globalName":"fieldTypeInteger.FieldTypeDouble","name":"FieldTypeDouble","params":[{"name":"flags","type":{"type":"template","template":"vector","value":{"type":"internalType","interfaceName":"FieldTypeIntegerFlag"}}}]},"FieldTypeInt64":{"kind":"type","id":-296959413,"globalName":"fieldTypeInteger.FieldTypeInt64","name":"FieldTypeInt64","params":[{"name":"flags","type":{"type":"template","template":"vector","value":{"type":"internalType","interfaceName":"FieldTypeIntegerFlag"}}}]},"FieldTypeInt32":{"kind":"type","id":1212985133,"globalName":"fieldTypeInteger.FieldTypeInt32","name":"FieldTypeInt32","params":[{"name":"flags","type":{"type":"template","template":"vector","value":{"type":"internalType","interfaceName":"FieldTypeIntegerFlag"}}}]},"__all":[{"kind":"trait","name":"FieldTypeIntegerFlag","nodes":[{"type":"externalType","name":"FieldTypeIntegerFlagOptional","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeIntegerFlagDefaultValueDouble","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeIntegerFlagDefaultValueInt64","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeIntegerFlagDefaultValueInt32","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeIntegerFlagMin","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeIntegerFlagMax","relativePath":"./FieldTypeInteger"}]},{"kind":"type","id":-1409939587,"globalName":"fieldTypeInteger.FieldTypeIntegerFlagOptional","name":"FieldTypeIntegerFlagOptional","params":[]},{"kind":"type","id":1991764510,"globalName":"fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble","name":"FieldTypeIntegerFlagDefaultValueDouble","params":[{"name":"value","type":{"type":"generic","value":"double"}}]},{"kind":"type","id":894668971,"globalName":"fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64","name":"FieldTypeIntegerFlagDefaultValueInt64","params":[{"name":"value","type":{"type":"generic","value":"long"}}]},{"kind":"type","id":1093984595,"globalName":"fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32","name":"FieldTypeIntegerFlagDefaultValueInt32","params":[{"name":"value","type":{"type":"generic","value":"int"}}]},{"kind":"type","id":715142335,"globalName":"fieldTypeInteger.FieldTypeIntegerFlagMin","name":"FieldTypeIntegerFlagMin","params":[{"name":"value","type":{"type":"generic","value":"double"}}]},{"kind":"type","id":-1160567723,"globalName":"fieldTypeInteger.FieldTypeIntegerFlagMax","name":"FieldTypeIntegerFlagMax","params":[{"name":"value","type":{"type":"generic","value":"double"}}]},{"kind":"type","id":-1526483373,"globalName":"fieldTypeInteger.FieldTypeDouble","name":"FieldTypeDouble","params":[{"name":"flags","type":{"type":"template","template":"vector","value":{"type":"internalType","interfaceName":"FieldTypeIntegerFlag"}}}]},{"kind":"type","id":-296959413,"globalName":"fieldTypeInteger.FieldTypeInt64","name":"FieldTypeInt64","params":[{"name":"flags","type":{"type":"template","template":"vector","value":{"type":"internalType","interfaceName":"FieldTypeIntegerFlag"}}}]},{"kind":"type","id":1212985133,"globalName":"fieldTypeInteger.FieldTypeInt32","name":"FieldTypeInt32","params":[{"name":"flags","type":{"type":"template","template":"vector","value":{"type":"internalType","interfaceName":"FieldTypeIntegerFlag"}}}]}]}
+{
+  "FieldTypeIntegerFlag": {
+    "kind": "trait",
+    "name": "FieldTypeIntegerFlag",
+    "nodes": [
+      {
+        "type": "externalType",
+        "name": "FieldTypeIntegerFlagOptional",
+        "relativePath": "./FieldTypeInteger"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeIntegerFlagDefaultValueDouble",
+        "relativePath": "./FieldTypeInteger"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeIntegerFlagDefaultValueInt64",
+        "relativePath": "./FieldTypeInteger"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeIntegerFlagDefaultValueInt32",
+        "relativePath": "./FieldTypeInteger"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeIntegerFlagMin",
+        "relativePath": "./FieldTypeInteger"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeIntegerFlagMax",
+        "relativePath": "./FieldTypeInteger"
+      }
+    ]
+  },
+  "FieldTypeIntegerFlagOptional": {
+    "kind": "type",
+    "id": -1409939587,
+    "globalName": "fieldTypeInteger.FieldTypeIntegerFlagOptional",
+    "name": "FieldTypeIntegerFlagOptional",
+    "params": []
+  },
+  "FieldTypeIntegerFlagDefaultValueDouble": {
+    "kind": "type",
+    "id": 1991764510,
+    "globalName": "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble",
+    "name": "FieldTypeIntegerFlagDefaultValueDouble",
+    "params": [
+      { "name": "value", "type": { "type": "generic", "value": "double" } }
+    ]
+  },
+  "FieldTypeIntegerFlagDefaultValueInt64": {
+    "kind": "type",
+    "id": 894668971,
+    "globalName": "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64",
+    "name": "FieldTypeIntegerFlagDefaultValueInt64",
+    "params": [
+      { "name": "value", "type": { "type": "generic", "value": "long" } }
+    ]
+  },
+  "FieldTypeIntegerFlagDefaultValueInt32": {
+    "kind": "type",
+    "id": 1093984595,
+    "globalName": "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32",
+    "name": "FieldTypeIntegerFlagDefaultValueInt32",
+    "params": [
+      { "name": "value", "type": { "type": "generic", "value": "int" } }
+    ]
+  },
+  "FieldTypeIntegerFlagMin": {
+    "kind": "type",
+    "id": 715142335,
+    "globalName": "fieldTypeInteger.FieldTypeIntegerFlagMin",
+    "name": "FieldTypeIntegerFlagMin",
+    "params": [
+      { "name": "value", "type": { "type": "generic", "value": "double" } }
+    ]
+  },
+  "FieldTypeIntegerFlagMax": {
+    "kind": "type",
+    "id": -1160567723,
+    "globalName": "fieldTypeInteger.FieldTypeIntegerFlagMax",
+    "name": "FieldTypeIntegerFlagMax",
+    "params": [
+      { "name": "value", "type": { "type": "generic", "value": "double" } }
+    ]
+  },
+  "FieldTypeDouble": {
+    "kind": "type",
+    "id": -1526483373,
+    "globalName": "fieldTypeInteger.FieldTypeDouble",
+    "name": "FieldTypeDouble",
+    "params": [
+      {
+        "name": "flags",
+        "type": {
+          "type": "template",
+          "template": "vector",
+          "value": {
+            "type": "internalType",
+            "interfaceName": "FieldTypeIntegerFlag"
+          }
+        }
+      }
+    ]
+  },
+  "FieldTypeInt64": {
+    "kind": "type",
+    "id": -296959413,
+    "globalName": "fieldTypeInteger.FieldTypeInt64",
+    "name": "FieldTypeInt64",
+    "params": [
+      {
+        "name": "flags",
+        "type": {
+          "type": "template",
+          "template": "vector",
+          "value": {
+            "type": "internalType",
+            "interfaceName": "FieldTypeIntegerFlag"
+          }
+        }
+      }
+    ]
+  },
+  "FieldTypeInt32": {
+    "kind": "type",
+    "id": 1212985133,
+    "globalName": "fieldTypeInteger.FieldTypeInt32",
+    "name": "FieldTypeInt32",
+    "params": [
+      {
+        "name": "flags",
+        "type": {
+          "type": "template",
+          "template": "vector",
+          "value": {
+            "type": "internalType",
+            "interfaceName": "FieldTypeIntegerFlag"
+          }
+        }
+      }
+    ]
+  },
+  "__all": [
+    {
+      "kind": "trait",
+      "name": "FieldTypeIntegerFlag",
+      "nodes": [
+        {
+          "type": "externalType",
+          "name": "FieldTypeIntegerFlagOptional",
+          "relativePath": "./FieldTypeInteger"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeIntegerFlagDefaultValueDouble",
+          "relativePath": "./FieldTypeInteger"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeIntegerFlagDefaultValueInt64",
+          "relativePath": "./FieldTypeInteger"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeIntegerFlagDefaultValueInt32",
+          "relativePath": "./FieldTypeInteger"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeIntegerFlagMin",
+          "relativePath": "./FieldTypeInteger"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeIntegerFlagMax",
+          "relativePath": "./FieldTypeInteger"
+        }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": -1409939587,
+      "globalName": "fieldTypeInteger.FieldTypeIntegerFlagOptional",
+      "name": "FieldTypeIntegerFlagOptional",
+      "params": []
+    },
+    {
+      "kind": "type",
+      "id": 1991764510,
+      "globalName": "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble",
+      "name": "FieldTypeIntegerFlagDefaultValueDouble",
+      "params": [
+        { "name": "value", "type": { "type": "generic", "value": "double" } }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": 894668971,
+      "globalName": "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64",
+      "name": "FieldTypeIntegerFlagDefaultValueInt64",
+      "params": [
+        { "name": "value", "type": { "type": "generic", "value": "long" } }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": 1093984595,
+      "globalName": "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32",
+      "name": "FieldTypeIntegerFlagDefaultValueInt32",
+      "params": [
+        { "name": "value", "type": { "type": "generic", "value": "int" } }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": 715142335,
+      "globalName": "fieldTypeInteger.FieldTypeIntegerFlagMin",
+      "name": "FieldTypeIntegerFlagMin",
+      "params": [
+        { "name": "value", "type": { "type": "generic", "value": "double" } }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": -1160567723,
+      "globalName": "fieldTypeInteger.FieldTypeIntegerFlagMax",
+      "name": "FieldTypeIntegerFlagMax",
+      "params": [
+        { "name": "value", "type": { "type": "generic", "value": "double" } }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": -1526483373,
+      "globalName": "fieldTypeInteger.FieldTypeDouble",
+      "name": "FieldTypeDouble",
+      "params": [
+        {
+          "name": "flags",
+          "type": {
+            "type": "template",
+            "template": "vector",
+            "value": {
+              "type": "internalType",
+              "interfaceName": "FieldTypeIntegerFlag"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": -296959413,
+      "globalName": "fieldTypeInteger.FieldTypeInt64",
+      "name": "FieldTypeInt64",
+      "params": [
+        {
+          "name": "flags",
+          "type": {
+            "type": "template",
+            "template": "vector",
+            "value": {
+              "type": "internalType",
+              "interfaceName": "FieldTypeIntegerFlag"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": 1212985133,
+      "globalName": "fieldTypeInteger.FieldTypeInt32",
+      "name": "FieldTypeInt32",
+      "params": [
+        {
+          "name": "flags",
+          "type": {
+            "type": "template",
+            "template": "vector",
+            "value": {
+              "type": "internalType",
+              "interfaceName": "FieldTypeIntegerFlag"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

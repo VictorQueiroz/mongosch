@@ -1,0 +1,152 @@
+{
+  "FieldTypeArrayFlag": {
+    "kind": "trait",
+    "name": "FieldTypeArrayFlag",
+    "nodes": [
+      {
+        "type": "externalType",
+        "name": "FieldTypeArrayFlagMinLength",
+        "relativePath": "./FieldTypeArray"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeArrayFlagMaxLength",
+        "relativePath": "./FieldTypeArray"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeArrayFlagOptional",
+        "relativePath": "./FieldTypeArray"
+      }
+    ]
+  },
+  "FieldTypeArrayFlagMinLength": {
+    "kind": "type",
+    "id": -2125914307,
+    "globalName": "fieldTypeArray.FieldTypeArrayFlagMinLength",
+    "name": "FieldTypeArrayFlagMinLength",
+    "params": [
+      { "name": "value", "type": { "type": "generic", "value": "int" } }
+    ]
+  },
+  "FieldTypeArrayFlagMaxLength": {
+    "kind": "type",
+    "id": -756086823,
+    "globalName": "fieldTypeArray.FieldTypeArrayFlagMaxLength",
+    "name": "FieldTypeArrayFlagMaxLength",
+    "params": [
+      { "name": "value", "type": { "type": "generic", "value": "int" } }
+    ]
+  },
+  "FieldTypeArrayFlagOptional": {
+    "kind": "type",
+    "id": 28218945,
+    "globalName": "fieldTypeArray.FieldTypeArrayFlagOptional",
+    "name": "FieldTypeArrayFlagOptional",
+    "params": []
+  },
+  "FieldTypeArray": {
+    "kind": "type",
+    "id": -1280597715,
+    "globalName": "fieldTypeArray.FieldTypeArray",
+    "name": "FieldTypeArray",
+    "params": [
+      { "name": "name", "type": { "type": "generic", "value": "string" } },
+      {
+        "name": "flags",
+        "type": {
+          "type": "template",
+          "template": "vector",
+          "value": {
+            "type": "internalType",
+            "interfaceName": "FieldTypeArrayFlag"
+          }
+        }
+      },
+      {
+        "name": "arrayType",
+        "type": {
+          "type": "externalType",
+          "name": "FieldType",
+          "relativePath": "./FieldType"
+        }
+      }
+    ]
+  },
+  "__all": [
+    {
+      "kind": "trait",
+      "name": "FieldTypeArrayFlag",
+      "nodes": [
+        {
+          "type": "externalType",
+          "name": "FieldTypeArrayFlagMinLength",
+          "relativePath": "./FieldTypeArray"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeArrayFlagMaxLength",
+          "relativePath": "./FieldTypeArray"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeArrayFlagOptional",
+          "relativePath": "./FieldTypeArray"
+        }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": -2125914307,
+      "globalName": "fieldTypeArray.FieldTypeArrayFlagMinLength",
+      "name": "FieldTypeArrayFlagMinLength",
+      "params": [
+        { "name": "value", "type": { "type": "generic", "value": "int" } }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": -756086823,
+      "globalName": "fieldTypeArray.FieldTypeArrayFlagMaxLength",
+      "name": "FieldTypeArrayFlagMaxLength",
+      "params": [
+        { "name": "value", "type": { "type": "generic", "value": "int" } }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": 28218945,
+      "globalName": "fieldTypeArray.FieldTypeArrayFlagOptional",
+      "name": "FieldTypeArrayFlagOptional",
+      "params": []
+    },
+    {
+      "kind": "type",
+      "id": -1280597715,
+      "globalName": "fieldTypeArray.FieldTypeArray",
+      "name": "FieldTypeArray",
+      "params": [
+        { "name": "name", "type": { "type": "generic", "value": "string" } },
+        {
+          "name": "flags",
+          "type": {
+            "type": "template",
+            "template": "vector",
+            "value": {
+              "type": "internalType",
+              "interfaceName": "FieldTypeArrayFlag"
+            }
+          }
+        },
+        {
+          "name": "arrayType",
+          "type": {
+            "type": "externalType",
+            "name": "FieldType",
+            "relativePath": "./FieldType"
+          }
+        }
+      ]
+    }
+  ]
+}

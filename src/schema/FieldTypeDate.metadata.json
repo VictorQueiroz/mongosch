@@ -1,1 +1,168 @@
-{"FieldTypeDateFlag":{"kind":"trait","name":"FieldTypeDateFlag","nodes":[{"type":"externalType","name":"FieldTypeDateFlagDefaultValueCurrentDate","relativePath":"./FieldTypeDate"},{"type":"externalType","name":"FieldTypeDateFlagUpdateOnEvent","relativePath":"./FieldTypeDate"}]},"FieldTypeDateFlagDefaultValueCurrentDate":{"kind":"type","id":210004158,"globalName":"fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate","name":"FieldTypeDateFlagDefaultValueCurrentDate","params":[]},"FieldTypeDateFlagUpdateOnEvent":{"kind":"type","id":-388087272,"globalName":"fieldTypeDate.FieldTypeDateFlagUpdateOnEvent","name":"FieldTypeDateFlagUpdateOnEvent","params":[{"name":"event","type":{"type":"externalType","name":"Event","relativePath":"./Event"}}]},"FieldTypeDate":{"kind":"type","id":-367427752,"globalName":"fieldTypeDate.FieldTypeDate","name":"FieldTypeDate","params":[{"name":"flags","type":{"type":"template","template":"vector","value":{"type":"internalType","interfaceName":"FieldTypeDateFlag"}}}]},"__all":[{"kind":"trait","name":"FieldTypeDateFlag","nodes":[{"type":"externalType","name":"FieldTypeDateFlagDefaultValueCurrentDate","relativePath":"./FieldTypeDate"},{"type":"externalType","name":"FieldTypeDateFlagUpdateOnEvent","relativePath":"./FieldTypeDate"}]},{"kind":"type","id":210004158,"globalName":"fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate","name":"FieldTypeDateFlagDefaultValueCurrentDate","params":[]},{"kind":"type","id":-388087272,"globalName":"fieldTypeDate.FieldTypeDateFlagUpdateOnEvent","name":"FieldTypeDateFlagUpdateOnEvent","params":[{"name":"event","type":{"type":"externalType","name":"Event","relativePath":"./Event"}}]},{"kind":"type","id":-367427752,"globalName":"fieldTypeDate.FieldTypeDate","name":"FieldTypeDate","params":[{"name":"flags","type":{"type":"template","template":"vector","value":{"type":"internalType","interfaceName":"FieldTypeDateFlag"}}}]}]}
+{
+  "FieldTypeDateFlag": {
+    "kind": "trait",
+    "name": "FieldTypeDateFlag",
+    "nodes": [
+      {
+        "type": "externalType",
+        "name": "FieldTypeDateFlagFuture",
+        "relativePath": "./FieldTypeDate"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeDateFlagPast",
+        "relativePath": "./FieldTypeDate"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeDateFlagDefaultValueCurrentDate",
+        "relativePath": "./FieldTypeDate"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeDateFlagUpdateOnEvent",
+        "relativePath": "./FieldTypeDate"
+      }
+    ]
+  },
+  "FieldTypeDateFlagFuture": {
+    "kind": "type",
+    "id": -1345777696,
+    "globalName": "fieldTypeDate.FieldTypeDateFlagFuture",
+    "name": "FieldTypeDateFlagFuture",
+    "params": []
+  },
+  "FieldTypeDateFlagPast": {
+    "kind": "type",
+    "id": -1190157343,
+    "globalName": "fieldTypeDate.FieldTypeDateFlagPast",
+    "name": "FieldTypeDateFlagPast",
+    "params": []
+  },
+  "FieldTypeDateFlagDefaultValueCurrentDate": {
+    "kind": "type",
+    "id": 210004158,
+    "globalName": "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate",
+    "name": "FieldTypeDateFlagDefaultValueCurrentDate",
+    "params": []
+  },
+  "FieldTypeDateFlagUpdateOnEvent": {
+    "kind": "type",
+    "id": -388087272,
+    "globalName": "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent",
+    "name": "FieldTypeDateFlagUpdateOnEvent",
+    "params": [
+      {
+        "name": "event",
+        "type": {
+          "type": "externalType",
+          "name": "Event",
+          "relativePath": "./Event"
+        }
+      }
+    ]
+  },
+  "FieldTypeDate": {
+    "kind": "type",
+    "id": -367427752,
+    "globalName": "fieldTypeDate.FieldTypeDate",
+    "name": "FieldTypeDate",
+    "params": [
+      {
+        "name": "flags",
+        "type": {
+          "type": "template",
+          "template": "vector",
+          "value": {
+            "type": "internalType",
+            "interfaceName": "FieldTypeDateFlag"
+          }
+        }
+      }
+    ]
+  },
+  "__all": [
+    {
+      "kind": "trait",
+      "name": "FieldTypeDateFlag",
+      "nodes": [
+        {
+          "type": "externalType",
+          "name": "FieldTypeDateFlagFuture",
+          "relativePath": "./FieldTypeDate"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeDateFlagPast",
+          "relativePath": "./FieldTypeDate"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeDateFlagDefaultValueCurrentDate",
+          "relativePath": "./FieldTypeDate"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeDateFlagUpdateOnEvent",
+          "relativePath": "./FieldTypeDate"
+        }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": -1345777696,
+      "globalName": "fieldTypeDate.FieldTypeDateFlagFuture",
+      "name": "FieldTypeDateFlagFuture",
+      "params": []
+    },
+    {
+      "kind": "type",
+      "id": -1190157343,
+      "globalName": "fieldTypeDate.FieldTypeDateFlagPast",
+      "name": "FieldTypeDateFlagPast",
+      "params": []
+    },
+    {
+      "kind": "type",
+      "id": 210004158,
+      "globalName": "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate",
+      "name": "FieldTypeDateFlagDefaultValueCurrentDate",
+      "params": []
+    },
+    {
+      "kind": "type",
+      "id": -388087272,
+      "globalName": "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent",
+      "name": "FieldTypeDateFlagUpdateOnEvent",
+      "params": [
+        {
+          "name": "event",
+          "type": {
+            "type": "externalType",
+            "name": "Event",
+            "relativePath": "./Event"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": -367427752,
+      "globalName": "fieldTypeDate.FieldTypeDate",
+      "name": "FieldTypeDate",
+      "params": [
+        {
+          "name": "flags",
+          "type": {
+            "type": "template",
+            "template": "vector",
+            "value": {
+              "type": "internalType",
+              "interfaceName": "FieldTypeDateFlag"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

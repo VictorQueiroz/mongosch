@@ -1,19 +1,13 @@
-import { MemorizerList } from "cachecraft";
 import FileGeneratorModel, { getModelClassName } from "./FileGeneratorModel";
-import { Model, compareModel } from "./schema/Model";
+import { Model } from "./schema/Model";
 import Exception from "./Exception";
 import CodeStream from "textstreamjs";
 
 export default class FileGeneratorManager {
   readonly #models;
   readonly #fileGenerators: Map<string, FileGeneratorModel> = new Map();
-  // TODO: I think this is no longer needed
-  readonly #modelMemorizer = new MemorizerList(
-    (model: Model) => model,
-    compareModel
-  );
   public constructor(models: Model[]) {
-    this.#models = models.map((m) => this.#modelMemorizer.get(m));
+    this.#models = models;
   }
   public resolve(model: Model) {
     const result = this.#fileGenerators.get(model.collectionName);
@@ -93,6 +87,11 @@ export default class FileGeneratorManager {
     );
     files.push({
       path: "DatabaseClient.ts",
+      contents: cs.value()
+    });
+    cs.write(`export { DatabaseClient } from "./DatabaseClient";\n`);
+    files.push({
+      path: "index.ts",
       contents: cs.value()
     });
     return files;

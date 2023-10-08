@@ -1,1 +1,78 @@
-{"FieldTypeBooleanFlags":{"kind":"trait","name":"FieldTypeBooleanFlags","nodes":[{"type":"externalType","name":"FieldTypeBooleanFlagsOptional","relativePath":"./FieldTypeBoolean"}]},"FieldTypeBooleanFlagsOptional":{"kind":"type","id":1833850754,"globalName":"fieldTypeBoolean.FieldTypeBooleanFlagsOptional","name":"FieldTypeBooleanFlagsOptional","params":[]},"FieldTypeBoolean":{"kind":"type","id":-1452915313,"globalName":"fieldTypeBoolean.FieldTypeBoolean","name":"FieldTypeBoolean","params":[{"name":"flags","type":{"type":"template","template":"vector","value":{"type":"internalType","interfaceName":"FieldTypeBooleanFlags"}}}]},"__all":[{"kind":"trait","name":"FieldTypeBooleanFlags","nodes":[{"type":"externalType","name":"FieldTypeBooleanFlagsOptional","relativePath":"./FieldTypeBoolean"}]},{"kind":"type","id":1833850754,"globalName":"fieldTypeBoolean.FieldTypeBooleanFlagsOptional","name":"FieldTypeBooleanFlagsOptional","params":[]},{"kind":"type","id":-1452915313,"globalName":"fieldTypeBoolean.FieldTypeBoolean","name":"FieldTypeBoolean","params":[{"name":"flags","type":{"type":"template","template":"vector","value":{"type":"internalType","interfaceName":"FieldTypeBooleanFlags"}}}]}]}
+{
+  "FieldTypeBooleanFlags": {
+    "kind": "trait",
+    "name": "FieldTypeBooleanFlags",
+    "nodes": [
+      {
+        "type": "externalType",
+        "name": "FieldTypeBooleanFlagsOptional",
+        "relativePath": "./FieldTypeBoolean"
+      }
+    ]
+  },
+  "FieldTypeBooleanFlagsOptional": {
+    "kind": "type",
+    "id": 1833850754,
+    "globalName": "fieldTypeBoolean.FieldTypeBooleanFlagsOptional",
+    "name": "FieldTypeBooleanFlagsOptional",
+    "params": []
+  },
+  "FieldTypeBoolean": {
+    "kind": "type",
+    "id": -1452915313,
+    "globalName": "fieldTypeBoolean.FieldTypeBoolean",
+    "name": "FieldTypeBoolean",
+    "params": [
+      {
+        "name": "flags",
+        "type": {
+          "type": "template",
+          "template": "vector",
+          "value": {
+            "type": "internalType",
+            "interfaceName": "FieldTypeBooleanFlags"
+          }
+        }
+      }
+    ]
+  },
+  "__all": [
+    {
+      "kind": "trait",
+      "name": "FieldTypeBooleanFlags",
+      "nodes": [
+        {
+          "type": "externalType",
+          "name": "FieldTypeBooleanFlagsOptional",
+          "relativePath": "./FieldTypeBoolean"
+        }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": 1833850754,
+      "globalName": "fieldTypeBoolean.FieldTypeBooleanFlagsOptional",
+      "name": "FieldTypeBooleanFlagsOptional",
+      "params": []
+    },
+    {
+      "kind": "type",
+      "id": -1452915313,
+      "globalName": "fieldTypeBoolean.FieldTypeBoolean",
+      "name": "FieldTypeBoolean",
+      "params": [
+        {
+          "name": "flags",
+          "type": {
+            "type": "template",
+            "template": "vector",
+            "value": {
+              "type": "internalType",
+              "interfaceName": "FieldTypeBooleanFlags"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

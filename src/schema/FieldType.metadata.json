@@ -1,1 +1,146 @@
-{"FieldType":{"kind":"trait","name":"FieldType","nodes":[{"type":"externalType","name":"FieldTypeModelReference","relativePath":"./FieldTypeModelReference"},{"type":"externalType","name":"FieldTypeString","relativePath":"./FieldTypeString"},{"type":"externalType","name":"FieldTypeObject","relativePath":"./FieldTypeObject"},{"type":"externalType","name":"FieldTypeArray","relativePath":"./FieldTypeObject"},{"type":"externalType","name":"FieldTypeDouble","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeInt64","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeInt32","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeDate","relativePath":"./FieldTypeDate"},{"type":"externalType","name":"FieldTypeEnumString","relativePath":"./FieldTypeEnum"},{"type":"externalType","name":"FieldTypeEnumInt","relativePath":"./FieldTypeEnum"},{"type":"externalType","name":"FieldTypeUnion","relativePath":"./FieldTypeUnion"},{"type":"externalType","name":"FieldTypeBinary","relativePath":"./FieldTypeBinary"},{"type":"externalType","name":"FieldTypeBoolean","relativePath":"./FieldTypeBoolean"}]},"__all":[{"kind":"trait","name":"FieldType","nodes":[{"type":"externalType","name":"FieldTypeModelReference","relativePath":"./FieldTypeModelReference"},{"type":"externalType","name":"FieldTypeString","relativePath":"./FieldTypeString"},{"type":"externalType","name":"FieldTypeObject","relativePath":"./FieldTypeObject"},{"type":"externalType","name":"FieldTypeArray","relativePath":"./FieldTypeObject"},{"type":"externalType","name":"FieldTypeDouble","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeInt64","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeInt32","relativePath":"./FieldTypeInteger"},{"type":"externalType","name":"FieldTypeDate","relativePath":"./FieldTypeDate"},{"type":"externalType","name":"FieldTypeEnumString","relativePath":"./FieldTypeEnum"},{"type":"externalType","name":"FieldTypeEnumInt","relativePath":"./FieldTypeEnum"},{"type":"externalType","name":"FieldTypeUnion","relativePath":"./FieldTypeUnion"},{"type":"externalType","name":"FieldTypeBinary","relativePath":"./FieldTypeBinary"},{"type":"externalType","name":"FieldTypeBoolean","relativePath":"./FieldTypeBoolean"}]}]}
+{
+  "FieldType": {
+    "kind": "trait",
+    "name": "FieldType",
+    "nodes": [
+      {
+        "type": "externalType",
+        "name": "FieldTypeModelReference",
+        "relativePath": "./FieldTypeModelReference"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeString",
+        "relativePath": "./FieldTypeString"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeObject",
+        "relativePath": "./FieldTypeObject"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeDouble",
+        "relativePath": "./FieldTypeInteger"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeInt64",
+        "relativePath": "./FieldTypeInteger"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeInt32",
+        "relativePath": "./FieldTypeInteger"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeDate",
+        "relativePath": "./FieldTypeDate"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeEnumString",
+        "relativePath": "./FieldTypeEnum"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeEnumInt",
+        "relativePath": "./FieldTypeEnum"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeUnion",
+        "relativePath": "./FieldTypeUnion"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeBinary",
+        "relativePath": "./FieldTypeBinary"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeArray",
+        "relativePath": "./FieldTypeArray"
+      },
+      {
+        "type": "externalType",
+        "name": "FieldTypeBoolean",
+        "relativePath": "./FieldTypeBoolean"
+      }
+    ]
+  },
+  "__all": [
+    {
+      "kind": "trait",
+      "name": "FieldType",
+      "nodes": [
+        {
+          "type": "externalType",
+          "name": "FieldTypeModelReference",
+          "relativePath": "./FieldTypeModelReference"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeString",
+          "relativePath": "./FieldTypeString"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeObject",
+          "relativePath": "./FieldTypeObject"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeDouble",
+          "relativePath": "./FieldTypeInteger"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeInt64",
+          "relativePath": "./FieldTypeInteger"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeInt32",
+          "relativePath": "./FieldTypeInteger"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeDate",
+          "relativePath": "./FieldTypeDate"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeEnumString",
+          "relativePath": "./FieldTypeEnum"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeEnumInt",
+          "relativePath": "./FieldTypeEnum"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeUnion",
+          "relativePath": "./FieldTypeUnion"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeBinary",
+          "relativePath": "./FieldTypeBinary"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeArray",
+          "relativePath": "./FieldTypeArray"
+        },
+        {
+          "type": "externalType",
+          "name": "FieldTypeBoolean",
+          "relativePath": "./FieldTypeBoolean"
+        }
+      ]
+    }
+  ]
+}

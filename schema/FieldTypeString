@@ -18,6 +18,10 @@ export type FieldTypeStringFlagMaxLength : FieldTypeStringFlag {
   int value;
 }
 
+export type FieldTypeStringFlagMatchRegularExpression : FieldTypeStringFlag {
+  string value;
+}
+
 export type FieldTypeString : FieldType {
   vector<FieldTypeStringFlag> flags;
 }
