@@ -1,13 +1,31 @@
 import {IUser} from './User';
 import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
 export interface IInputPost {
+  /**
+   * Post title.
+   */
   title: string;
+  /**
+   * User that authored the post.
+   */
   authorId: ObjectId;
+  /**
+   * Date when the post was created
+   */
   createdAt: Date;
 }
 export interface IPost {
+  /**
+   * Post title.
+   */
   title: string;
+  /**
+   * User that authored the post.
+   */
   authorId: ObjectId;
+  /**
+   * Date when the post was created
+   */
   createdAt: Date;
 }
 export interface IPostPopulated {
@@ -100,5 +118,10 @@ export function validatePost(value: IPost) {
     }
   }
   const value2 = value['createdAt'];
+  if(!(value2 instanceof Date)) {
+    return {
+      error: `Expected value2 to be of type Date, but got "${typeof value2}" instead`
+    }
+  }
   return null;
 }

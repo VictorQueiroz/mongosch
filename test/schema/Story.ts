@@ -1,11 +1,23 @@
 import {IUser} from './User';
 import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
 export interface IInputStory {
+  /**
+   * Story name
+   */
   name: string;
+  /**
+   * The person who created the story.
+   */
   authorId: ObjectId;
 }
 export interface IStory {
+  /**
+   * Story name
+   */
   name: string;
+  /**
+   * The person who created the story.
+   */
   authorId: ObjectId;
 }
 export interface IStoryPopulated {

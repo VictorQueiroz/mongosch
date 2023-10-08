@@ -1,16 +1,40 @@
 import {Collection, Filter, UpdateFilter, OptionalId} from 'mongodb';
 export interface IInputUser {
+  /**
+   * Phone number
+   */
   phone: {
+    /**
+     * Country code of the phone
+     */
     countryCode: UserPhonePhoneCountryCodeType;
+    /**
+     * National number
+     */
     nationalNumber: string;
   };
+  /**
+   * Date when the user was created
+   */
   createdAt: Date;
 }
 export interface IUser {
+  /**
+   * Phone number
+   */
   phone: {
+    /**
+     * Country code of the phone
+     */
     countryCode: UserPhonePhoneCountryCodeType;
+    /**
+     * National number
+     */
     nationalNumber: string;
   };
+  /**
+   * Date when the user was created
+   */
   createdAt: Date;
 }
 export const UserPhonePhoneCountryCodeValues = [
@@ -577,5 +601,10 @@ export function validateUser(value: IUser) {
     }
   }
   const value3 = value['createdAt'];
+  if(!(value3 instanceof Date)) {
+    return {
+      error: `Expected value3 to be of type Date, but got "${typeof value3}" instead`
+    }
+  }
   return null;
 }

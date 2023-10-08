@@ -1,16 +1,40 @@
 import {IContentUserInterface} from './ContentUserInterface';
 import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
 export interface IInputContentParagraph {
+  /**
+   * Paragraph list
+   */
   paragraphs: ReadonlyArray<{
+    /**
+     * Paragraph sentences.
+     */
     sentences: ReadonlyArray<{
+      /**
+       * Sentence.
+       */
       value: string;
+      /**
+       * How long is the sentence gonna take to be finally rendered.
+       */
       duration: number;
     }>;
   }>;
+  /**
+   * Next content after the content is fully processed by the client.
+   */
   nextContent: {
+    /**
+     * Condition to be evaluated.
+     */
     condition: {
+      /**
+       * JavaScript code to be executed.
+       */
       code: string;
     };
+    /**
+     * Actual value of the conditional template.
+     */
     value: {
       id: ContentParagraphNextContentConditionalValueType.Paragraph;
       value: ObjectId;
@@ -19,20 +43,50 @@ export interface IInputContentParagraph {
       value: ObjectId;
     };
   };
+  /**
+   * Content creation date.
+   */
   createdAt?: Date;
+  /**
+   * Content creation date.
+   */
   updatedAt?: Date;
 }
 export interface IContentParagraph {
+  /**
+   * Paragraph list
+   */
   paragraphs: ReadonlyArray<{
+    /**
+     * Paragraph sentences.
+     */
     sentences: ReadonlyArray<{
+      /**
+       * Sentence.
+       */
       value: string;
+      /**
+       * How long is the sentence gonna take to be finally rendered.
+       */
       duration: number;
     }>;
   }>;
+  /**
+   * Next content after the content is fully processed by the client.
+   */
   nextContent: {
+    /**
+     * Condition to be evaluated.
+     */
     condition: {
+      /**
+       * JavaScript code to be executed.
+       */
       code: string;
     };
+    /**
+     * Actual value of the conditional template.
+     */
     value: {
       id: ContentParagraphNextContentConditionalValueType.Paragraph;
       value: ObjectId;
@@ -41,7 +95,13 @@ export interface IContentParagraph {
       value: ObjectId;
     };
   };
+  /**
+   * Content creation date.
+   */
   createdAt: Date;
+  /**
+   * Content creation date.
+   */
   updatedAt: Date;
 }
 export enum ContentParagraphNextContentConditionalValueType {
@@ -125,10 +185,6 @@ export class ContentParagraphModel {
       contentParagraphs: new Array<ObjectId>(),
       contentUserInterfaces: new Array<ObjectId>(),
     };
-    for(const arrayElement_1 of value.paragraphs) {
-      for(const arrayElement_3 of arrayElement_1.sentences) {
-      }
-    }
     if(value.nextContent.value.id === 0) {
       ids.contentParagraphs.push(value.nextContent.value.value);
     }

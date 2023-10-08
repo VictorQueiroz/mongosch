@@ -1012,6 +1012,9 @@ export default class FileGeneratorModel extends CodeStream {
   }
   #generateFields({ fields, flags = false }: IGenerateFieldsOptions) {
     for (const f of fields) {
+      this.write("/**\n");
+      this.write(` * ${f.description}\n`);
+      this.write(" */\n");
       this.write(`${f.name}`);
       if (flags) {
         this.#generateAfterFieldNameCode(f);

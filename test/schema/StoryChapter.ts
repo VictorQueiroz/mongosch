@@ -4,11 +4,29 @@ import {IContentParagraph} from './ContentParagraph';
 import {IContentUserInterface} from './ContentUserInterface';
 import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
 export interface IInputStoryChapter {
+  /**
+   * Title of the story chapter
+   */
   title: string;
+  /**
+   * Date when the chapter was last updated
+   */
   createdAt: Date;
+  /**
+   * Date when the chapter was last updated
+   */
   updatedAt: Date;
+  /**
+   * The chapter author id.
+   */
   userId: ObjectId;
+  /**
+   * The story id to which this chapter belongs to.
+   */
   storyId: ObjectId;
+  /**
+   * Initial content id
+   */
   initialContentId: {
     id: StoryChapterInitialContentIdType.Paragraph;
     value: ObjectId;
@@ -18,11 +36,29 @@ export interface IInputStoryChapter {
   };
 }
 export interface IStoryChapter {
+  /**
+   * Title of the story chapter
+   */
   title: string;
+  /**
+   * Date when the chapter was last updated
+   */
   createdAt: Date;
+  /**
+   * Date when the chapter was last updated
+   */
   updatedAt: Date;
+  /**
+   * The chapter author id.
+   */
   userId: ObjectId;
+  /**
+   * The story id to which this chapter belongs to.
+   */
   storyId: ObjectId;
+  /**
+   * Initial content id
+   */
   initialContentId: {
     id: StoryChapterInitialContentIdType.Paragraph;
     value: ObjectId;
@@ -165,7 +201,17 @@ export function validateStoryChapter(value: IStoryChapter) {
     }
   }
   const value1 = value['createdAt'];
+  if(!(value1 instanceof Date)) {
+    return {
+      error: `Expected value1 to be of type Date, but got "${typeof value1}" instead`
+    }
+  }
   const value2 = value['updatedAt'];
+  if(!(value2 instanceof Date)) {
+    return {
+      error: `Expected value2 to be of type Date, but got "${typeof value2}" instead`
+    }
+  }
   const value3 = value['userId'];
   if(!(value3 instanceof ObjectId)) {
     return {

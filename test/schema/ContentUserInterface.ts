@@ -1,21 +1,54 @@
 import {IContentParagraph} from './ContentParagraph';
 import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
 export interface IInputContentUserInterface {
+  /**
+   * Button rows
+   */
   buttonRows: ReadonlyArray<{
+    /**
+     * Row items.
+     */
     buttons: ReadonlyArray<{
+      /**
+       * Condition that will defined whether this button row will be rendered or not.
+       */
       condition: {
+        /**
+         * JavaScript code to be executed.
+         */
         code: string;
       };
+      /**
+       * The name that should appear in the button.
+       */
       title: string;
+      /**
+       * Script that will run when the user clicks on the button.
+       */
       onClick: {
+        /**
+         * JavaScript code to be executed.
+         */
         code: string;
       };
     }>;
   }>;
+  /**
+   * Next content after the content is fully processed by the client.
+   */
   nextContent: {
+    /**
+     * Condition to be evaluated.
+     */
     condition: {
+      /**
+       * JavaScript code to be executed.
+       */
       code: string;
     };
+    /**
+     * Actual value of the conditional template.
+     */
     value: {
       id: ContentUserInterfaceNextContentConditionalValueType.Paragraph;
       value: ObjectId;
@@ -24,25 +57,64 @@ export interface IInputContentUserInterface {
       value: ObjectId;
     };
   };
+  /**
+   * Content creation date.
+   */
   createdAt?: Date;
+  /**
+   * Content creation date.
+   */
   updatedAt?: Date;
 }
 export interface IContentUserInterface {
+  /**
+   * Button rows
+   */
   buttonRows: ReadonlyArray<{
+    /**
+     * Row items.
+     */
     buttons: ReadonlyArray<{
+      /**
+       * Condition that will defined whether this button row will be rendered or not.
+       */
       condition: {
+        /**
+         * JavaScript code to be executed.
+         */
         code: string;
       };
+      /**
+       * The name that should appear in the button.
+       */
       title: string;
+      /**
+       * Script that will run when the user clicks on the button.
+       */
       onClick: {
+        /**
+         * JavaScript code to be executed.
+         */
         code: string;
       };
     }>;
   }>;
+  /**
+   * Next content after the content is fully processed by the client.
+   */
   nextContent: {
+    /**
+     * Condition to be evaluated.
+     */
     condition: {
+      /**
+       * JavaScript code to be executed.
+       */
       code: string;
     };
+    /**
+     * Actual value of the conditional template.
+     */
     value: {
       id: ContentUserInterfaceNextContentConditionalValueType.Paragraph;
       value: ObjectId;
@@ -51,7 +123,13 @@ export interface IContentUserInterface {
       value: ObjectId;
     };
   };
+  /**
+   * Content creation date.
+   */
   createdAt: Date;
+  /**
+   * Content creation date.
+   */
   updatedAt: Date;
 }
 export enum ContentUserInterfaceNextContentConditionalValueType {
@@ -135,10 +213,6 @@ export class ContentUserInterfaceModel {
       contentParagraphs: new Array<ObjectId>(),
       contentUserInterfaces: new Array<ObjectId>(),
     };
-    for(const arrayElement_1 of value.buttonRows) {
-      for(const arrayElement_3 of arrayElement_1.buttons) {
-      }
-    }
     if(value.nextContent.value.id === 0) {
       ids.contentParagraphs.push(value.nextContent.value.value);
     }
