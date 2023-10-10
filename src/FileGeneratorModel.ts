@@ -616,8 +616,12 @@ export default class FileGeneratorModel extends CodeStream {
         this.write(
           `const populated: ${getPopulatedInterfaceName(m)} = {\n`,
           () => {
-            for (const m of this.#referencedModels) {
-              this.write(`${m.collectionName}: [],\n`);
+            for (const collectionName of new Set(
+              Array.from(this.#referencedModels.values()).map(
+                (m) => m.collectionName
+              )
+            )) {
+              this.write(`${collectionName}: [],\n`);
             }
           },
           "};\n"
