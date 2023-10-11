@@ -4,7 +4,7 @@ import { FieldType } from "./schema/FieldType";
 import { Field } from "./schema/Field";
 import { UnionItem } from "./schema/FieldTypeUnion";
 import Exception from "./Exception";
-import { Event, EventOnCreate, compareEventTrait } from "./schema/Event";
+import { Event, compareEventTrait } from "./schema/Event";
 import { FieldTypeObject } from "./schema/FieldTypeObject";
 
 interface IGenerateValidationFieldsOptions {
@@ -613,14 +613,15 @@ export default class FileGeneratorModel extends CodeStream {
         .map((n) => `"${n}"`)
         .join(", ")}]) {\n`,
       () => {
+        const collectionNames = new Set(
+          Array.from(this.#referencedModels.values()).map(
+            (m) => m.collectionName
+          )
+        );
         this.write(
           `const populated: ${getPopulatedInterfaceName(m)} = {\n`,
           () => {
-            for (const collectionName of new Set(
-              Array.from(this.#referencedModels.values()).map(
-                (m) => m.collectionName
-              )
-            )) {
+            for (const collectionName of collectionNames) {
               this.write(`${collectionName}: [],\n`);
             }
           },
@@ -629,8 +630,8 @@ export default class FileGeneratorModel extends CodeStream {
         this.write(
           `const ids = {\n`,
           () => {
-            for (const m of this.#referencedModels) {
-              this.write(`${m.collectionName}: new Array<ObjectId>(),\n`);
+            for (const collectionName of collectionNames) {
+              this.write(`${collectionName}: new Array<ObjectId>(),\n`);
             }
           },
           "};\n"
