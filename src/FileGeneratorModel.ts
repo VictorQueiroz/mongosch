@@ -662,7 +662,7 @@ export default class FileGeneratorModel extends CodeStream {
           () => {
             for (const m of this.#referencedModels) {
               this.write(
-                `(async (list) => populated.${m.collectionName}.push(...(await list)))(entities.includes("${m.className}") ? this.${m.collectionName}.find({\n`,
+                `(async (list) => population.${m.collectionName}.push(...(await list)))(entities.includes("${m.className}") ? this.${m.collectionName}.find({\n`,
                 () => {
                   this.write(
                     "_id: {\n",
@@ -679,7 +679,7 @@ export default class FileGeneratorModel extends CodeStream {
           "]);\n"
         );
 
-        this.write("return populated;\n");
+        this.write("return population;\n");
       },
       "}\n"
     );
