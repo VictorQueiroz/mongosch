@@ -23,7 +23,7 @@ function upperFirst(value: string) {
 }
 
 function getPopulatedInterfaceName(model: Model) {
-  return `I${upperFirst(model.className)}Populated`;
+  return `I${upperFirst(model.className)}Population`;
 }
 
 function getModelInterfaceName(model: Model) {
@@ -619,7 +619,7 @@ export default class FileGeneratorModel extends CodeStream {
           )
         );
         this.write(
-          `const populated: ${getPopulatedInterfaceName(m)} = {\n`,
+          `const population: ${getPopulatedInterfaceName(m)} = {\n`,
           () => {
             for (const collectionName of collectionNames) {
               this.write(`${collectionName}: [],\n`);
