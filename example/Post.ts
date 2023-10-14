@@ -2,12 +2,14 @@ import { Field } from "../src/schema/Field";
 import { defaultFieldTypeDate } from "../src/schema/FieldTypeDate";
 import { defaultFieldTypeModelReference } from "../src/schema/FieldTypeModelReference";
 import { defaultFieldTypeString } from "../src/schema/FieldTypeString";
-import { Model } from "../src/schema/Model";
+import { Model, ModelIdentity } from "../src/schema/Model";
 import User from "./User";
 
 export default Model({
-  collectionName: "posts",
-  className: "Post",
+  identity: ModelIdentity({
+    collectionName: "posts",
+    className: "Post"
+  }),
   fields: [
     Field({
       fieldType: defaultFieldTypeString(),
@@ -18,7 +20,7 @@ export default Model({
       description: "User that authored the post.",
       name: "authorId",
       fieldType: defaultFieldTypeModelReference({
-        model: User()
+        model: User().identity
       })
     }),
     Field({

@@ -1,11 +1,12 @@
 import CodeStream from "textstreamjs";
-import { Model } from "./schema/Model";
+import { Model, ModelIdentity } from "./schema/Model";
 import { FieldType } from "./schema/FieldType";
 import { Field } from "./schema/Field";
 import { UnionItem } from "./schema/FieldTypeUnion";
 import Exception from "./Exception";
 import { Event, compareEventTrait } from "./schema/Event";
 import { FieldTypeObject } from "./schema/FieldTypeObject";
+import getModelIdentity from "./getModelIdentity";
 
 interface IGenerateValidationFieldsOptions {
   /**
@@ -15,7 +16,7 @@ interface IGenerateValidationFieldsOptions {
 }
 
 export function getModelClassName(model: Model) {
-  return `${model.className}Model`;
+  return `${getModelIdentity(model).className}Model`;
 }
 
 function upperFirst(value: string) {
@@ -23,23 +24,23 @@ function upperFirst(value: string) {
 }
 
 function getPopulatedInterfaceName(model: Model) {
-  return `I${upperFirst(model.className)}Population`;
+  return `I${upperFirst(getModelIdentity(model).className)}Population`;
 }
 
-function getModelInterfaceName(model: Model) {
-  return `I${upperFirst(model.className)}`;
+function getModelInterfaceName(model: ModelIdentity | Model) {
+  return `I${upperFirst(getModelIdentity(model).className)}`;
 }
 
 function getModelInputInterfaceName(model: Model) {
-  return `IInput${upperFirst(model.className)}`;
+  return `IInput${upperFirst(getModelIdentity(model).className)}`;
 }
 
 function getValidateFunctionName(model: Model) {
-  return `validate${upperFirst(model.className)}`;
+  return `validate${upperFirst(getModelIdentity(model).className)}`;
 }
 
 function getPartialValidateFunctionName(model: Model) {
-  return `partiallyValidate${upperFirst(model.className)}`;
+  return `partiallyValidate${upperFirst(getModelIdentity(model).className)}`;
 }
 
 function getEnumValuesConstantName(model: Model, path: PathItem[]) {
@@ -55,7 +56,9 @@ function joinModelAndPath(model: Model, path: PathItem[], lastSuffix: string) {
       return a;
     }, new Array<string>())
     .map((p) => `${p[0].toUpperCase()}${p.slice(1)}`);
-  return `${model.className}${suffixes.join("")}${lastSuffix}`;
+  return `${getModelIdentity(model).className}${suffixes.join(
+    ""
+  )}${lastSuffix}`;
 }
 
 function sanitize(value: string) {
@@ -119,9 +122,9 @@ export default class FileGeneratorModel extends CodeStream {
   readonly #model;
   readonly #manager;
   readonly #imports: IFileGeneratorModelImport[];
-  readonly #referencedModels = new Set<Model>();
+  readonly #referencedModels = new Set<ModelIdentity>();
   readonly #pathByFieldTypeMap = new Map<FieldType, PathItem[]>();
-  #modelClassArguments = new Array<Model>();
+  #modelClassArguments = new Array<ModelIdentity>();
   public constructor({
     parent,
     manager,
@@ -129,7 +132,7 @@ export default class FileGeneratorModel extends CodeStream {
   }: {
     parent: CodeStream;
     manager: {
-      resolve(value: Model): FileGeneratorModel;
+      resolve(value: ModelIdentity): FileGeneratorModel;
     };
     model: Model;
   }) {
@@ -140,11 +143,11 @@ export default class FileGeneratorModel extends CodeStream {
     this.#imports = [];
     this.#model = model;
   }
-  public modelClassArguments(): Array<Readonly<Model>> {
+  public modelClassArguments(): Array<Readonly<ModelIdentity>> {
     return this.#modelClassArguments;
   }
   public outRelativePath() {
-    return `${this.#model.className}.ts`;
+    return `${getModelIdentity(this.#model).className}.ts`;
   }
   public preprocess() {
     for (const f of this.#model.fields) {
@@ -154,17 +157,17 @@ export default class FileGeneratorModel extends CodeStream {
     this.#preprocessFields(
       Array.from(this.#model.fields.values()).map((f) => f.fieldType)
     );
-    this.#modelClassArguments = [this.#model, ...this.#referencedModels].reduce(
-      (a, b) => {
-        for (const i of a) {
-          if (i.collectionName === b.collectionName) {
-            return a;
-          }
+    this.#modelClassArguments = [
+      this.#model.identity,
+      ...this.#referencedModels
+    ].reduce((a, b) => {
+      for (const i of a) {
+        if (i.collectionName === b.collectionName) {
+          return a;
         }
-        return [...a, b];
-      },
-      new Array<Model>()
-    );
+      }
+      return [...a, b];
+    }, new Array<ModelIdentity>());
     this.#import({
       path: "mongodb",
       exports: ["Collection", "Filter", "UpdateFilter", "OptionalId"]
@@ -210,9 +213,9 @@ export default class FileGeneratorModel extends CodeStream {
     this.write(
       `export interface ${getPopulatedInterfaceName(m)} {\n`,
       () => {
-        const propNames = new Map<string, Model>();
+        const propNames = new Map<string, ModelIdentity>();
         for (const model of this.#referencedModels) {
-          propNames.set(model.collectionName, model);
+          propNames.set(getModelIdentity(model).collectionName, model);
         }
         for (const [collectionName, model] of propNames) {
           this.write(
@@ -341,9 +344,9 @@ export default class FileGeneratorModel extends CodeStream {
         const fileGenerator = this.#manager.resolve(fieldType.model);
         this.#import({
           fileGenerator,
-          exports: [getModelInterfaceName(fieldType.model)]
+          exports: [getModelInterfaceName(getModelIdentity(fieldType.model))]
         });
-        this.#referencedModels.add(fieldType.model);
+        this.#referencedModels.add(getModelIdentity(fieldType.model));
         break;
       case "fieldTypeObject.FieldTypeObject":
         for (const f of fieldType.properties) {
@@ -379,7 +382,7 @@ export default class FileGeneratorModel extends CodeStream {
             for (const model of this.#modelClassArguments) {
               this.write(
                 `private readonly ${
-                  model.collectionName
+                  getModelIdentity(model).collectionName
                 }: Collection<${getModelInterfaceName(model)}>,\n`
               );
             }
@@ -391,7 +394,9 @@ export default class FileGeneratorModel extends CodeStream {
             `public ${method}(value: Filter<${getModelInterfaceName(m)}>) {\n`,
             () => {
               this.write(
-                `return this.${this.#model.collectionName}.${method}(value);\n`
+                `return this.${
+                  getModelIdentity(this.#model).collectionName
+                }.${method}(value);\n`
               );
             },
             "}\n"
@@ -454,7 +459,7 @@ export default class FileGeneratorModel extends CodeStream {
               this.write("}\n");
               this.write(
                 `const result = await this.${
-                  this.#model.collectionName
+                  getModelIdentity(this.#model).collectionName
                 }.${method}(filter, update);\n`
               );
               this.write(
@@ -474,7 +479,9 @@ export default class FileGeneratorModel extends CodeStream {
             `public ${method}() {\n`,
             () => {
               this.write(
-                `return this.${this.#model.collectionName}.${method}();\n`
+                `return this.${
+                  getModelIdentity(this.#model).collectionName
+                }.${method}();\n`
               );
             },
             "}\n"
@@ -525,7 +532,7 @@ export default class FileGeneratorModel extends CodeStream {
             // );
             this.write(
               `const result = await this.${
-                this.#model.collectionName
+                getModelIdentity(this.#model).collectionName
               }.insertOne(value, { forceServerObjectId: false });\n`
             );
             this.write(
@@ -603,7 +610,7 @@ export default class FileGeneratorModel extends CodeStream {
   #generatePopulateMethod() {
     const m = this.#model;
     const entityNames = Array.from(this.#referencedModels.values()).map(
-      (m) => m.className
+      (m) => getModelIdentity(m).className
     );
     const valueArgumentType = `${getModelInterfaceName(m)}`;
     this.write(
@@ -615,7 +622,7 @@ export default class FileGeneratorModel extends CodeStream {
       () => {
         const collectionNames = new Set(
           Array.from(this.#referencedModels.values()).map(
-            (m) => m.collectionName
+            (m) => getModelIdentity(m).collectionName
           )
         );
         this.write(
@@ -662,12 +669,18 @@ export default class FileGeneratorModel extends CodeStream {
           () => {
             for (const m of this.#referencedModels) {
               this.write(
-                `(async (list) => population.${m.collectionName}.push(...(await list)))(entities.includes("${m.className}") ? this.${m.collectionName}.find({\n`,
+                `(async (list) => population.${
+                  getModelIdentity(m).collectionName
+                }.push(...(await list)))(entities.includes("${
+                  getModelIdentity(m).className
+                }") ? this.${getModelIdentity(m).collectionName}.find({\n`,
                 () => {
                   this.write(
                     "_id: {\n",
                     () => {
-                      this.write(`$in: ids.${m.collectionName}\n`);
+                      this.write(
+                        `$in: ids.${getModelIdentity(m).collectionName}\n`
+                      );
                     },
                     "}\n"
                   );
@@ -757,7 +770,7 @@ export default class FileGeneratorModel extends CodeStream {
   }
   #generateFilterClass() {
     this.write(
-      `export class ${this.#model.className}Filter {\n`,
+      `export class ${getModelIdentity(this.#model).className}Filter {\n`,
       () => {
         this.write(
           `readonly #filter: Filter<${getModelClassName(this.#model)}> = {};\n`

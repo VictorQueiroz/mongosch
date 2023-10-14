@@ -1,13 +1,15 @@
 import { Field } from "../src/schema/Field";
 import { defaultFieldTypeModelReference } from "../src/schema/FieldTypeModelReference";
 import { defaultFieldTypeString } from "../src/schema/FieldTypeString";
-import { Model } from "../src/schema/Model";
+import { Model, ModelIdentity } from "../src/schema/Model";
 import User from "./User";
 
 export default function Story() {
   return Model({
-    className: "Story",
-    collectionName: "stories",
+    identity: ModelIdentity({
+      className: "Story",
+      collectionName: "stories"
+    }),
     fields: [
       Field({
         description: "Story name",
@@ -17,7 +19,7 @@ export default function Story() {
       Field({
         description: "The person who created the story.",
         fieldType: defaultFieldTypeModelReference({
-          model: User()
+          model: User().identity
         }),
         name: "authorId"
       })

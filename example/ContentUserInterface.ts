@@ -6,9 +6,8 @@ import {
 } from "../src/schema/FieldTypeArray";
 import { FieldTypeObject } from "../src/schema/FieldTypeObject";
 import { defaultFieldTypeString } from "../src/schema/FieldTypeString";
-import { Model, updateModel } from "../src/schema/Model";
+import { Model, ModelIdentity } from "../src/schema/Model";
 import ContentBase from "./Content";
-import Content from "./Content";
 import Script from "./Script";
 
 function Button() {
@@ -50,27 +49,27 @@ function ButtonRow() {
   });
 }
 
-export function ContentUserInterfaceBase() {
-  return Model({
-    className: "ContentUserInterface",
-    collectionName: "contentUserInterfaces",
-    fields: [
-      Field({
-        description: "Button rows",
-        name: "buttonRows",
-        fieldType: FieldTypeArray({
-          name: "ButtonRows",
-          flags: [],
-          arrayType: ButtonRow()
-        })
-      })
-    ]
-  });
-}
+export const ContentUserInterfaceIdentity = ModelIdentity({
+  className: "ContentUserInterface",
+  collectionName: "contentUserInterfaces"
+});
 
-/**
- * This is what we pass to the compiler, to avoid circular dependencies.
- */
-export function ContentUserInterface() {
-  return mergeFields(ContentUserInterfaceBase(), ContentBase());
+export default function ContentUserInterface() {
+  return mergeFields(
+    Model({
+      identity: ContentUserInterfaceIdentity,
+      fields: [
+        Field({
+          description: "Button rows",
+          name: "buttonRows",
+          fieldType: FieldTypeArray({
+            name: "ButtonRows",
+            flags: [],
+            arrayType: ButtonRow()
+          })
+        })
+      ]
+    }),
+    ContentBase()
+  );
 }

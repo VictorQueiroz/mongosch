@@ -1,7 +1,11 @@
 import {Field} from "./Field";
 
-export type Model {
+export type ModelIdentity {
   string className;
   string collectionName;
+}
+
+export type Model {
+  ModelIdentity identity;
   vector<Field> fields;
 }

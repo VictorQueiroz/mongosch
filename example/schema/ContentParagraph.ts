@@ -108,7 +108,7 @@ export enum ContentParagraphNextContentConditionalValueType {
   Paragraph = 0,
   UI = 1,
 }
-export interface IContentParagraphPopulated {
+export interface IContentParagraphPopulation {
   contentParagraphs: WithId<IContentParagraph>[];
   contentUserInterfaces: WithId<IContentUserInterface>[];
 }
@@ -169,7 +169,7 @@ export class ContentParagraphModel {
     return this.contentParagraphs.countDocuments();
   }
   public async populate(value: IContentParagraph | ReadonlyArray<IContentParagraph>, entities: ("ContentParagraph" | "ContentUserInterface")[] = ["ContentParagraph", "ContentUserInterface"]) {
-    const populated: IContentParagraphPopulated = {
+    const population: IContentParagraphPopulation = {
       contentParagraphs: [],
       contentUserInterfaces: [],
     };
@@ -187,18 +187,18 @@ export class ContentParagraphModel {
       }
     }
     await Promise.all([
-      (async (list) => populated.contentParagraphs.push(...(await list)))(entities.includes("ContentParagraph") ? this.contentParagraphs.find({
+      (async (list) => population.contentParagraphs.push(...(await list)))(entities.includes("ContentParagraph") ? this.contentParagraphs.find({
         _id: {
           $in: ids.contentParagraphs
         }
       }).toArray() : Promise.resolve([])),
-      (async (list) => populated.contentUserInterfaces.push(...(await list)))(entities.includes("ContentUserInterface") ? this.contentUserInterfaces.find({
+      (async (list) => population.contentUserInterfaces.push(...(await list)))(entities.includes("ContentUserInterface") ? this.contentUserInterfaces.find({
         _id: {
           $in: ids.contentUserInterfaces
         }
       }).toArray() : Promise.resolve([])),
     ]);
-    return populated;
+    return population;
   }
   public async add(value: OptionalId<IContentParagraph>) {
     const result = await this.insertOne(value);

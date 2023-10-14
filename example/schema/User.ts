@@ -539,7 +539,7 @@ export enum UserPhonePhoneCountryCodeType {
   ZM = "ZM",
   ZW = "ZW",
 }
-export interface IUserPopulated {
+export interface IUserPopulation {
 }
 export class UserModel {
   public constructor(

@@ -1,14 +1,26 @@
 {
-  "Model": {
+  "ModelIdentity": {
     "kind": "type",
-    "id": -747051574,
-    "globalName": "model.Model",
-    "name": "Model",
+    "id": 253500267,
+    "globalName": "model.ModelIdentity",
+    "name": "ModelIdentity",
     "params": [
       { "name": "className", "type": { "type": "generic", "value": "string" } },
       {
         "name": "collectionName",
         "type": { "type": "generic", "value": "string" }
+      }
+    ]
+  },
+  "Model": {
+    "kind": "type",
+    "id": 983355634,
+    "globalName": "model.Model",
+    "name": "Model",
+    "params": [
+      {
+        "name": "identity",
+        "type": { "type": "internalType", "interfaceName": "ModelIdentity" }
       },
       {
         "name": "fields",
@@ -27,9 +39,9 @@
   "__all": [
     {
       "kind": "type",
-      "id": -747051574,
-      "globalName": "model.Model",
-      "name": "Model",
+      "id": 253500267,
+      "globalName": "model.ModelIdentity",
+      "name": "ModelIdentity",
       "params": [
         {
           "name": "className",
@@ -38,6 +50,18 @@
         {
           "name": "collectionName",
           "type": { "type": "generic", "value": "string" }
+        }
+      ]
+    },
+    {
+      "kind": "type",
+      "id": 983355634,
+      "globalName": "model.Model",
+      "name": "Model",
+      "params": [
+        {
+          "name": "identity",
+          "type": { "type": "internalType", "interfaceName": "ModelIdentity" }
         },
         {
           "name": "fields",

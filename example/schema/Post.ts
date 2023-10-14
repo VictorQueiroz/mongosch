@@ -28,7 +28,7 @@ export interface IPost {
    */
   createdAt: Date;
 }
-export interface IPostPopulated {
+export interface IPostPopulation {
   users: WithId<IUser>[];
 }
 export class PostModel {
@@ -88,7 +88,7 @@ export class PostModel {
     return this.posts.countDocuments();
   }
   public async populate(value: IPost | ReadonlyArray<IPost>, entities: ("User")[] = ["User"]) {
-    const populated: IPostPopulated = {
+    const population: IPostPopulation = {
       users: [],
     };
     const ids = {
@@ -99,13 +99,13 @@ export class PostModel {
       ids.users.push(item.authorId);
     }
     await Promise.all([
-      (async (list) => populated.users.push(...(await list)))(entities.includes("User") ? this.users.find({
+      (async (list) => population.users.push(...(await list)))(entities.includes("User") ? this.users.find({
         _id: {
           $in: ids.users
         }
       }).toArray() : Promise.resolve([])),
     ]);
-    return populated;
+    return population;
   }
   public async add(value: OptionalId<IPost>) {
     const result = await this.insertOne(value);

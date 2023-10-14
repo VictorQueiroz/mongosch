@@ -7,10 +7,10 @@ import {
 } from "../src/schema/FieldTypeDate";
 import { FieldTypeModelReference } from "../src/schema/FieldTypeModelReference";
 import { FieldTypeUnion, UnionItem } from "../src/schema/FieldTypeUnion";
-import { Model } from "../src/schema/Model";
+import { Model, defaultModel } from "../src/schema/Model";
 import { Conditional } from "./Conditional";
-import { ContentParagraphBase } from "./ContentParagraph";
-import { ContentUserInterfaceBase } from "./ContentUserInterface";
+import { ContentParagraphIdentity } from "./ContentParagraph";
+import { ContentUserInterfaceIdentity } from "./ContentUserInterface";
 
 export enum ContentType {
   Paragraph,
@@ -25,14 +25,14 @@ export function ContentRef() {
         name: "Paragraph",
         id: ContentType.Paragraph,
         fieldType: FieldTypeModelReference({
-          model: ContentParagraphBase()
+          model: ContentParagraphIdentity
         })
       }),
       UnionItem({
         id: ContentType.UserInterface,
         name: "UI",
         fieldType: FieldTypeModelReference({
-          model: ContentUserInterfaceBase()
+          model: ContentUserInterfaceIdentity
         })
       })
     ]
@@ -40,9 +40,7 @@ export function ContentRef() {
 }
 
 export default function ContentBase() {
-  return Model({
-    collectionName: "contents",
-    className: "contents",
+  return defaultModel({
     fields: [
       Field({
         name: "nextContent",

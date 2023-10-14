@@ -1,14 +1,14 @@
-import { Model } from "./Model";
-import { isModel } from "./Model";
+import { ModelIdentity } from "./Model";
+import { isModelIdentity } from "./Model";
 import { ISerializer } from "./__types__";
-import { encodeModel } from "./Model";
+import { encodeModelIdentity } from "./Model";
 import { IDeserializer } from "./__types__";
-import { decodeModel } from "./Model";
-import { defaultModel } from "./Model";
-import { compareModel } from "./Model";
+import { decodeModelIdentity } from "./Model";
+import { defaultModelIdentity } from "./Model";
+import { compareModelIdentity } from "./Model";
 export interface FieldTypeModelReference {
   _name: "fieldTypeModelReference.FieldTypeModelReference";
-  model: Readonly<Model>;
+  model: Readonly<ModelIdentity>;
 }
 export function isFieldTypeModelReference(
   value: unknown
@@ -23,12 +23,12 @@ export function isFieldTypeModelReference(
     )
   )
     return false;
-  if (!("model" in value && ((__v0) => isModel(__v0))(value["model"])))
+  if (!("model" in value && ((__v0) => isModelIdentity(__v0))(value["model"])))
     return false;
   return true;
 }
 export interface FieldTypeModelReferenceInputParams {
-  model: Readonly<Model>;
+  model: Readonly<ModelIdentity>;
 }
 export function FieldTypeModelReference(
   params: FieldTypeModelReferenceInputParams
@@ -42,12 +42,12 @@ export function encodeFieldTypeModelReference(
   __s: ISerializer,
   value: FieldTypeModelReference
 ) {
-  __s.writeInt32(-1200777270);
+  __s.writeInt32(-969422962);
   /**
    * encoding param: model
    */
   const __pv0 = value["model"];
-  encodeModel(__s, __pv0);
+  encodeModelIdentity(__s, __pv0);
 }
 export function decodeFieldTypeModelReference(
   __d: IDeserializer
@@ -56,12 +56,12 @@ export function decodeFieldTypeModelReference(
   /**
    * decode header
    */
-  if (__id !== -1200777270) return null;
-  let model: Model;
+  if (__id !== -969422962) return null;
+  let model: ModelIdentity;
   /**
    * decoding param: model
    */
-  const tmp2 = decodeModel(__d);
+  const tmp2 = decodeModelIdentity(__d);
   if (tmp2 === null) return null;
   model = tmp2;
   return {
@@ -73,7 +73,7 @@ export function defaultFieldTypeModelReference(
   params: Partial<FieldTypeModelReferenceInputParams> = {}
 ): FieldTypeModelReference {
   return FieldTypeModelReference({
-    model: defaultModel(),
+    model: defaultModelIdentity(),
     ...params
   });
 }
@@ -85,7 +85,7 @@ export function compareFieldTypeModelReference(
     /**
      * compare parameter model
      */
-    compareModel(__a["model"], __b["model"])
+    compareModelIdentity(__a["model"], __b["model"])
   );
 }
 export function updateFieldTypeModelReference(
@@ -93,7 +93,7 @@ export function updateFieldTypeModelReference(
   changes: Partial<FieldTypeModelReferenceInputParams>
 ) {
   if (typeof changes["model"] !== "undefined") {
-    if (!compareModel(changes["model"], value["model"])) {
+    if (!compareModelIdentity(changes["model"], value["model"])) {
       value = FieldTypeModelReference({
         ...value,
         model: changes["model"]

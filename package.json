@@ -30,7 +30,7 @@
     ]
   },
   "scripts": {
-    "prepublishOnly": "npx tsc -b cli --force",
+    "prepublishOnly": "npx tsc -b cli --force && npm run build:schema && npm run build:models",
     "build:schema": "npx jsbuffer schema/main -o src/schema --indentation-size 2 --no-ts-config && npm run prettier",
     "build:models": "npx ts-node --project cli/tsconfig.json cli --input example/model-definitions.ts -o example/schema",
     "build:models:fast": "TS_NODE_TRANSPILE_ONLY=1 npm run build:models",

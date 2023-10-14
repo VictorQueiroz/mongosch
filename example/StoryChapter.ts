@@ -2,7 +2,7 @@ import { Field } from "../src/schema/Field";
 import { defaultFieldTypeDate } from "../src/schema/FieldTypeDate";
 import { defaultFieldTypeModelReference } from "../src/schema/FieldTypeModelReference";
 import { defaultFieldTypeString } from "../src/schema/FieldTypeString";
-import { Model } from "../src/schema/Model";
+import { Model, ModelIdentity } from "../src/schema/Model";
 import { ContentRef } from "./Content";
 import Story from "./Story";
 import User from "./User";
@@ -12,8 +12,10 @@ import User from "./User";
  */
 export default function StoryChapter() {
   return Model({
-    className: "StoryChapter",
-    collectionName: "storyChapters",
+    identity: ModelIdentity({
+      className: "StoryChapter",
+      collectionName: "storyChapters"
+    }),
     fields: [
       Field({
         fieldType: defaultFieldTypeString(),
@@ -32,14 +34,14 @@ export default function StoryChapter() {
       }),
       Field({
         fieldType: defaultFieldTypeModelReference({
-          model: User()
+          model: User().identity
         }),
         description: "The chapter author id.",
         name: "userId"
       }),
       Field({
         fieldType: defaultFieldTypeModelReference({
-          model: Story()
+          model: Story().identity
         }),
         description: "The story id to which this chapter belongs to.",
         name: "storyId"

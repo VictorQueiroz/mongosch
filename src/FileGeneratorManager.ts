@@ -1,7 +1,9 @@
 import FileGeneratorModel, { getModelClassName } from "./FileGeneratorModel";
-import { Model } from "./schema/Model";
+import { Model, ModelIdentity } from "./schema/Model";
 import Exception from "./Exception";
 import CodeStream from "textstreamjs";
+import getModelIdentity from "./getModelIdentity";
+import assert from "assert";
 
 export default class FileGeneratorManager {
   readonly #models;
@@ -9,11 +11,12 @@ export default class FileGeneratorManager {
   public constructor(models: Model[]) {
     this.#models = models;
   }
-  public resolve(model: Model) {
-    const result = this.#fileGenerators.get(model.collectionName);
+  public resolve(model: ModelIdentity | Model) {
+    const identity = getModelIdentity(model);
+    const result = this.#fileGenerators.get(identity.collectionName);
     if (!result) {
       throw new Exception(
-        `Failed to find file generator for model: ${model.className}`
+        `Failed to find file generator for model: ${identity.className}`
       );
     }
     return result;
@@ -32,7 +35,16 @@ export default class FileGeneratorManager {
         model,
         manager: this
       });
-      this.#fileGenerators.set(model.collectionName, modelGenerator);
+      assert.strict.ok(
+        model.identity.className.length > 0 &&
+          model.identity.collectionName.length > 0,
+        `Model identity should have collectionName, and className properties with at least 1 character: ${JSON.stringify(
+          model,
+          null,
+          4
+        )}`
+      );
+      this.#fileGenerators.set(model.identity.collectionName, modelGenerator);
     }
     for (const modelGenerator of this.#fileGenerators.values()) {
       modelGenerator.preprocess();
@@ -46,14 +58,18 @@ export default class FileGeneratorManager {
     }
     cs.write("import { Db } from 'mongodb';\n");
     for (const m of this.#models) {
-      cs.write(`import { ${getModelClassName(m)} } from './${m.className}';\n`);
+      cs.write(
+        `import { ${getModelClassName(m)} } from './${m.identity.className}';\n`
+      );
     }
     cs.write(
       "export class DatabaseClient {\n",
       () => {
         for (const m of this.#models) {
           cs.write(
-            `public readonly ${m.className}: ${getModelClassName(m)};\n`
+            `public readonly ${m.identity.className}: ${getModelClassName(
+              m
+            )};\n`
           );
         }
         cs.write(
@@ -61,7 +77,7 @@ export default class FileGeneratorManager {
           () => {
             for (const m of this.#models) {
               cs.write(
-                `this.${m.className} = new ${m.className}Model(\n`,
+                `this.${m.identity.className} = new ${m.identity.className}Model(\n`,
                 () => {
                   const constructorArguments =
                     this.resolve(m).modelClassArguments();
