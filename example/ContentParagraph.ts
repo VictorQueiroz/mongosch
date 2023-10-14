@@ -5,7 +5,7 @@ import {
 } from "../src/schema/FieldTypeInteger";
 import { FieldTypeObject } from "../src/schema/FieldTypeObject";
 import { defaultFieldTypeString } from "../src/schema/FieldTypeString";
-import { Model } from "../src/schema/Model";
+import { Model, ModelIdentity } from "../src/schema/Model";
 import mergeFields from "../src/mergeFields";
 import ContentBase from "./Content";
 import {
@@ -49,24 +49,27 @@ const Paragraph = FieldTypeObject({
   ]
 });
 
-export function ContentParagraphBase() {
-  return Model({
-    className: "ContentParagraph",
-    collectionName: "contentParagraphs",
-    fields: [
-      Field({
-        description: "Paragraph list",
-        name: "paragraphs",
-        fieldType: FieldTypeArray({
-          flags: [],
-          name: "Paragraphs",
-          arrayType: Paragraph
-        })
-      })
-    ]
-  });
-}
+export const ContentParagraphIdentity = ModelIdentity({
+  className: "ContentParagraph",
+  collectionName: "contentParagraphs"
+});
 
 export default function ContentParagraph() {
-  return mergeFields(ContentParagraphBase(), ContentBase());
+  return mergeFields(
+    Model({
+      identity: ContentParagraphIdentity,
+      fields: [
+        Field({
+          description: "Paragraph list",
+          name: "paragraphs",
+          fieldType: FieldTypeArray({
+            flags: [],
+            name: "Paragraphs",
+            arrayType: Paragraph
+          })
+        })
+      ]
+    }),
+    ContentBase()
+  );
 }

@@ -7,6 +7,7 @@ import {
   defaultFieldTypeString
 } from "../src/schema/FieldTypeString";
 import { getCountries } from "libphonenumber-js";
+import { ModelIdentity } from "../src/schema/Model";
 
 const Phone = FieldTypeObject({
   name: "Phone",
@@ -37,8 +38,10 @@ const Phone = FieldTypeObject({
  */
 export default function User() {
   return Model({
-    className: "User",
-    collectionName: "users",
+    identity: ModelIdentity({
+      className: "User",
+      collectionName: "users"
+    }),
     fields: [
       Field({
         description: "Phone number",

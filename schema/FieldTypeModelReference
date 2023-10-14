@@ -1,6 +1,6 @@
 import { FieldType } from "./FieldType";
-import { Model } from "./Model";
+import { ModelIdentity } from "./Model";
 
 export type FieldTypeModelReference : FieldType {
-  Model model;
+  ModelIdentity model;
 }

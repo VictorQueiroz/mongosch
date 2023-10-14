@@ -147,7 +147,7 @@ export function decodeFieldTypeTrait(__d: IDeserializer) {
     | FieldTypeArray
     | FieldTypeBoolean;
   switch (__id) {
-    case -1200777270: {
+    case -969422962: {
       const tmp = decodeFieldTypeModelReference(__d);
       if (tmp === null) return null;
       value = tmp;

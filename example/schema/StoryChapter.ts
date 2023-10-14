@@ -71,7 +71,7 @@ export enum StoryChapterInitialContentIdType {
   Paragraph = 0,
   UI = 1,
 }
-export interface IStoryChapterPopulated {
+export interface IStoryChapterPopulation {
   users: WithId<IUser>[];
   stories: WithId<IStory>[];
   contentParagraphs: WithId<IContentParagraph>[];
@@ -137,7 +137,7 @@ export class StoryChapterModel {
     return this.storyChapters.countDocuments();
   }
   public async populate(value: IStoryChapter | ReadonlyArray<IStoryChapter>, entities: ("User" | "Story" | "ContentParagraph" | "ContentUserInterface")[] = ["User", "Story", "ContentParagraph", "ContentUserInterface"]) {
-    const populated: IStoryChapterPopulated = {
+    const population: IStoryChapterPopulation = {
       users: [],
       stories: [],
       contentParagraphs: [],
@@ -161,28 +161,28 @@ export class StoryChapterModel {
       }
     }
     await Promise.all([
-      (async (list) => populated.users.push(...(await list)))(entities.includes("User") ? this.users.find({
+      (async (list) => population.users.push(...(await list)))(entities.includes("User") ? this.users.find({
         _id: {
           $in: ids.users
         }
       }).toArray() : Promise.resolve([])),
-      (async (list) => populated.stories.push(...(await list)))(entities.includes("Story") ? this.stories.find({
+      (async (list) => population.stories.push(...(await list)))(entities.includes("Story") ? this.stories.find({
         _id: {
           $in: ids.stories
         }
       }).toArray() : Promise.resolve([])),
-      (async (list) => populated.contentParagraphs.push(...(await list)))(entities.includes("ContentParagraph") ? this.contentParagraphs.find({
+      (async (list) => population.contentParagraphs.push(...(await list)))(entities.includes("ContentParagraph") ? this.contentParagraphs.find({
         _id: {
           $in: ids.contentParagraphs
         }
       }).toArray() : Promise.resolve([])),
-      (async (list) => populated.contentUserInterfaces.push(...(await list)))(entities.includes("ContentUserInterface") ? this.contentUserInterfaces.find({
+      (async (list) => population.contentUserInterfaces.push(...(await list)))(entities.includes("ContentUserInterface") ? this.contentUserInterfaces.find({
         _id: {
           $in: ids.contentUserInterfaces
         }
       }).toArray() : Promise.resolve([])),
     ]);
-    return populated;
+    return population;
   }
   public async add(value: OptionalId<IStoryChapter>) {
     const result = await this.insertOne(value);

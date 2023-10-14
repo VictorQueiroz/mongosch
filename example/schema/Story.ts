@@ -20,7 +20,7 @@ export interface IStory {
    */
   authorId: ObjectId;
 }
-export interface IStoryPopulated {
+export interface IStoryPopulation {
   users: WithId<IUser>[];
 }
 export class StoryModel {
@@ -80,7 +80,7 @@ export class StoryModel {
     return this.stories.countDocuments();
   }
   public async populate(value: IStory | ReadonlyArray<IStory>, entities: ("User")[] = ["User"]) {
-    const populated: IStoryPopulated = {
+    const population: IStoryPopulation = {
       users: [],
     };
     const ids = {
@@ -91,13 +91,13 @@ export class StoryModel {
       ids.users.push(item.authorId);
     }
     await Promise.all([
-      (async (list) => populated.users.push(...(await list)))(entities.includes("User") ? this.users.find({
+      (async (list) => population.users.push(...(await list)))(entities.includes("User") ? this.users.find({
         _id: {
           $in: ids.users
         }
       }).toArray() : Promise.resolve([])),
     ]);
-    return populated;
+    return population;
   }
   public async add(value: OptionalId<IStory>) {
     const result = await this.insertOne(value);
