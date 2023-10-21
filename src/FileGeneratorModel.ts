@@ -170,7 +170,14 @@ export default class FileGeneratorModel extends CodeStream {
     }, new Array<ModelIdentity>());
     this.#import({
       path: "mongodb",
-      exports: ["Collection", "Filter", "UpdateFilter", "OptionalId"]
+      exports: [
+        "Collection",
+        "Filter",
+        "UpdateFilter",
+        "OptionalId",
+        "Document",
+        "CountDocumentsOptions"
+      ]
     });
     if (this.#referencedModels.size) {
       this.#import({
@@ -476,12 +483,12 @@ export default class FileGeneratorModel extends CodeStream {
         }
         for (const method of ["countDocuments"]) {
           this.write(
-            `public ${method}() {\n`,
+            `public ${method}(filter?: Document, options?: CountDocumentsOptions) {\n`,
             () => {
               this.write(
                 `return this.${
                   getModelIdentity(this.#model).collectionName
-                }.${method}();\n`
+                }.${method}(filter, options);\n`
               );
             },
             "}\n"
