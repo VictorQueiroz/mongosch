@@ -1,4 +1,4 @@
-import {Collection, Filter, UpdateFilter, OptionalId} from 'mongodb';
+import {Collection, Filter, UpdateFilter, OptionalId, Document, CountDocumentsOptions} from 'mongodb';
 export interface IInputUser {
   /**
    * Phone number
@@ -593,8 +593,8 @@ export class UserModel {
     }
     return { success: result };
   }
-  public countDocuments() {
-    return this.users.countDocuments();
+  public countDocuments(filter?: Document, options?: CountDocumentsOptions) {
+    return this.users.countDocuments(filter, options);
   }
   public async add(value: OptionalId<IUser>) {
     const result = await this.insertOne(value);

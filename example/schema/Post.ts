@@ -1,5 +1,5 @@
 import {IUser} from './User';
-import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, Document, CountDocumentsOptions, WithId} from 'mongodb';
 export interface IInputPost {
   /**
    * Post title.
@@ -84,8 +84,8 @@ export class PostModel {
     }
     return { success: result };
   }
-  public countDocuments() {
-    return this.posts.countDocuments();
+  public countDocuments(filter?: Document, options?: CountDocumentsOptions) {
+    return this.posts.countDocuments(filter, options);
   }
   public async populate(value: IPost | ReadonlyArray<IPost>, entities: ("User")[] = ["User"]) {
     const population: IPostPopulation = {

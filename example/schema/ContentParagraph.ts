@@ -1,5 +1,5 @@
 import {IContentUserInterface} from './ContentUserInterface';
-import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, Document, CountDocumentsOptions, WithId} from 'mongodb';
 export interface IInputContentParagraph {
   /**
    * Paragraph list
@@ -165,8 +165,8 @@ export class ContentParagraphModel {
     }
     return { success: result };
   }
-  public countDocuments() {
-    return this.contentParagraphs.countDocuments();
+  public countDocuments(filter?: Document, options?: CountDocumentsOptions) {
+    return this.contentParagraphs.countDocuments(filter, options);
   }
   public async populate(value: IContentParagraph | ReadonlyArray<IContentParagraph>, entities: ("ContentParagraph" | "ContentUserInterface")[] = ["ContentParagraph", "ContentUserInterface"]) {
     const population: IContentParagraphPopulation = {

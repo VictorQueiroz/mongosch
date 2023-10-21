@@ -2,7 +2,7 @@ import {IUser} from './User';
 import {IStory} from './Story';
 import {IContentParagraph} from './ContentParagraph';
 import {IContentUserInterface} from './ContentUserInterface';
-import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, Document, CountDocumentsOptions, WithId} from 'mongodb';
 export interface IInputStoryChapter {
   /**
    * Title of the story chapter
@@ -133,8 +133,8 @@ export class StoryChapterModel {
     }
     return { success: result };
   }
-  public countDocuments() {
-    return this.storyChapters.countDocuments();
+  public countDocuments(filter?: Document, options?: CountDocumentsOptions) {
+    return this.storyChapters.countDocuments(filter, options);
   }
   public async populate(value: IStoryChapter | ReadonlyArray<IStoryChapter>, entities: ("User" | "Story" | "ContentParagraph" | "ContentUserInterface")[] = ["User", "Story", "ContentParagraph", "ContentUserInterface"]) {
     const population: IStoryChapterPopulation = {

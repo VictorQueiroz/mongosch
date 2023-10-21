@@ -1,5 +1,5 @@
 import {IUser} from './User';
-import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, WithId} from 'mongodb';
+import {ObjectId, Filter, Collection, UpdateFilter, OptionalId, Document, CountDocumentsOptions, WithId} from 'mongodb';
 export interface IInputStory {
   /**
    * Story name
@@ -76,8 +76,8 @@ export class StoryModel {
     }
     return { success: result };
   }
-  public countDocuments() {
-    return this.stories.countDocuments();
+  public countDocuments(filter?: Document, options?: CountDocumentsOptions) {
+    return this.stories.countDocuments(filter, options);
   }
   public async populate(value: IStory | ReadonlyArray<IStory>, entities: ("User")[] = ["User"]) {
     const population: IStoryPopulation = {
