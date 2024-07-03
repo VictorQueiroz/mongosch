@@ -24,15 +24,15 @@ export function encodeFieldTypeArrayFlagTrait(
   value: FieldTypeArrayFlag
 ) {
   switch (value._name) {
-    case "fieldTypeArray.FieldTypeArrayFlagMinLength":
+    case "field-type-array.FieldTypeArrayFlagMinLength":
       return encodeFieldTypeArrayFlagMinLength(__s, value);
-    case "fieldTypeArray.FieldTypeArrayFlagMaxLength":
+    case "field-type-array.FieldTypeArrayFlagMaxLength":
       return encodeFieldTypeArrayFlagMaxLength(__s, value);
-    case "fieldTypeArray.FieldTypeArrayFlagOptional":
+    case "field-type-array.FieldTypeArrayFlagOptional":
       return encodeFieldTypeArrayFlagOptional(__s, value);
   }
   throw new Error(
-    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- fieldTypeArray.FieldTypeArrayFlagMinLength\n\t- fieldTypeArray.FieldTypeArrayFlagMaxLength\n\t- fieldTypeArray.FieldTypeArrayFlagOptional\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
+    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- field-type-array.FieldTypeArrayFlagMinLength\n\t- field-type-array.FieldTypeArrayFlagMaxLength\n\t- field-type-array.FieldTypeArrayFlagOptional\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
   );
 }
 export function decodeFieldTypeArrayFlagTrait(__d: IDeserializer) {
@@ -74,22 +74,22 @@ export function compareFieldTypeArrayFlagTrait(
   __b: FieldTypeArrayFlag
 ) {
   switch (__a._name) {
-    case "fieldTypeArray.FieldTypeArrayFlagMinLength":
-      if (__b._name !== "fieldTypeArray.FieldTypeArrayFlagMinLength")
+    case "field-type-array.FieldTypeArrayFlagMinLength":
+      if (__b._name !== "field-type-array.FieldTypeArrayFlagMinLength")
         return false;
       return compareFieldTypeArrayFlagMinLength(__a, __b);
-    case "fieldTypeArray.FieldTypeArrayFlagMaxLength":
-      if (__b._name !== "fieldTypeArray.FieldTypeArrayFlagMaxLength")
+    case "field-type-array.FieldTypeArrayFlagMaxLength":
+      if (__b._name !== "field-type-array.FieldTypeArrayFlagMaxLength")
         return false;
       return compareFieldTypeArrayFlagMaxLength(__a, __b);
-    case "fieldTypeArray.FieldTypeArrayFlagOptional":
-      if (__b._name !== "fieldTypeArray.FieldTypeArrayFlagOptional")
+    case "field-type-array.FieldTypeArrayFlagOptional":
+      if (__b._name !== "field-type-array.FieldTypeArrayFlagOptional")
         return false;
       return compareFieldTypeArrayFlagOptional(__a, __b);
   }
 }
 export interface FieldTypeArrayFlagMinLength {
-  _name: "fieldTypeArray.FieldTypeArrayFlagMinLength";
+  _name: "field-type-array.FieldTypeArrayFlagMinLength";
   value: number;
 }
 export function isFieldTypeArrayFlagMinLength(
@@ -101,7 +101,7 @@ export function isFieldTypeArrayFlagMinLength(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeArray.FieldTypeArrayFlagMinLength"
+      value["_name"] === "field-type-array.FieldTypeArrayFlagMinLength"
     )
   )
     return false;
@@ -130,7 +130,7 @@ export function FieldTypeArrayFlagMinLength(
   params: FieldTypeArrayFlagMinLengthInputParams
 ): FieldTypeArrayFlagMinLength {
   return {
-    _name: "fieldTypeArray.FieldTypeArrayFlagMinLength",
+    _name: "field-type-array.FieldTypeArrayFlagMinLength",
     value: params["value"]
   };
 }
@@ -159,7 +159,7 @@ export function decodeFieldTypeArrayFlagMinLength(
    */
   value = __d.readInt32();
   return {
-    _name: "fieldTypeArray.FieldTypeArrayFlagMinLength",
+    _name: "field-type-array.FieldTypeArrayFlagMinLength",
     value
   };
 }
@@ -197,7 +197,7 @@ export function updateFieldTypeArrayFlagMinLength(
   return value;
 }
 export interface FieldTypeArrayFlagMaxLength {
-  _name: "fieldTypeArray.FieldTypeArrayFlagMaxLength";
+  _name: "field-type-array.FieldTypeArrayFlagMaxLength";
   value: number;
 }
 export function isFieldTypeArrayFlagMaxLength(
@@ -209,7 +209,7 @@ export function isFieldTypeArrayFlagMaxLength(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeArray.FieldTypeArrayFlagMaxLength"
+      value["_name"] === "field-type-array.FieldTypeArrayFlagMaxLength"
     )
   )
     return false;
@@ -238,7 +238,7 @@ export function FieldTypeArrayFlagMaxLength(
   params: FieldTypeArrayFlagMaxLengthInputParams
 ): FieldTypeArrayFlagMaxLength {
   return {
-    _name: "fieldTypeArray.FieldTypeArrayFlagMaxLength",
+    _name: "field-type-array.FieldTypeArrayFlagMaxLength",
     value: params["value"]
   };
 }
@@ -267,7 +267,7 @@ export function decodeFieldTypeArrayFlagMaxLength(
    */
   value = __d.readInt32();
   return {
-    _name: "fieldTypeArray.FieldTypeArrayFlagMaxLength",
+    _name: "field-type-array.FieldTypeArrayFlagMaxLength",
     value
   };
 }
@@ -305,7 +305,7 @@ export function updateFieldTypeArrayFlagMaxLength(
   return value;
 }
 export interface FieldTypeArrayFlagOptional {
-  _name: "fieldTypeArray.FieldTypeArrayFlagOptional";
+  _name: "field-type-array.FieldTypeArrayFlagOptional";
 }
 export function isFieldTypeArrayFlagOptional(
   value: unknown
@@ -316,7 +316,7 @@ export function isFieldTypeArrayFlagOptional(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeArray.FieldTypeArrayFlagOptional"
+      value["_name"] === "field-type-array.FieldTypeArrayFlagOptional"
     )
   )
     return false;
@@ -327,7 +327,7 @@ export function FieldTypeArrayFlagOptional(
   _: FieldTypeArrayFlagOptionalInputParams = {}
 ): FieldTypeArrayFlagOptional {
   return {
-    _name: "fieldTypeArray.FieldTypeArrayFlagOptional"
+    _name: "field-type-array.FieldTypeArrayFlagOptional"
   };
 }
 export function encodeFieldTypeArrayFlagOptional(
@@ -345,7 +345,7 @@ export function decodeFieldTypeArrayFlagOptional(
    */
   if (__id !== 28218945) return null;
   return {
-    _name: "fieldTypeArray.FieldTypeArrayFlagOptional"
+    _name: "field-type-array.FieldTypeArrayFlagOptional"
   };
 }
 export function defaultFieldTypeArrayFlagOptional(
@@ -368,7 +368,7 @@ export function updateFieldTypeArrayFlagOptional(
   return value;
 }
 export interface FieldTypeArray {
-  _name: "fieldTypeArray.FieldTypeArray";
+  _name: "field-type-array.FieldTypeArray";
   name: string;
   flags: ReadonlyArray<Readonly<FieldTypeArrayFlag>>;
   arrayType: Readonly<FieldType>;
@@ -380,7 +380,7 @@ export function isFieldTypeArray(value: unknown): value is FieldTypeArray {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeArray.FieldTypeArray"
+      value["_name"] === "field-type-array.FieldTypeArray"
     )
   )
     return false;
@@ -415,7 +415,7 @@ export function FieldTypeArray(
   params: FieldTypeArrayInputParams
 ): FieldTypeArray {
   return {
-    _name: "fieldTypeArray.FieldTypeArray",
+    _name: "field-type-array.FieldTypeArray",
     name: params["name"],
     flags: params["flags"],
     arrayType: params["arrayType"]
@@ -476,7 +476,7 @@ export function decodeFieldTypeArray(
   if (tmp5 === null) return null;
   arrayType = tmp5;
   return {
-    _name: "fieldTypeArray.FieldTypeArray",
+    _name: "field-type-array.FieldTypeArray",
     name,
     flags,
     arrayType

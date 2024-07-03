@@ -2,7 +2,7 @@ import JSBI from "jsbi";
 import { ISerializer } from "./__types__";
 import { IDeserializer } from "./__types__";
 export interface EnumFieldInt {
-  _name: "fieldTypeEnum.EnumFieldInt";
+  _name: "field-type-enum.EnumFieldInt";
   name: string;
   value: number;
 }
@@ -13,7 +13,7 @@ export function isEnumFieldInt(value: unknown): value is EnumFieldInt {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeEnum.EnumFieldInt"
+      value["_name"] === "field-type-enum.EnumFieldInt"
     )
   )
     return false;
@@ -43,7 +43,7 @@ export interface EnumFieldIntInputParams {
 }
 export function EnumFieldInt(params: EnumFieldIntInputParams): EnumFieldInt {
   return {
-    _name: "fieldTypeEnum.EnumFieldInt",
+    _name: "field-type-enum.EnumFieldInt",
     name: params["name"],
     value: params["value"]
   };
@@ -78,7 +78,7 @@ export function decodeEnumFieldInt(__d: IDeserializer): EnumFieldInt | null {
    */
   value = __d.readInt32();
   return {
-    _name: "fieldTypeEnum.EnumFieldInt",
+    _name: "field-type-enum.EnumFieldInt",
     name,
     value
   };
@@ -130,7 +130,7 @@ export function updateEnumFieldInt(
   return value;
 }
 export interface EnumFieldString {
-  _name: "fieldTypeEnum.EnumFieldString";
+  _name: "field-type-enum.EnumFieldString";
   name: string;
   value: string;
 }
@@ -141,7 +141,7 @@ export function isEnumFieldString(value: unknown): value is EnumFieldString {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeEnum.EnumFieldString"
+      value["_name"] === "field-type-enum.EnumFieldString"
     )
   )
     return false;
@@ -161,7 +161,7 @@ export function EnumFieldString(
   params: EnumFieldStringInputParams
 ): EnumFieldString {
   return {
-    _name: "fieldTypeEnum.EnumFieldString",
+    _name: "field-type-enum.EnumFieldString",
     name: params["name"],
     value: params["value"]
   };
@@ -201,7 +201,7 @@ export function decodeEnumFieldString(
    */
   value = __d.readString();
   return {
-    _name: "fieldTypeEnum.EnumFieldString",
+    _name: "field-type-enum.EnumFieldString",
     name,
     value
   };
@@ -253,7 +253,7 @@ export function updateEnumFieldString(
   return value;
 }
 export interface FieldTypeEnumString {
-  _name: "fieldTypeEnum.FieldTypeEnumString";
+  _name: "field-type-enum.FieldTypeEnumString";
   name: string;
   fields: ReadonlyArray<Readonly<EnumFieldString>>;
 }
@@ -266,7 +266,7 @@ export function isFieldTypeEnumString(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeEnum.FieldTypeEnumString"
+      value["_name"] === "field-type-enum.FieldTypeEnumString"
     )
   )
     return false;
@@ -291,7 +291,7 @@ export function FieldTypeEnumString(
   params: FieldTypeEnumStringInputParams
 ): FieldTypeEnumString {
   return {
-    _name: "fieldTypeEnum.FieldTypeEnumString",
+    _name: "field-type-enum.FieldTypeEnumString",
     name: params["name"],
     fields: params["fields"]
   };
@@ -342,7 +342,7 @@ export function decodeFieldTypeEnumString(
     __o2[__i2] = __tmp3;
   }
   return {
-    _name: "fieldTypeEnum.FieldTypeEnumString",
+    _name: "field-type-enum.FieldTypeEnumString",
     name,
     fields
   };
@@ -418,7 +418,7 @@ export function updateFieldTypeEnumString(
   return value;
 }
 export interface FieldTypeEnumInt {
-  _name: "fieldTypeEnum.FieldTypeEnumInt";
+  _name: "field-type-enum.FieldTypeEnumInt";
   name: string;
   fields: ReadonlyArray<Readonly<EnumFieldInt>>;
 }
@@ -429,7 +429,7 @@ export function isFieldTypeEnumInt(value: unknown): value is FieldTypeEnumInt {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeEnum.FieldTypeEnumInt"
+      value["_name"] === "field-type-enum.FieldTypeEnumInt"
     )
   )
     return false;
@@ -454,7 +454,7 @@ export function FieldTypeEnumInt(
   params: FieldTypeEnumIntInputParams
 ): FieldTypeEnumInt {
   return {
-    _name: "fieldTypeEnum.FieldTypeEnumInt",
+    _name: "field-type-enum.FieldTypeEnumInt",
     name: params["name"],
     fields: params["fields"]
   };
@@ -505,7 +505,7 @@ export function decodeFieldTypeEnumInt(
     __o2[__i2] = __tmp3;
   }
   return {
-    _name: "fieldTypeEnum.FieldTypeEnumInt",
+    _name: "field-type-enum.FieldTypeEnumInt",
     name,
     fields
   };

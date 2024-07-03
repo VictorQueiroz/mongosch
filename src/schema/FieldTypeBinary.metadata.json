@@ -2,7 +2,7 @@
   "FieldTypeBinary": {
     "kind": "type",
     "id": -1706328239,
-    "globalName": "fieldTypeBinary.FieldTypeBinary",
+    "globalName": "field-type-binary.FieldTypeBinary",
     "name": "FieldTypeBinary",
     "params": []
   },
@@ -10,7 +10,7 @@
     {
       "kind": "type",
       "id": -1706328239,
-      "globalName": "fieldTypeBinary.FieldTypeBinary",
+      "globalName": "field-type-binary.FieldTypeBinary",
       "name": "FieldTypeBinary",
       "params": []
     }

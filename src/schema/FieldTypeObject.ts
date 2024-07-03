@@ -6,7 +6,7 @@ import { IDeserializer } from "./__types__";
 import { decodeField } from "./Field";
 import { compareField } from "./Field";
 export interface FieldTypeObject {
-  _name: "fieldTypeObject.FieldTypeObject";
+  _name: "field-type-object.FieldTypeObject";
   name: string;
   properties: ReadonlyArray<Readonly<Field>>;
 }
@@ -17,7 +17,7 @@ export function isFieldTypeObject(value: unknown): value is FieldTypeObject {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeObject.FieldTypeObject"
+      value["_name"] === "field-type-object.FieldTypeObject"
     )
   )
     return false;
@@ -42,7 +42,7 @@ export function FieldTypeObject(
   params: FieldTypeObjectInputParams
 ): FieldTypeObject {
   return {
-    _name: "fieldTypeObject.FieldTypeObject",
+    _name: "field-type-object.FieldTypeObject",
     name: params["name"],
     properties: params["properties"]
   };
@@ -93,7 +93,7 @@ export function decodeFieldTypeObject(
     __o2[__i2] = tmp4;
   }
   return {
-    _name: "fieldTypeObject.FieldTypeObject",
+    _name: "field-type-object.FieldTypeObject",
     name,
     properties
   };

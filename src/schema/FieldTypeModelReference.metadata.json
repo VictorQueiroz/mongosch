@@ -1,8 +1,26 @@
 {
+  "FieldTypeModelReferenceFlag": {
+    "kind": "trait",
+    "name": "FieldTypeModelReferenceFlag",
+    "nodes": [
+      {
+        "type": "externalType",
+        "name": "FieldTypeModelReferenceFlagOptional",
+        "relativePath": "./FieldTypeModelReference"
+      }
+    ]
+  },
+  "FieldTypeModelReferenceFlagOptional": {
+    "kind": "type",
+    "id": -2034463642,
+    "globalName": "field-type-model-reference.FieldTypeModelReferenceFlagOptional",
+    "name": "FieldTypeModelReferenceFlagOptional",
+    "params": []
+  },
   "FieldTypeModelReference": {
     "kind": "type",
-    "id": -969422962,
-    "globalName": "fieldTypeModelReference.FieldTypeModelReference",
+    "id": 1901102098,
+    "globalName": "field-type-model-reference.FieldTypeModelReference",
     "name": "FieldTypeModelReference",
     "params": [
       {
@@ -12,14 +30,43 @@
           "name": "ModelIdentity",
           "relativePath": "./Model"
         }
+      },
+      {
+        "name": "flags",
+        "type": {
+          "type": "template",
+          "template": "vector",
+          "value": {
+            "type": "internalType",
+            "interfaceName": "FieldTypeModelReferenceFlag"
+          }
+        }
       }
     ]
   },
   "__all": [
     {
+      "kind": "trait",
+      "name": "FieldTypeModelReferenceFlag",
+      "nodes": [
+        {
+          "type": "externalType",
+          "name": "FieldTypeModelReferenceFlagOptional",
+          "relativePath": "./FieldTypeModelReference"
+        }
+      ]
+    },
+    {
       "kind": "type",
-      "id": -969422962,
-      "globalName": "fieldTypeModelReference.FieldTypeModelReference",
+      "id": -2034463642,
+      "globalName": "field-type-model-reference.FieldTypeModelReferenceFlagOptional",
+      "name": "FieldTypeModelReferenceFlagOptional",
+      "params": []
+    },
+    {
+      "kind": "type",
+      "id": 1901102098,
+      "globalName": "field-type-model-reference.FieldTypeModelReference",
       "name": "FieldTypeModelReference",
       "params": [
         {
@@ -28,6 +75,17 @@
             "type": "externalType",
             "name": "ModelIdentity",
             "relativePath": "./Model"
+          }
+        },
+        {
+          "name": "flags",
+          "type": {
+            "type": "template",
+            "template": "vector",
+            "value": {
+              "type": "internalType",
+              "interfaceName": "FieldTypeModelReferenceFlag"
+            }
           }
         }
       ]

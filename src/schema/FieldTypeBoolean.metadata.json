@@ -13,14 +13,14 @@
   "FieldTypeBooleanFlagsOptional": {
     "kind": "type",
     "id": 1833850754,
-    "globalName": "fieldTypeBoolean.FieldTypeBooleanFlagsOptional",
+    "globalName": "field-type-boolean.FieldTypeBooleanFlagsOptional",
     "name": "FieldTypeBooleanFlagsOptional",
     "params": []
   },
   "FieldTypeBoolean": {
     "kind": "type",
     "id": -1452915313,
-    "globalName": "fieldTypeBoolean.FieldTypeBoolean",
+    "globalName": "field-type-boolean.FieldTypeBoolean",
     "name": "FieldTypeBoolean",
     "params": [
       {
@@ -51,14 +51,14 @@
     {
       "kind": "type",
       "id": 1833850754,
-      "globalName": "fieldTypeBoolean.FieldTypeBooleanFlagsOptional",
+      "globalName": "field-type-boolean.FieldTypeBooleanFlagsOptional",
       "name": "FieldTypeBooleanFlagsOptional",
       "params": []
     },
     {
       "kind": "type",
       "id": -1452915313,
-      "globalName": "fieldTypeBoolean.FieldTypeBoolean",
+      "globalName": "field-type-boolean.FieldTypeBoolean",
       "name": "FieldTypeBoolean",
       "params": [
         {

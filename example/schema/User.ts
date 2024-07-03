@@ -559,6 +559,11 @@ export class UserModel {
   }
   public async updateOne(filter: Filter<IUser>, update: UpdateFilter<IUser> | Partial<IUser>) {
     if("$set" in update) {
+      if(!update['$set']) {
+        update['$set'] = {};
+      }
+      let changes = {...update['$set']};
+      update['$set'] = changes;
       const validation = partiallyValidateUser(update['$set']);
       if(validation !== null) {
         return validation;
@@ -577,6 +582,11 @@ export class UserModel {
   }
   public async updateMany(filter: Filter<IUser>, update: UpdateFilter<IUser> | Partial<IUser>) {
     if("$set" in update) {
+      if(!update['$set']) {
+        update['$set'] = {};
+      }
+      let changes = {...update['$set']};
+      update['$set'] = changes;
       const validation = partiallyValidateUser(update['$set']);
       if(validation !== null) {
         return validation;

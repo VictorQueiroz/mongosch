@@ -1,5 +1,9 @@
+import { EventOnUpdate } from "../src/schema/Event";
 import { Field } from "../src/schema/Field";
-import { defaultFieldTypeDate } from "../src/schema/FieldTypeDate";
+import {
+  FieldTypeDateFlagUpdateOnEvent,
+  defaultFieldTypeDate
+} from "../src/schema/FieldTypeDate";
 import { defaultFieldTypeModelReference } from "../src/schema/FieldTypeModelReference";
 import { defaultFieldTypeString } from "../src/schema/FieldTypeString";
 import { Model, ModelIdentity } from "../src/schema/Model";
@@ -27,6 +31,17 @@ export default Model({
       name: "createdAt",
       description: "Date when the post was created",
       fieldType: defaultFieldTypeDate()
+    }),
+    Field({
+      name: "updatedAt",
+      description: "Date when the post was last updated.",
+      fieldType: defaultFieldTypeDate({
+        flags: [
+          FieldTypeDateFlagUpdateOnEvent({
+            event: EventOnUpdate()
+          })
+        ]
+      })
     })
   ]
 });

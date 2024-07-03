@@ -38,14 +38,14 @@
   "FieldTypeIntegerFlagOptional": {
     "kind": "type",
     "id": -1409939587,
-    "globalName": "fieldTypeInteger.FieldTypeIntegerFlagOptional",
+    "globalName": "field-type-integer.FieldTypeIntegerFlagOptional",
     "name": "FieldTypeIntegerFlagOptional",
     "params": []
   },
   "FieldTypeIntegerFlagDefaultValueDouble": {
     "kind": "type",
     "id": 1991764510,
-    "globalName": "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble",
+    "globalName": "field-type-integer.FieldTypeIntegerFlagDefaultValueDouble",
     "name": "FieldTypeIntegerFlagDefaultValueDouble",
     "params": [
       { "name": "value", "type": { "type": "generic", "value": "double" } }
@@ -54,7 +54,7 @@
   "FieldTypeIntegerFlagDefaultValueInt64": {
     "kind": "type",
     "id": 894668971,
-    "globalName": "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64",
+    "globalName": "field-type-integer.FieldTypeIntegerFlagDefaultValueInt64",
     "name": "FieldTypeIntegerFlagDefaultValueInt64",
     "params": [
       { "name": "value", "type": { "type": "generic", "value": "long" } }
@@ -63,7 +63,7 @@
   "FieldTypeIntegerFlagDefaultValueInt32": {
     "kind": "type",
     "id": 1093984595,
-    "globalName": "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32",
+    "globalName": "field-type-integer.FieldTypeIntegerFlagDefaultValueInt32",
     "name": "FieldTypeIntegerFlagDefaultValueInt32",
     "params": [
       { "name": "value", "type": { "type": "generic", "value": "int" } }
@@ -72,7 +72,7 @@
   "FieldTypeIntegerFlagMin": {
     "kind": "type",
     "id": 715142335,
-    "globalName": "fieldTypeInteger.FieldTypeIntegerFlagMin",
+    "globalName": "field-type-integer.FieldTypeIntegerFlagMin",
     "name": "FieldTypeIntegerFlagMin",
     "params": [
       { "name": "value", "type": { "type": "generic", "value": "double" } }
@@ -81,7 +81,7 @@
   "FieldTypeIntegerFlagMax": {
     "kind": "type",
     "id": -1160567723,
-    "globalName": "fieldTypeInteger.FieldTypeIntegerFlagMax",
+    "globalName": "field-type-integer.FieldTypeIntegerFlagMax",
     "name": "FieldTypeIntegerFlagMax",
     "params": [
       { "name": "value", "type": { "type": "generic", "value": "double" } }
@@ -90,7 +90,7 @@
   "FieldTypeDouble": {
     "kind": "type",
     "id": -1526483373,
-    "globalName": "fieldTypeInteger.FieldTypeDouble",
+    "globalName": "field-type-integer.FieldTypeDouble",
     "name": "FieldTypeDouble",
     "params": [
       {
@@ -109,7 +109,7 @@
   "FieldTypeInt64": {
     "kind": "type",
     "id": -296959413,
-    "globalName": "fieldTypeInteger.FieldTypeInt64",
+    "globalName": "field-type-integer.FieldTypeInt64",
     "name": "FieldTypeInt64",
     "params": [
       {
@@ -128,7 +128,7 @@
   "FieldTypeInt32": {
     "kind": "type",
     "id": 1212985133,
-    "globalName": "fieldTypeInteger.FieldTypeInt32",
+    "globalName": "field-type-integer.FieldTypeInt32",
     "name": "FieldTypeInt32",
     "params": [
       {
@@ -184,14 +184,14 @@
     {
       "kind": "type",
       "id": -1409939587,
-      "globalName": "fieldTypeInteger.FieldTypeIntegerFlagOptional",
+      "globalName": "field-type-integer.FieldTypeIntegerFlagOptional",
       "name": "FieldTypeIntegerFlagOptional",
       "params": []
     },
     {
       "kind": "type",
       "id": 1991764510,
-      "globalName": "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble",
+      "globalName": "field-type-integer.FieldTypeIntegerFlagDefaultValueDouble",
       "name": "FieldTypeIntegerFlagDefaultValueDouble",
       "params": [
         { "name": "value", "type": { "type": "generic", "value": "double" } }
@@ -200,7 +200,7 @@
     {
       "kind": "type",
       "id": 894668971,
-      "globalName": "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64",
+      "globalName": "field-type-integer.FieldTypeIntegerFlagDefaultValueInt64",
       "name": "FieldTypeIntegerFlagDefaultValueInt64",
       "params": [
         { "name": "value", "type": { "type": "generic", "value": "long" } }
@@ -209,7 +209,7 @@
     {
       "kind": "type",
       "id": 1093984595,
-      "globalName": "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32",
+      "globalName": "field-type-integer.FieldTypeIntegerFlagDefaultValueInt32",
       "name": "FieldTypeIntegerFlagDefaultValueInt32",
       "params": [
         { "name": "value", "type": { "type": "generic", "value": "int" } }
@@ -218,7 +218,7 @@
     {
       "kind": "type",
       "id": 715142335,
-      "globalName": "fieldTypeInteger.FieldTypeIntegerFlagMin",
+      "globalName": "field-type-integer.FieldTypeIntegerFlagMin",
       "name": "FieldTypeIntegerFlagMin",
       "params": [
         { "name": "value", "type": { "type": "generic", "value": "double" } }
@@ -227,7 +227,7 @@
     {
       "kind": "type",
       "id": -1160567723,
-      "globalName": "fieldTypeInteger.FieldTypeIntegerFlagMax",
+      "globalName": "field-type-integer.FieldTypeIntegerFlagMax",
       "name": "FieldTypeIntegerFlagMax",
       "params": [
         { "name": "value", "type": { "type": "generic", "value": "double" } }
@@ -236,7 +236,7 @@
     {
       "kind": "type",
       "id": -1526483373,
-      "globalName": "fieldTypeInteger.FieldTypeDouble",
+      "globalName": "field-type-integer.FieldTypeDouble",
       "name": "FieldTypeDouble",
       "params": [
         {
@@ -255,7 +255,7 @@
     {
       "kind": "type",
       "id": -296959413,
-      "globalName": "fieldTypeInteger.FieldTypeInt64",
+      "globalName": "field-type-integer.FieldTypeInt64",
       "name": "FieldTypeInt64",
       "params": [
         {
@@ -274,7 +274,7 @@
     {
       "kind": "type",
       "id": 1212985133,
-      "globalName": "fieldTypeInteger.FieldTypeInt32",
+      "globalName": "field-type-integer.FieldTypeInt32",
       "name": "FieldTypeInt32",
       "params": [
         {

@@ -13,6 +13,10 @@ export interface IInputPost {
    * Date when the post was created
    */
   createdAt: Date;
+  /**
+   * Date when the post was last updated.
+   */
+  updatedAt?: Date;
 }
 export interface IPost {
   /**
@@ -27,6 +31,10 @@ export interface IPost {
    * Date when the post was created
    */
   createdAt: Date;
+  /**
+   * Date when the post was last updated.
+   */
+  updatedAt: Date;
 }
 export interface IPostPopulation {
   users: WithId<IUser>[];
@@ -50,6 +58,12 @@ export class PostModel {
   }
   public async updateOne(filter: Filter<IPost>, update: UpdateFilter<IPost> | Partial<IPost>) {
     if("$set" in update) {
+      if(!update['$set']) {
+        update['$set'] = {};
+      }
+      let changes = {...update['$set']};
+      changes.updatedAt = new Date();
+      update['$set'] = changes;
       const validation = partiallyValidatePost(update['$set']);
       if(validation !== null) {
         return validation;
@@ -68,6 +82,12 @@ export class PostModel {
   }
   public async updateMany(filter: Filter<IPost>, update: UpdateFilter<IPost> | Partial<IPost>) {
     if("$set" in update) {
+      if(!update['$set']) {
+        update['$set'] = {};
+      }
+      let changes = {...update['$set']};
+      changes.updatedAt = new Date();
+      update['$set'] = changes;
       const validation = partiallyValidatePost(update['$set']);
       if(validation !== null) {
         return validation;
@@ -165,6 +185,17 @@ export function validatePost(value: unknown) {
       error: `Expected value.createdAt to be of type Date, but got "${typeof valueCreatedAt3}" instead`
     }
   }
+  if(!('updatedAt' in value)) {
+    return {
+      error: `Expected "value" to have a property named ${'updatedAt'}, but only the following properties were found: ${Object.keys(value)}`
+    }
+  }
+  const valueUpdatedAt4 = value['updatedAt'];
+  if(!(valueUpdatedAt4 instanceof Date)) {
+    return {
+      error: `Expected value.updatedAt to be of type Date, but got "${typeof valueUpdatedAt4}" instead`
+    }
+  }
   return null;
 }
 export function partiallyValidatePost(value: unknown) {
@@ -179,10 +210,10 @@ export function partiallyValidatePost(value: unknown) {
         error: `Expected "value" to have a property named ${'title'}, but only the following properties were found: ${Object.keys(value)}`
       }
     }
-    const valueTitle4 = value['title'];
-    if(!(typeof valueTitle4 === 'string')) {
+    const valueTitle5 = value['title'];
+    if(!(typeof valueTitle5 === 'string')) {
       return {
-        error: `Expected value.title to be a string, but got ${typeof valueTitle4} instead`
+        error: `Expected value.title to be a string, but got ${typeof valueTitle5} instead`
       }
     }
   }
@@ -192,10 +223,10 @@ export function partiallyValidatePost(value: unknown) {
         error: `Expected "value" to have a property named ${'authorId'}, but only the following properties were found: ${Object.keys(value)}`
       }
     }
-    const valueAuthorId5 = value['authorId'];
-    if(!(valueAuthorId5 instanceof ObjectId)) {
+    const valueAuthorId6 = value['authorId'];
+    if(!(valueAuthorId6 instanceof ObjectId)) {
       return {
-        error: `Expected value.authorId to be an instance of ObjectId, but got typeof valueAuthorId5 instead`
+        error: `Expected value.authorId to be an instance of ObjectId, but got typeof valueAuthorId6 instead`
       }
     }
   }
@@ -205,10 +236,23 @@ export function partiallyValidatePost(value: unknown) {
         error: `Expected "value" to have a property named ${'createdAt'}, but only the following properties were found: ${Object.keys(value)}`
       }
     }
-    const valueCreatedAt6 = value['createdAt'];
-    if(!(valueCreatedAt6 instanceof Date)) {
+    const valueCreatedAt7 = value['createdAt'];
+    if(!(valueCreatedAt7 instanceof Date)) {
       return {
-        error: `Expected value.createdAt to be of type Date, but got "${typeof valueCreatedAt6}" instead`
+        error: `Expected value.createdAt to be of type Date, but got "${typeof valueCreatedAt7}" instead`
+      }
+    }
+  }
+  if('updatedAt' in value) {
+    if(!('updatedAt' in value)) {
+      return {
+        error: `Expected "value" to have a property named ${'updatedAt'}, but only the following properties were found: ${Object.keys(value)}`
+      }
+    }
+    const valueUpdatedAt8 = value['updatedAt'];
+    if(!(valueUpdatedAt8 instanceof Date)) {
+      return {
+        error: `Expected value.updatedAt to be of type Date, but got "${typeof valueUpdatedAt8}" instead`
       }
     }
   }

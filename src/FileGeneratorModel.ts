@@ -1,11 +1,14 @@
 import CodeStream from "textstreamjs";
 import { Model, ModelIdentity } from "./schema/Model";
 import { FieldType } from "./schema/FieldType";
-import { Field } from "./schema/Field";
+import { Field, updateField } from "./schema/Field";
 import { UnionItem } from "./schema/FieldTypeUnion";
 import Exception from "./Exception";
-import { Event, compareEventTrait } from "./schema/Event";
-import { FieldTypeObject } from "./schema/FieldTypeObject";
+import { Event, EventOnUpdate, compareEventTrait } from "./schema/Event";
+import {
+  FieldTypeObject,
+  updateFieldTypeObject
+} from "./schema/FieldTypeObject";
 import getModelIdentity from "./getModelIdentity";
 
 interface IGenerateValidationFieldsOptions {
@@ -71,34 +74,34 @@ function getEnumClassName(model: Model, path: PathItem[]) {
 
 function hasModelReference(fieldType: FieldType) {
   switch (fieldType._name) {
-    case "fieldTypeModelReference.FieldTypeModelReference":
+    case "field-type-model-reference.FieldTypeModelReference":
       return true;
-    case "fieldTypeObject.FieldTypeObject":
+    case "field-type-object.FieldTypeObject":
       for (const f of fieldType.properties) {
         if (hasModelReference(f.fieldType)) {
           return true;
         }
       }
       break;
-    case "fieldTypeArray.FieldTypeArray":
+    case "field-type-array.FieldTypeArray":
       return hasModelReference(fieldType.arrayType);
-    case "fieldTypeString.FieldTypeString":
-    case "fieldTypeInteger.FieldTypeDouble":
-    case "fieldTypeInteger.FieldTypeInt64":
-    case "fieldTypeInteger.FieldTypeInt32":
-    case "fieldTypeDate.FieldTypeDate":
-    case "fieldTypeEnum.FieldTypeEnumString":
-    case "fieldTypeEnum.FieldTypeEnumInt":
+    case "field-type-string.FieldTypeString":
+    case "field-type-integer.FieldTypeDouble":
+    case "field-type-integer.FieldTypeInt64":
+    case "field-type-integer.FieldTypeInt32":
+    case "field-type-date.FieldTypeDate":
+    case "field-type-enum.FieldTypeEnumString":
+    case "field-type-enum.FieldTypeEnumInt":
       break;
-    case "fieldTypeUnion.FieldTypeUnion":
+    case "field-type-union.FieldTypeUnion":
       for (const f of fieldType.items) {
         if (hasModelReference(f.fieldType)) {
           return true;
         }
       }
       break;
-    case "fieldTypeBinary.FieldTypeBinary":
-    case "fieldTypeBoolean.FieldTypeBoolean":
+    case "field-type-binary.FieldTypeBinary":
+    case "field-type-boolean.FieldTypeBoolean":
   }
   return false;
 }
@@ -244,19 +247,19 @@ export default class FileGeneratorModel extends CodeStream {
     const currentPath = [...path, fieldType];
     fn(fieldType, path);
     switch (fieldType._name) {
-      case "fieldTypeObject.FieldTypeObject":
+      case "field-type-object.FieldTypeObject":
         for (const prop of fieldType.properties) {
           this.#iterateWithPath(prop.fieldType, [...currentPath, prop], fn);
         }
         break;
-      case "fieldTypeArray.FieldTypeArray":
+      case "field-type-array.FieldTypeArray":
         this.#iterateWithPath(
           fieldType.arrayType,
           [...currentPath, fieldType.arrayType],
           fn
         );
         break;
-      case "fieldTypeUnion.FieldTypeUnion":
+      case "field-type-union.FieldTypeUnion":
         for (const f of fieldType.items) {
           this.#iterateWithPath(f.fieldType, [...currentPath, f], fn);
         }
@@ -280,8 +283,8 @@ export default class FileGeneratorModel extends CodeStream {
   #generateEnumClass(fieldType: FieldType) {
     const fieldTypePath = this.#fieldTypePathOrFailure(fieldType);
     switch (fieldType._name) {
-      case "fieldTypeEnum.FieldTypeEnumString":
-      case "fieldTypeEnum.FieldTypeEnumInt":
+      case "field-type-enum.FieldTypeEnumString":
+      case "field-type-enum.FieldTypeEnumInt":
         this.write(
           `export const ${getEnumValuesConstantName(
             this.#model,
@@ -299,24 +302,24 @@ export default class FileGeneratorModel extends CodeStream {
         break;
     }
     switch (fieldType._name) {
-      case "fieldTypeObject.FieldTypeObject":
+      case "field-type-object.FieldTypeObject":
         for (const prop of fieldType.properties) {
           this.#generateEnumClass(prop.fieldType);
         }
         break;
-      case "fieldTypeArray.FieldTypeArray":
+      case "field-type-array.FieldTypeArray":
         this.#generateEnumClass(fieldType.arrayType);
         break;
-      case "fieldTypeModelReference.FieldTypeModelReference":
-      case "fieldTypeString.FieldTypeString":
-      case "fieldTypeInteger.FieldTypeDouble":
-      case "fieldTypeInteger.FieldTypeInt64":
-      case "fieldTypeInteger.FieldTypeInt32":
-      case "fieldTypeDate.FieldTypeDate":
-      case "fieldTypeBinary.FieldTypeBinary":
-      case "fieldTypeBoolean.FieldTypeBoolean":
+      case "field-type-model-reference.FieldTypeModelReference":
+      case "field-type-string.FieldTypeString":
+      case "field-type-integer.FieldTypeDouble":
+      case "field-type-integer.FieldTypeInt64":
+      case "field-type-integer.FieldTypeInt32":
+      case "field-type-date.FieldTypeDate":
+      case "field-type-binary.FieldTypeBinary":
+      case "field-type-boolean.FieldTypeBoolean":
         break;
-      case "fieldTypeUnion.FieldTypeUnion":
+      case "field-type-union.FieldTypeUnion":
         this.write(
           `export enum ${getEnumClassName(this.#model, fieldTypePath)} {\n`,
           () => {
@@ -327,8 +330,8 @@ export default class FileGeneratorModel extends CodeStream {
           "}\n"
         );
         break;
-      case "fieldTypeEnum.FieldTypeEnumString":
-      case "fieldTypeEnum.FieldTypeEnumInt":
+      case "field-type-enum.FieldTypeEnumString":
+      case "field-type-enum.FieldTypeEnumInt":
         this.write(
           `export enum ${getEnumClassName(this.#model, fieldTypePath)} {\n`,
           () => {
@@ -347,7 +350,7 @@ export default class FileGeneratorModel extends CodeStream {
   }
   #populateModelSetFromFieldType(fieldType: FieldType) {
     switch (fieldType._name) {
-      case "fieldTypeModelReference.FieldTypeModelReference":
+      case "field-type-model-reference.FieldTypeModelReference":
         const fileGenerator = this.#manager.resolve(fieldType.model);
         this.#import({
           fileGenerator,
@@ -355,27 +358,27 @@ export default class FileGeneratorModel extends CodeStream {
         });
         this.#referencedModels.add(getModelIdentity(fieldType.model));
         break;
-      case "fieldTypeObject.FieldTypeObject":
+      case "field-type-object.FieldTypeObject":
         for (const f of fieldType.properties) {
           this.#populateModelSetFromFieldType(f.fieldType);
         }
         break;
-      case "fieldTypeArray.FieldTypeArray":
+      case "field-type-array.FieldTypeArray":
         this.#populateModelSetFromFieldType(fieldType.arrayType);
         break;
-      case "fieldTypeUnion.FieldTypeUnion":
+      case "field-type-union.FieldTypeUnion":
         for (const ft of fieldType.items) {
           this.#populateModelSetFromFieldType(ft.fieldType);
         }
         break;
-      case "fieldTypeString.FieldTypeString":
-      case "fieldTypeInteger.FieldTypeDouble":
-      case "fieldTypeInteger.FieldTypeInt64":
-      case "fieldTypeInteger.FieldTypeInt32":
-      case "fieldTypeDate.FieldTypeDate":
-      case "fieldTypeEnum.FieldTypeEnumString":
-      case "fieldTypeEnum.FieldTypeEnumInt":
-      case "fieldTypeBoolean.FieldTypeBoolean":
+      case "field-type-string.FieldTypeString":
+      case "field-type-integer.FieldTypeDouble":
+      case "field-type-integer.FieldTypeInt64":
+      case "field-type-integer.FieldTypeInt32":
+      case "field-type-date.FieldTypeDate":
+      case "field-type-enum.FieldTypeEnumString":
+      case "field-type-enum.FieldTypeEnumInt":
+      case "field-type-boolean.FieldTypeBoolean":
     }
   }
   #generateModelClass() {
@@ -421,6 +424,22 @@ export default class FileGeneratorModel extends CodeStream {
                 'if("$set" in update) {\n',
                 () => {
                   this.write(
+                    "if(!update['$set']) {\n",
+                    () => {
+                      this.write("update['$set'] = {};\n");
+                    },
+                    "}\n"
+                  );
+                  this.write("let changes = {...update['$set']};\n");
+                  for (const f of m.fields) {
+                    this.#updateSetAtomicOperatorIfEvent(
+                      f.fieldType,
+                      ["changes", f.name],
+                      EventOnUpdate()
+                    );
+                  }
+                  this.write(`update['$set'] = changes;\n`);
+                  this.write(
                     `const validation = ${getPartialValidateFunctionName(
                       m
                     )}(update['$set']);\n`
@@ -432,13 +451,6 @@ export default class FileGeneratorModel extends CodeStream {
                     },
                     "}\n"
                   );
-                  // this.#generateModelDataChangingCode(
-                  //   m.fields,
-                  //   [],
-                  //   EventOnCreate(),
-                  //   'update["$set"]',
-                  //   'update["$set"]'
-                  // );
                 },
                 "} else {\n"
               );
@@ -455,13 +467,6 @@ export default class FileGeneratorModel extends CodeStream {
                   },
                   "}\n"
                 );
-                // this.#generateModelDataChangingCode(
-                //   m.fields,
-                //   [],
-                //   EventOnCreate(),
-                //   "update",
-                //   "update"
-                // );
               });
               this.write("}\n");
               this.write(
@@ -529,14 +534,6 @@ export default class FileGeneratorModel extends CodeStream {
               },
               "}\n"
             );
-            // this.write(`let completeValue: ${getModelInterfaceName(m)};\n`);
-            // this.#generateModelDataChangingCode(
-            //   m.fields,
-            //   [],
-            //   EventOnCreate(),
-            //   "value",
-            //   "value"
-            // );
             this.write(
               `const result = await this.${
                 getModelIdentity(this.#model).collectionName
@@ -559,59 +556,49 @@ export default class FileGeneratorModel extends CodeStream {
       "}\n"
     );
   }
-  #generateModelDataChangingCode(
-    fields: ReadonlyArray<Field>,
-    path: Field[] = [],
-    event: Event,
-    value: string,
-    spreadObject: string
+  #updateSetAtomicOperatorIfEvent(
+    fieldType: FieldType,
+    path: string[],
+    currentEvent: Event
   ) {
-    for (const f of fields) {
-      const { fieldType } = f;
-      switch (fieldType._name) {
-        case "fieldTypeDate.FieldTypeDate":
-          this.write(
-            `${value} = {\n`,
-            () => {
-              this.write(`...${spreadObject},\n`);
-              for (const flag of fieldType.flags) {
-                switch (flag._name) {
-                  case "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent":
-                    if (!compareEventTrait(event, flag.event)) {
-                      continue;
-                    }
-                    this.write(`${f.name}: new Date()\n`);
-                    break;
-                  case "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate":
-                    this.write(`${f.name}: new Date()\n`);
-                    break;
-                }
+    switch (fieldType._name) {
+      case "field-type-date.FieldTypeDate":
+        for (const flag of fieldType.flags) {
+          switch (flag._name) {
+            case "field-type-date.FieldTypeDateFlagUpdateOnEvent":
+              if (currentEvent._name === "event.EventOnUpdate") {
+                this.write(`${path.join(".")} = new Date();\n`);
               }
-            },
-            "}\n"
+              break;
+          }
+        }
+        break;
+      case "field-type-object.FieldTypeObject":
+        for (const p of fieldType.properties) {
+          this.#updateSetAtomicOperatorIfEvent(
+            p.fieldType,
+            [...path, p.name],
+            currentEvent
           );
-          break;
-        case "fieldTypeObject.FieldTypeObject":
-          this.#generateModelDataChangingCode(
-            fieldType.properties,
-            [...path, f],
-            event,
-            value,
-            spreadObject
-          );
-          break;
-        case "fieldTypeArray.FieldTypeArray":
-        case "fieldTypeModelReference.FieldTypeModelReference":
-        case "fieldTypeString.FieldTypeString":
-        case "fieldTypeInteger.FieldTypeDouble":
-        case "fieldTypeInteger.FieldTypeInt64":
-        case "fieldTypeInteger.FieldTypeInt32":
-        case "fieldTypeEnum.FieldTypeEnumString":
-        case "fieldTypeEnum.FieldTypeEnumInt":
-        case "fieldTypeUnion.FieldTypeUnion":
-        case "fieldTypeBinary.FieldTypeBinary":
-        case "fieldTypeBoolean.FieldTypeBoolean":
-      }
+        }
+        break;
+      case "field-type-array.FieldTypeArray":
+        this.#updateSetAtomicOperatorIfEvent(
+          fieldType.arrayType,
+          [...path, "$[]"],
+          currentEvent
+        );
+        break;
+      case "field-type-model-reference.FieldTypeModelReference":
+      case "field-type-string.FieldTypeString":
+      case "field-type-integer.FieldTypeDouble":
+      case "field-type-integer.FieldTypeInt64":
+      case "field-type-integer.FieldTypeInt32":
+      case "field-type-enum.FieldTypeEnumString":
+      case "field-type-enum.FieldTypeEnumInt":
+      case "field-type-union.FieldTypeUnion":
+      case "field-type-binary.FieldTypeBinary":
+      case "field-type-boolean.FieldTypeBoolean":
     }
   }
   #generatePopulateMethod() {
@@ -715,14 +702,23 @@ export default class FileGeneratorModel extends CodeStream {
     }
     const currentPath = [...previousPath, propertyKey];
     switch (fieldType._name) {
-      case "fieldTypeModelReference.FieldTypeModelReference":
+      case "field-type-model-reference.FieldTypeModelReference": {
+        const hasOptionalFlag = fieldType.flags.some(
+          (f) =>
+            f._name ===
+            "field-type-model-reference.FieldTypeModelReferenceFlagOptional"
+        );
+        const key = currentPath.join(".");
+        let optionalValidation = "";
+        if (hasOptionalFlag) {
+          optionalValidation = `if(${key}) `;
+        }
         this.write(
-          `ids.${fieldType.model.collectionName}.push(${currentPath.join(
-            "."
-          )});\n`
+          `${optionalValidation}ids.${fieldType.model.collectionName}.push(${key});\n`
         );
         break;
-      case "fieldTypeUnion.FieldTypeUnion":
+      }
+      case "field-type-union.FieldTypeUnion":
         for (const ft of fieldType.items) {
           this.write(
             `if(${currentPath.join(".")}.id === ${ft.id}) {\n`,
@@ -738,7 +734,7 @@ export default class FileGeneratorModel extends CodeStream {
           );
         }
         break;
-      case "fieldTypeObject.FieldTypeObject":
+      case "field-type-object.FieldTypeObject":
         for (const f of fieldType.properties) {
           depth = this.#generatePopulateExpressions(
             f.fieldType,
@@ -748,7 +744,7 @@ export default class FileGeneratorModel extends CodeStream {
           );
         }
         break;
-      case "fieldTypeArray.FieldTypeArray": {
+      case "field-type-array.FieldTypeArray": {
         const itemVarName = `arrayElement_${depth}`;
         this.write(
           `for(const ${itemVarName} of ${currentPath.join(".")}) {\n`,
@@ -764,14 +760,14 @@ export default class FileGeneratorModel extends CodeStream {
         );
         break;
       }
-      case "fieldTypeString.FieldTypeString":
-      case "fieldTypeInteger.FieldTypeDouble":
-      case "fieldTypeInteger.FieldTypeInt64":
-      case "fieldTypeInteger.FieldTypeInt32":
-      case "fieldTypeDate.FieldTypeDate":
-      case "fieldTypeEnum.FieldTypeEnumString":
-      case "fieldTypeEnum.FieldTypeEnumInt":
-      case "fieldTypeBoolean.FieldTypeBoolean":
+      case "field-type-string.FieldTypeString":
+      case "field-type-integer.FieldTypeDouble":
+      case "field-type-integer.FieldTypeInt64":
+      case "field-type-integer.FieldTypeInt32":
+      case "field-type-date.FieldTypeDate":
+      case "field-type-enum.FieldTypeEnumString":
+      case "field-type-enum.FieldTypeEnumInt":
+      case "field-type-boolean.FieldTypeBoolean":
     }
     return depth;
   }
@@ -839,7 +835,7 @@ export default class FileGeneratorModel extends CodeStream {
       case "model.Model":
         props = m.fields;
         break;
-      case "fieldTypeObject.FieldTypeObject":
+      case "field-type-object.FieldTypeObject":
         props = m.properties;
         break;
     }
@@ -906,15 +902,15 @@ export default class FileGeneratorModel extends CodeStream {
     const humanReadableProp = `${obj}.${sanitize(key)}`;
     this.write(`const ${value} = ${obj}[${key}];\n`);
     switch (fieldType._name) {
-      case "fieldTypeModelReference.FieldTypeModelReference":
+      case "field-type-model-reference.FieldTypeModelReference":
         this.#generateValidationIf(
           `${value} instanceof ObjectId`,
           `Expected ${humanReadableProp} to be an instance of ObjectId, but got typeof ${value} instead`
         );
         break;
-      case "fieldTypeString.FieldTypeString":
+      case "field-type-string.FieldTypeString":
         const isOptional = fieldType.flags.find(
-          (f) => f._name === "fieldTypeString.FieldTypeStringFlagOptional"
+          (f) => f._name === "field-type-string.FieldTypeStringFlagOptional"
         );
         if (isOptional) {
           this.#generateValidationIf(
@@ -933,7 +929,7 @@ export default class FileGeneratorModel extends CodeStream {
             () => {
               for (const f of fieldType.flags) {
                 switch (f._name) {
-                  case "fieldTypeString.FieldTypeStringFlagMatchRegularExpression":
+                  case "field-type-string.FieldTypeStringFlagMatchRegularExpression":
                     try {
                       new RegExp(f.value);
                     } catch (reason) {
@@ -946,13 +942,13 @@ export default class FileGeneratorModel extends CodeStream {
                       `Expected ${humanReadableProp} to match ${f.value}, but it didn't`
                     );
                     break;
-                  case "fieldTypeString.FieldTypeStringFlagMinLength":
+                  case "field-type-string.FieldTypeStringFlagMinLength":
                     this.#generateValidationIf(
                       `${value}.length >= ${f.value}`,
                       `Expected ${humanReadableProp} string to have at least ${f.value} characters`
                     );
                     break;
-                  case "fieldTypeString.FieldTypeStringFlagMaxLength":
+                  case "field-type-string.FieldTypeStringFlagMaxLength":
                     this.#generateValidationIf(
                       `${value}.length <= ${f.value}`,
                       `Expected ${humanReadableProp} string to have up to ${f.value} characters`
@@ -965,7 +961,7 @@ export default class FileGeneratorModel extends CodeStream {
           );
         }
         break;
-      case "fieldTypeObject.FieldTypeObject":
+      case "field-type-object.FieldTypeObject":
         depth = this.#generateValidationFields(
           fieldType,
           value,
@@ -973,31 +969,31 @@ export default class FileGeneratorModel extends CodeStream {
           options
         );
         break;
-      case "fieldTypeDate.FieldTypeDate":
+      case "field-type-date.FieldTypeDate":
         this.#generateValidationIf(
           `${value} instanceof Date`,
           `Expected ${humanReadableProp} to be of type Date, but got "\${typeof ${value}}" instead`
         );
         for (const f of fieldType.flags) {
           switch (f._name) {
-            case "fieldTypeDate.FieldTypeDateFlagFuture":
+            case "field-type-date.FieldTypeDateFlagFuture":
               this.#generateValidationIf(
                 `${value}.getTime() > new Date().getTime()`,
                 `Expected ${humanReadableProp} to be in the future, but it's in the past`
               );
               break;
-            case "fieldTypeDate.FieldTypeDateFlagPast":
+            case "field-type-date.FieldTypeDateFlagPast":
               this.#generateValidationIf(
                 `${value}.getTime() < new Date().getTime()`,
                 `Expected ${humanReadableProp} to be in the future, but it's in the past`
               );
               break;
-            case "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate":
-            case "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent":
+            case "field-type-date.FieldTypeDateFlagDefaultValueCurrentDate":
+            case "field-type-date.FieldTypeDateFlagUpdateOnEvent":
           }
         }
         break;
-      case "fieldTypeArray.FieldTypeArray": {
+      case "field-type-array.FieldTypeArray": {
         this.#generateValidationIf(
           `Array.isArray(${value})`,
           `Expected ${humanReadableProp} to be an array, but got "\${typeof ${value}}" instead`
@@ -1018,21 +1014,21 @@ export default class FileGeneratorModel extends CodeStream {
         );
         break;
       }
-      case "fieldTypeInteger.FieldTypeDouble":
-      case "fieldTypeInteger.FieldTypeInt64":
-      case "fieldTypeInteger.FieldTypeInt32":
+      case "field-type-integer.FieldTypeDouble":
+      case "field-type-integer.FieldTypeInt64":
+      case "field-type-integer.FieldTypeInt32":
         this.#generateValidationIf(
           `typeof ${value} === 'number'`,
           `Expected ${humanReadableProp} to be number, but got "\${typeof ${value}}" instead`
         );
         break;
-      case "fieldTypeBoolean.FieldTypeBoolean":
+      case "field-type-boolean.FieldTypeBoolean":
         this.#generateValidationIf(
           `typeof ${value} === 'boolean'`,
           `Expected ${humanReadableProp} to be boolean, but got "\${typeof ${value}}" instead`
         );
         break;
-      case "fieldTypeUnion.FieldTypeUnion":
+      case "field-type-union.FieldTypeUnion":
         this.#generateValidationIf(
           `typeof ${value} === 'object' && ${value} !== null`,
           `Expected ${humanReadableProp} to be an object, but got "\${typeof ${value}}" instead`
@@ -1066,17 +1062,17 @@ export default class FileGeneratorModel extends CodeStream {
           "}\n"
         );
         break;
-      case "fieldTypeBinary.FieldTypeBinary":
+      case "field-type-binary.FieldTypeBinary":
         this.#generateValidationIf(
           `${value} instanceof Binary`,
           `Expected ${humanReadableProp} to be an instance of Binary, but got "\${typeof ${value}}" instead`
         );
         break;
-      case "fieldTypeEnum.FieldTypeEnumInt":
-      case "fieldTypeEnum.FieldTypeEnumString": {
+      case "field-type-enum.FieldTypeEnumInt":
+      case "field-type-enum.FieldTypeEnumString": {
         this.#generateValidationIf(
           `typeof ${value} === '${
-            fieldType._name === "fieldTypeEnum.FieldTypeEnumInt"
+            fieldType._name === "field-type-enum.FieldTypeEnumInt"
               ? "number"
               : "string"
           }'`,
@@ -1185,33 +1181,33 @@ export default class FileGeneratorModel extends CodeStream {
   #preprocessFields(fieldTypes: ReadonlyArray<FieldType>) {
     for (const fieldType of fieldTypes) {
       switch (fieldType._name) {
-        case "fieldTypeBinary.FieldTypeBinary":
+        case "field-type-binary.FieldTypeBinary":
           this.#import({
             exports: ["Binary"],
             path: "mongodb"
           });
           break;
-        case "fieldTypeString.FieldTypeString":
+        case "field-type-string.FieldTypeString":
           break;
-        case "fieldTypeModelReference.FieldTypeModelReference":
+        case "field-type-model-reference.FieldTypeModelReference":
           this.#import({
             path: "mongodb",
             exports: ["ObjectId", "Filter"]
           });
           break;
-        case "fieldTypeObject.FieldTypeObject":
+        case "field-type-object.FieldTypeObject":
           this.#preprocessFields(fieldType.properties.map((f) => f.fieldType));
           break;
-        case "fieldTypeArray.FieldTypeArray":
+        case "field-type-array.FieldTypeArray":
           this.#preprocessFields([fieldType.arrayType]);
           break;
-        case "fieldTypeInteger.FieldTypeDouble":
-        case "fieldTypeInteger.FieldTypeInt64":
-        case "fieldTypeInteger.FieldTypeInt32":
-        case "fieldTypeDate.FieldTypeDate":
-        case "fieldTypeBoolean.FieldTypeBoolean":
+        case "field-type-integer.FieldTypeDouble":
+        case "field-type-integer.FieldTypeInt64":
+        case "field-type-integer.FieldTypeInt32":
+        case "field-type-date.FieldTypeDate":
+        case "field-type-boolean.FieldTypeBoolean":
           break;
-        case "fieldTypeUnion.FieldTypeUnion":
+        case "field-type-union.FieldTypeUnion":
           this.#preprocessFields(fieldType.items.map((i) => i.fieldType));
       }
     }
@@ -1233,12 +1229,12 @@ export default class FileGeneratorModel extends CodeStream {
   #generateAfterFieldNameCode(f: Field) {
     const { fieldType } = f;
     switch (fieldType._name) {
-      case "fieldTypeDate.FieldTypeDate":
+      case "field-type-date.FieldTypeDate":
         let writtenOptionalQuestionMark = false;
         for (const flag of fieldType.flags) {
           switch (flag._name) {
-            case "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate":
-            case "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent":
+            case "field-type-date.FieldTypeDateFlagDefaultValueCurrentDate":
+            case "field-type-date.FieldTypeDateFlagUpdateOnEvent":
               if (writtenOptionalQuestionMark) {
                 continue;
               }
@@ -1248,33 +1244,33 @@ export default class FileGeneratorModel extends CodeStream {
           }
         }
         break;
-      case "fieldTypeModelReference.FieldTypeModelReference":
-      case "fieldTypeString.FieldTypeString":
-      case "fieldTypeObject.FieldTypeObject":
-      case "fieldTypeArray.FieldTypeArray":
-      case "fieldTypeInteger.FieldTypeDouble":
-      case "fieldTypeInteger.FieldTypeInt64":
-      case "fieldTypeInteger.FieldTypeInt32":
-      case "fieldTypeEnum.FieldTypeEnumString":
-      case "fieldTypeEnum.FieldTypeEnumInt":
-      case "fieldTypeUnion.FieldTypeUnion":
-      case "fieldTypeBinary.FieldTypeBinary":
-      case "fieldTypeBoolean.FieldTypeBoolean":
+      case "field-type-model-reference.FieldTypeModelReference":
+      case "field-type-string.FieldTypeString":
+      case "field-type-object.FieldTypeObject":
+      case "field-type-array.FieldTypeArray":
+      case "field-type-integer.FieldTypeDouble":
+      case "field-type-integer.FieldTypeInt64":
+      case "field-type-integer.FieldTypeInt32":
+      case "field-type-enum.FieldTypeEnumString":
+      case "field-type-enum.FieldTypeEnumInt":
+      case "field-type-union.FieldTypeUnion":
+      case "field-type-binary.FieldTypeBinary":
+      case "field-type-boolean.FieldTypeBoolean":
         break;
     }
   }
   #generateFieldTypeCode(fieldType: FieldType) {
     switch (fieldType._name) {
-      case "fieldTypeBinary.FieldTypeBinary":
+      case "field-type-binary.FieldTypeBinary":
         this.append("Binary");
         break;
-      case "fieldTypeString.FieldTypeString":
+      case "field-type-string.FieldTypeString":
         this.append(`string`);
         break;
-      case "fieldTypeModelReference.FieldTypeModelReference":
+      case "field-type-model-reference.FieldTypeModelReference":
         this.append(`ObjectId`);
         break;
-      case "fieldTypeObject.FieldTypeObject":
+      case "field-type-object.FieldTypeObject":
         this.append(`{\n`);
         this.indentBlock(() => {
           this.#generateFields({
@@ -1284,23 +1280,23 @@ export default class FileGeneratorModel extends CodeStream {
         });
         this.write("}");
         break;
-      case "fieldTypeArray.FieldTypeArray":
+      case "field-type-array.FieldTypeArray":
         this.append("ReadonlyArray<");
         this.#generateFieldTypeCode(fieldType.arrayType);
         this.append(">");
         break;
-      case "fieldTypeDate.FieldTypeDate":
+      case "field-type-date.FieldTypeDate":
         this.append("Date");
         break;
-      case "fieldTypeInteger.FieldTypeDouble":
-      case "fieldTypeInteger.FieldTypeInt64":
-      case "fieldTypeInteger.FieldTypeInt32":
+      case "field-type-integer.FieldTypeDouble":
+      case "field-type-integer.FieldTypeInt64":
+      case "field-type-integer.FieldTypeInt32":
         this.append("number");
         break;
-      case "fieldTypeBoolean.FieldTypeBoolean":
+      case "field-type-boolean.FieldTypeBoolean":
         this.append("boolean");
         break;
-      case "fieldTypeUnion.FieldTypeUnion":
+      case "field-type-union.FieldTypeUnion":
         const unionEnumType = getEnumClassName(
           this.#model,
           this.#fieldTypePathOrFailure(fieldType)
@@ -1319,8 +1315,8 @@ export default class FileGeneratorModel extends CodeStream {
           }
         }
         break;
-      case "fieldTypeEnum.FieldTypeEnumString":
-      case "fieldTypeEnum.FieldTypeEnumInt": {
+      case "field-type-enum.FieldTypeEnumString":
+      case "field-type-enum.FieldTypeEnumInt": {
         const fieldTypePath = this.#fieldTypePathOrFailure(fieldType);
         this.append(getEnumClassName(this.#model, fieldTypePath));
         break;

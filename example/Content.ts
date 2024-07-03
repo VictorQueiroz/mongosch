@@ -25,14 +25,16 @@ export function ContentRef() {
         name: "Paragraph",
         id: ContentType.Paragraph,
         fieldType: FieldTypeModelReference({
-          model: ContentParagraphIdentity
+          model: ContentParagraphIdentity,
+          flags: []
         })
       }),
       UnionItem({
         id: ContentType.UserInterface,
         name: "UI",
         fieldType: FieldTypeModelReference({
-          model: ContentUserInterfaceIdentity
+          model: ContentUserInterfaceIdentity,
+          flags: []
         })
       })
     ]

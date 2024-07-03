@@ -42,6 +42,11 @@ export class StoryModel {
   }
   public async updateOne(filter: Filter<IStory>, update: UpdateFilter<IStory> | Partial<IStory>) {
     if("$set" in update) {
+      if(!update['$set']) {
+        update['$set'] = {};
+      }
+      let changes = {...update['$set']};
+      update['$set'] = changes;
       const validation = partiallyValidateStory(update['$set']);
       if(validation !== null) {
         return validation;
@@ -60,6 +65,11 @@ export class StoryModel {
   }
   public async updateMany(filter: Filter<IStory>, update: UpdateFilter<IStory> | Partial<IStory>) {
     if("$set" in update) {
+      if(!update['$set']) {
+        update['$set'] = {};
+      }
+      let changes = {...update['$set']};
+      update['$set'] = changes;
       const validation = partiallyValidateStory(update['$set']);
       if(validation !== null) {
         return validation;

@@ -24,21 +24,21 @@ export function encodeFieldTypeIntegerFlagTrait(
   value: FieldTypeIntegerFlag
 ) {
   switch (value._name) {
-    case "fieldTypeInteger.FieldTypeIntegerFlagOptional":
+    case "field-type-integer.FieldTypeIntegerFlagOptional":
       return encodeFieldTypeIntegerFlagOptional(__s, value);
-    case "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble":
+    case "field-type-integer.FieldTypeIntegerFlagDefaultValueDouble":
       return encodeFieldTypeIntegerFlagDefaultValueDouble(__s, value);
-    case "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64":
+    case "field-type-integer.FieldTypeIntegerFlagDefaultValueInt64":
       return encodeFieldTypeIntegerFlagDefaultValueInt64(__s, value);
-    case "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32":
+    case "field-type-integer.FieldTypeIntegerFlagDefaultValueInt32":
       return encodeFieldTypeIntegerFlagDefaultValueInt32(__s, value);
-    case "fieldTypeInteger.FieldTypeIntegerFlagMin":
+    case "field-type-integer.FieldTypeIntegerFlagMin":
       return encodeFieldTypeIntegerFlagMin(__s, value);
-    case "fieldTypeInteger.FieldTypeIntegerFlagMax":
+    case "field-type-integer.FieldTypeIntegerFlagMax":
       return encodeFieldTypeIntegerFlagMax(__s, value);
   }
   throw new Error(
-    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- fieldTypeInteger.FieldTypeIntegerFlagOptional\n\t- fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble\n\t- fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64\n\t- fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32\n\t- fieldTypeInteger.FieldTypeIntegerFlagMin\n\t- fieldTypeInteger.FieldTypeIntegerFlagMax\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
+    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- field-type-integer.FieldTypeIntegerFlagOptional\n\t- field-type-integer.FieldTypeIntegerFlagDefaultValueDouble\n\t- field-type-integer.FieldTypeIntegerFlagDefaultValueInt64\n\t- field-type-integer.FieldTypeIntegerFlagDefaultValueInt32\n\t- field-type-integer.FieldTypeIntegerFlagMin\n\t- field-type-integer.FieldTypeIntegerFlagMax\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
   );
 }
 export function decodeFieldTypeIntegerFlagTrait(__d: IDeserializer) {
@@ -101,40 +101,41 @@ export function compareFieldTypeIntegerFlagTrait(
   __b: FieldTypeIntegerFlag
 ) {
   switch (__a._name) {
-    case "fieldTypeInteger.FieldTypeIntegerFlagOptional":
-      if (__b._name !== "fieldTypeInteger.FieldTypeIntegerFlagOptional")
+    case "field-type-integer.FieldTypeIntegerFlagOptional":
+      if (__b._name !== "field-type-integer.FieldTypeIntegerFlagOptional")
         return false;
       return compareFieldTypeIntegerFlagOptional(__a, __b);
-    case "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble":
+    case "field-type-integer.FieldTypeIntegerFlagDefaultValueDouble":
       if (
-        __b._name !== "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble"
+        __b._name !==
+        "field-type-integer.FieldTypeIntegerFlagDefaultValueDouble"
       )
         return false;
       return compareFieldTypeIntegerFlagDefaultValueDouble(__a, __b);
-    case "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64":
+    case "field-type-integer.FieldTypeIntegerFlagDefaultValueInt64":
       if (
-        __b._name !== "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64"
+        __b._name !== "field-type-integer.FieldTypeIntegerFlagDefaultValueInt64"
       )
         return false;
       return compareFieldTypeIntegerFlagDefaultValueInt64(__a, __b);
-    case "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32":
+    case "field-type-integer.FieldTypeIntegerFlagDefaultValueInt32":
       if (
-        __b._name !== "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32"
+        __b._name !== "field-type-integer.FieldTypeIntegerFlagDefaultValueInt32"
       )
         return false;
       return compareFieldTypeIntegerFlagDefaultValueInt32(__a, __b);
-    case "fieldTypeInteger.FieldTypeIntegerFlagMin":
-      if (__b._name !== "fieldTypeInteger.FieldTypeIntegerFlagMin")
+    case "field-type-integer.FieldTypeIntegerFlagMin":
+      if (__b._name !== "field-type-integer.FieldTypeIntegerFlagMin")
         return false;
       return compareFieldTypeIntegerFlagMin(__a, __b);
-    case "fieldTypeInteger.FieldTypeIntegerFlagMax":
-      if (__b._name !== "fieldTypeInteger.FieldTypeIntegerFlagMax")
+    case "field-type-integer.FieldTypeIntegerFlagMax":
+      if (__b._name !== "field-type-integer.FieldTypeIntegerFlagMax")
         return false;
       return compareFieldTypeIntegerFlagMax(__a, __b);
   }
 }
 export interface FieldTypeIntegerFlagOptional {
-  _name: "fieldTypeInteger.FieldTypeIntegerFlagOptional";
+  _name: "field-type-integer.FieldTypeIntegerFlagOptional";
 }
 export function isFieldTypeIntegerFlagOptional(
   value: unknown
@@ -145,7 +146,7 @@ export function isFieldTypeIntegerFlagOptional(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeInteger.FieldTypeIntegerFlagOptional"
+      value["_name"] === "field-type-integer.FieldTypeIntegerFlagOptional"
     )
   )
     return false;
@@ -156,7 +157,7 @@ export function FieldTypeIntegerFlagOptional(
   _: FieldTypeIntegerFlagOptionalInputParams = {}
 ): FieldTypeIntegerFlagOptional {
   return {
-    _name: "fieldTypeInteger.FieldTypeIntegerFlagOptional"
+    _name: "field-type-integer.FieldTypeIntegerFlagOptional"
   };
 }
 export function encodeFieldTypeIntegerFlagOptional(
@@ -174,7 +175,7 @@ export function decodeFieldTypeIntegerFlagOptional(
    */
   if (__id !== -1409939587) return null;
   return {
-    _name: "fieldTypeInteger.FieldTypeIntegerFlagOptional"
+    _name: "field-type-integer.FieldTypeIntegerFlagOptional"
   };
 }
 export function defaultFieldTypeIntegerFlagOptional(
@@ -197,7 +198,7 @@ export function updateFieldTypeIntegerFlagOptional(
   return value;
 }
 export interface FieldTypeIntegerFlagDefaultValueDouble {
-  _name: "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble";
+  _name: "field-type-integer.FieldTypeIntegerFlagDefaultValueDouble";
   value: number;
 }
 export function isFieldTypeIntegerFlagDefaultValueDouble(
@@ -210,7 +211,7 @@ export function isFieldTypeIntegerFlagDefaultValueDouble(
       "_name" in value &&
       typeof value["_name"] === "string" &&
       value["_name"] ===
-        "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble"
+        "field-type-integer.FieldTypeIntegerFlagDefaultValueDouble"
     )
   )
     return false;
@@ -227,7 +228,7 @@ export function FieldTypeIntegerFlagDefaultValueDouble(
   params: FieldTypeIntegerFlagDefaultValueDoubleInputParams
 ): FieldTypeIntegerFlagDefaultValueDouble {
   return {
-    _name: "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble",
+    _name: "field-type-integer.FieldTypeIntegerFlagDefaultValueDouble",
     value: params["value"]
   };
 }
@@ -256,7 +257,7 @@ export function decodeFieldTypeIntegerFlagDefaultValueDouble(
    */
   value = __d.readDouble();
   return {
-    _name: "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble",
+    _name: "field-type-integer.FieldTypeIntegerFlagDefaultValueDouble",
     value
   };
 }
@@ -294,7 +295,7 @@ export function updateFieldTypeIntegerFlagDefaultValueDouble(
   return value;
 }
 export interface FieldTypeIntegerFlagDefaultValueInt64 {
-  _name: "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64";
+  _name: "field-type-integer.FieldTypeIntegerFlagDefaultValueInt64";
   value: string;
 }
 export function isFieldTypeIntegerFlagDefaultValueInt64(
@@ -307,7 +308,7 @@ export function isFieldTypeIntegerFlagDefaultValueInt64(
       "_name" in value &&
       typeof value["_name"] === "string" &&
       value["_name"] ===
-        "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64"
+        "field-type-integer.FieldTypeIntegerFlagDefaultValueInt64"
     )
   )
     return false;
@@ -337,7 +338,7 @@ export function FieldTypeIntegerFlagDefaultValueInt64(
   params: FieldTypeIntegerFlagDefaultValueInt64InputParams
 ): FieldTypeIntegerFlagDefaultValueInt64 {
   return {
-    _name: "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64",
+    _name: "field-type-integer.FieldTypeIntegerFlagDefaultValueInt64",
     value: params["value"]
   };
 }
@@ -366,7 +367,7 @@ export function decodeFieldTypeIntegerFlagDefaultValueInt64(
    */
   value = __d.readSignedLong();
   return {
-    _name: "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64",
+    _name: "field-type-integer.FieldTypeIntegerFlagDefaultValueInt64",
     value
   };
 }
@@ -404,7 +405,7 @@ export function updateFieldTypeIntegerFlagDefaultValueInt64(
   return value;
 }
 export interface FieldTypeIntegerFlagDefaultValueInt32 {
-  _name: "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32";
+  _name: "field-type-integer.FieldTypeIntegerFlagDefaultValueInt32";
   value: number;
 }
 export function isFieldTypeIntegerFlagDefaultValueInt32(
@@ -417,7 +418,7 @@ export function isFieldTypeIntegerFlagDefaultValueInt32(
       "_name" in value &&
       typeof value["_name"] === "string" &&
       value["_name"] ===
-        "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32"
+        "field-type-integer.FieldTypeIntegerFlagDefaultValueInt32"
     )
   )
     return false;
@@ -446,7 +447,7 @@ export function FieldTypeIntegerFlagDefaultValueInt32(
   params: FieldTypeIntegerFlagDefaultValueInt32InputParams
 ): FieldTypeIntegerFlagDefaultValueInt32 {
   return {
-    _name: "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32",
+    _name: "field-type-integer.FieldTypeIntegerFlagDefaultValueInt32",
     value: params["value"]
   };
 }
@@ -475,7 +476,7 @@ export function decodeFieldTypeIntegerFlagDefaultValueInt32(
    */
   value = __d.readInt32();
   return {
-    _name: "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32",
+    _name: "field-type-integer.FieldTypeIntegerFlagDefaultValueInt32",
     value
   };
 }
@@ -513,7 +514,7 @@ export function updateFieldTypeIntegerFlagDefaultValueInt32(
   return value;
 }
 export interface FieldTypeIntegerFlagMin {
-  _name: "fieldTypeInteger.FieldTypeIntegerFlagMin";
+  _name: "field-type-integer.FieldTypeIntegerFlagMin";
   value: number;
 }
 export function isFieldTypeIntegerFlagMin(
@@ -525,7 +526,7 @@ export function isFieldTypeIntegerFlagMin(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeInteger.FieldTypeIntegerFlagMin"
+      value["_name"] === "field-type-integer.FieldTypeIntegerFlagMin"
     )
   )
     return false;
@@ -542,7 +543,7 @@ export function FieldTypeIntegerFlagMin(
   params: FieldTypeIntegerFlagMinInputParams
 ): FieldTypeIntegerFlagMin {
   return {
-    _name: "fieldTypeInteger.FieldTypeIntegerFlagMin",
+    _name: "field-type-integer.FieldTypeIntegerFlagMin",
     value: params["value"]
   };
 }
@@ -571,7 +572,7 @@ export function decodeFieldTypeIntegerFlagMin(
    */
   value = __d.readDouble();
   return {
-    _name: "fieldTypeInteger.FieldTypeIntegerFlagMin",
+    _name: "field-type-integer.FieldTypeIntegerFlagMin",
     value
   };
 }
@@ -609,7 +610,7 @@ export function updateFieldTypeIntegerFlagMin(
   return value;
 }
 export interface FieldTypeIntegerFlagMax {
-  _name: "fieldTypeInteger.FieldTypeIntegerFlagMax";
+  _name: "field-type-integer.FieldTypeIntegerFlagMax";
   value: number;
 }
 export function isFieldTypeIntegerFlagMax(
@@ -621,7 +622,7 @@ export function isFieldTypeIntegerFlagMax(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeInteger.FieldTypeIntegerFlagMax"
+      value["_name"] === "field-type-integer.FieldTypeIntegerFlagMax"
     )
   )
     return false;
@@ -638,7 +639,7 @@ export function FieldTypeIntegerFlagMax(
   params: FieldTypeIntegerFlagMaxInputParams
 ): FieldTypeIntegerFlagMax {
   return {
-    _name: "fieldTypeInteger.FieldTypeIntegerFlagMax",
+    _name: "field-type-integer.FieldTypeIntegerFlagMax",
     value: params["value"]
   };
 }
@@ -667,7 +668,7 @@ export function decodeFieldTypeIntegerFlagMax(
    */
   value = __d.readDouble();
   return {
-    _name: "fieldTypeInteger.FieldTypeIntegerFlagMax",
+    _name: "field-type-integer.FieldTypeIntegerFlagMax",
     value
   };
 }
@@ -705,7 +706,7 @@ export function updateFieldTypeIntegerFlagMax(
   return value;
 }
 export interface FieldTypeDouble {
-  _name: "fieldTypeInteger.FieldTypeDouble";
+  _name: "field-type-integer.FieldTypeDouble";
   flags: ReadonlyArray<Readonly<FieldTypeIntegerFlag>>;
 }
 export function isFieldTypeDouble(value: unknown): value is FieldTypeDouble {
@@ -715,7 +716,7 @@ export function isFieldTypeDouble(value: unknown): value is FieldTypeDouble {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeInteger.FieldTypeDouble"
+      value["_name"] === "field-type-integer.FieldTypeDouble"
     )
   )
     return false;
@@ -739,7 +740,7 @@ export function FieldTypeDouble(
   params: FieldTypeDoubleInputParams
 ): FieldTypeDouble {
   return {
-    _name: "fieldTypeInteger.FieldTypeDouble",
+    _name: "field-type-integer.FieldTypeDouble",
     flags: params["flags"]
   };
 }
@@ -779,7 +780,7 @@ export function decodeFieldTypeDouble(
     __o1[__i1] = __tmp2;
   }
   return {
-    _name: "fieldTypeInteger.FieldTypeDouble",
+    _name: "field-type-integer.FieldTypeDouble",
     flags
   };
 }
@@ -841,7 +842,7 @@ export function updateFieldTypeDouble(
   return value;
 }
 export interface FieldTypeInt64 {
-  _name: "fieldTypeInteger.FieldTypeInt64";
+  _name: "field-type-integer.FieldTypeInt64";
   flags: ReadonlyArray<Readonly<FieldTypeIntegerFlag>>;
 }
 export function isFieldTypeInt64(value: unknown): value is FieldTypeInt64 {
@@ -851,7 +852,7 @@ export function isFieldTypeInt64(value: unknown): value is FieldTypeInt64 {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeInteger.FieldTypeInt64"
+      value["_name"] === "field-type-integer.FieldTypeInt64"
     )
   )
     return false;
@@ -875,7 +876,7 @@ export function FieldTypeInt64(
   params: FieldTypeInt64InputParams
 ): FieldTypeInt64 {
   return {
-    _name: "fieldTypeInteger.FieldTypeInt64",
+    _name: "field-type-integer.FieldTypeInt64",
     flags: params["flags"]
   };
 }
@@ -912,7 +913,7 @@ export function decodeFieldTypeInt64(
     __o1[__i1] = __tmp2;
   }
   return {
-    _name: "fieldTypeInteger.FieldTypeInt64",
+    _name: "field-type-integer.FieldTypeInt64",
     flags
   };
 }
@@ -974,7 +975,7 @@ export function updateFieldTypeInt64(
   return value;
 }
 export interface FieldTypeInt32 {
-  _name: "fieldTypeInteger.FieldTypeInt32";
+  _name: "field-type-integer.FieldTypeInt32";
   flags: ReadonlyArray<Readonly<FieldTypeIntegerFlag>>;
 }
 export function isFieldTypeInt32(value: unknown): value is FieldTypeInt32 {
@@ -984,7 +985,7 @@ export function isFieldTypeInt32(value: unknown): value is FieldTypeInt32 {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeInteger.FieldTypeInt32"
+      value["_name"] === "field-type-integer.FieldTypeInt32"
     )
   )
     return false;
@@ -1008,7 +1009,7 @@ export function FieldTypeInt32(
   params: FieldTypeInt32InputParams
 ): FieldTypeInt32 {
   return {
-    _name: "fieldTypeInteger.FieldTypeInt32",
+    _name: "field-type-integer.FieldTypeInt32",
     flags: params["flags"]
   };
 }
@@ -1045,7 +1046,7 @@ export function decodeFieldTypeInt32(
     __o1[__i1] = __tmp2;
   }
   return {
-    _name: "fieldTypeInteger.FieldTypeInt32",
+    _name: "field-type-integer.FieldTypeInt32",
     flags
   };
 }

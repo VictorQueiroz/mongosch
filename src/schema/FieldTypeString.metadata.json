@@ -28,7 +28,7 @@
   "FieldTypeStringFlagDefaultValue": {
     "kind": "type",
     "id": -200469876,
-    "globalName": "fieldTypeString.FieldTypeStringFlagDefaultValue",
+    "globalName": "field-type-string.FieldTypeStringFlagDefaultValue",
     "name": "FieldTypeStringFlagDefaultValue",
     "params": [
       { "name": "value", "type": { "type": "generic", "value": "string" } }
@@ -37,14 +37,14 @@
   "FieldTypeStringFlagOptional": {
     "kind": "type",
     "id": -1310457092,
-    "globalName": "fieldTypeString.FieldTypeStringFlagOptional",
+    "globalName": "field-type-string.FieldTypeStringFlagOptional",
     "name": "FieldTypeStringFlagOptional",
     "params": []
   },
   "FieldTypeStringFlagMinLength": {
     "kind": "type",
     "id": 1227713402,
-    "globalName": "fieldTypeString.FieldTypeStringFlagMinLength",
+    "globalName": "field-type-string.FieldTypeStringFlagMinLength",
     "name": "FieldTypeStringFlagMinLength",
     "params": [
       { "name": "value", "type": { "type": "generic", "value": "int" } }
@@ -53,7 +53,7 @@
   "FieldTypeStringFlagMaxLength": {
     "kind": "type",
     "id": 445346718,
-    "globalName": "fieldTypeString.FieldTypeStringFlagMaxLength",
+    "globalName": "field-type-string.FieldTypeStringFlagMaxLength",
     "name": "FieldTypeStringFlagMaxLength",
     "params": [
       { "name": "value", "type": { "type": "generic", "value": "int" } }
@@ -62,7 +62,7 @@
   "FieldTypeStringFlagMatchRegularExpression": {
     "kind": "type",
     "id": -1306615325,
-    "globalName": "fieldTypeString.FieldTypeStringFlagMatchRegularExpression",
+    "globalName": "field-type-string.FieldTypeStringFlagMatchRegularExpression",
     "name": "FieldTypeStringFlagMatchRegularExpression",
     "params": [
       { "name": "value", "type": { "type": "generic", "value": "string" } }
@@ -71,7 +71,7 @@
   "FieldTypeString": {
     "kind": "type",
     "id": -58794197,
-    "globalName": "fieldTypeString.FieldTypeString",
+    "globalName": "field-type-string.FieldTypeString",
     "name": "FieldTypeString",
     "params": [
       {
@@ -117,7 +117,7 @@
     {
       "kind": "type",
       "id": -200469876,
-      "globalName": "fieldTypeString.FieldTypeStringFlagDefaultValue",
+      "globalName": "field-type-string.FieldTypeStringFlagDefaultValue",
       "name": "FieldTypeStringFlagDefaultValue",
       "params": [
         { "name": "value", "type": { "type": "generic", "value": "string" } }
@@ -126,14 +126,14 @@
     {
       "kind": "type",
       "id": -1310457092,
-      "globalName": "fieldTypeString.FieldTypeStringFlagOptional",
+      "globalName": "field-type-string.FieldTypeStringFlagOptional",
       "name": "FieldTypeStringFlagOptional",
       "params": []
     },
     {
       "kind": "type",
       "id": 1227713402,
-      "globalName": "fieldTypeString.FieldTypeStringFlagMinLength",
+      "globalName": "field-type-string.FieldTypeStringFlagMinLength",
       "name": "FieldTypeStringFlagMinLength",
       "params": [
         { "name": "value", "type": { "type": "generic", "value": "int" } }
@@ -142,7 +142,7 @@
     {
       "kind": "type",
       "id": 445346718,
-      "globalName": "fieldTypeString.FieldTypeStringFlagMaxLength",
+      "globalName": "field-type-string.FieldTypeStringFlagMaxLength",
       "name": "FieldTypeStringFlagMaxLength",
       "params": [
         { "name": "value", "type": { "type": "generic", "value": "int" } }
@@ -151,7 +151,7 @@
     {
       "kind": "type",
       "id": -1306615325,
-      "globalName": "fieldTypeString.FieldTypeStringFlagMatchRegularExpression",
+      "globalName": "field-type-string.FieldTypeStringFlagMatchRegularExpression",
       "name": "FieldTypeStringFlagMatchRegularExpression",
       "params": [
         { "name": "value", "type": { "type": "generic", "value": "string" } }
@@ -160,7 +160,7 @@
     {
       "kind": "type",
       "id": -58794197,
-      "globalName": "fieldTypeString.FieldTypeString",
+      "globalName": "field-type-string.FieldTypeString",
       "name": "FieldTypeString",
       "params": [
         {

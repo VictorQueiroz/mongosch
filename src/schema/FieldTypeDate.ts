@@ -25,17 +25,17 @@ export function encodeFieldTypeDateFlagTrait(
   value: FieldTypeDateFlag
 ) {
   switch (value._name) {
-    case "fieldTypeDate.FieldTypeDateFlagFuture":
+    case "field-type-date.FieldTypeDateFlagFuture":
       return encodeFieldTypeDateFlagFuture(__s, value);
-    case "fieldTypeDate.FieldTypeDateFlagPast":
+    case "field-type-date.FieldTypeDateFlagPast":
       return encodeFieldTypeDateFlagPast(__s, value);
-    case "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate":
+    case "field-type-date.FieldTypeDateFlagDefaultValueCurrentDate":
       return encodeFieldTypeDateFlagDefaultValueCurrentDate(__s, value);
-    case "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent":
+    case "field-type-date.FieldTypeDateFlagUpdateOnEvent":
       return encodeFieldTypeDateFlagUpdateOnEvent(__s, value);
   }
   throw new Error(
-    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- fieldTypeDate.FieldTypeDateFlagFuture\n\t- fieldTypeDate.FieldTypeDateFlagPast\n\t- fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate\n\t- fieldTypeDate.FieldTypeDateFlagUpdateOnEvent\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
+    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- field-type-date.FieldTypeDateFlagFuture\n\t- field-type-date.FieldTypeDateFlagPast\n\t- field-type-date.FieldTypeDateFlagDefaultValueCurrentDate\n\t- field-type-date.FieldTypeDateFlagUpdateOnEvent\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
   );
 }
 export function decodeFieldTypeDateFlagTrait(__d: IDeserializer) {
@@ -84,26 +84,26 @@ export function compareFieldTypeDateFlagTrait(
   __b: FieldTypeDateFlag
 ) {
   switch (__a._name) {
-    case "fieldTypeDate.FieldTypeDateFlagFuture":
-      if (__b._name !== "fieldTypeDate.FieldTypeDateFlagFuture") return false;
+    case "field-type-date.FieldTypeDateFlagFuture":
+      if (__b._name !== "field-type-date.FieldTypeDateFlagFuture") return false;
       return compareFieldTypeDateFlagFuture(__a, __b);
-    case "fieldTypeDate.FieldTypeDateFlagPast":
-      if (__b._name !== "fieldTypeDate.FieldTypeDateFlagPast") return false;
+    case "field-type-date.FieldTypeDateFlagPast":
+      if (__b._name !== "field-type-date.FieldTypeDateFlagPast") return false;
       return compareFieldTypeDateFlagPast(__a, __b);
-    case "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate":
+    case "field-type-date.FieldTypeDateFlagDefaultValueCurrentDate":
       if (
-        __b._name !== "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate"
+        __b._name !== "field-type-date.FieldTypeDateFlagDefaultValueCurrentDate"
       )
         return false;
       return compareFieldTypeDateFlagDefaultValueCurrentDate(__a, __b);
-    case "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent":
-      if (__b._name !== "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent")
+    case "field-type-date.FieldTypeDateFlagUpdateOnEvent":
+      if (__b._name !== "field-type-date.FieldTypeDateFlagUpdateOnEvent")
         return false;
       return compareFieldTypeDateFlagUpdateOnEvent(__a, __b);
   }
 }
 export interface FieldTypeDateFlagFuture {
-  _name: "fieldTypeDate.FieldTypeDateFlagFuture";
+  _name: "field-type-date.FieldTypeDateFlagFuture";
 }
 export function isFieldTypeDateFlagFuture(
   value: unknown
@@ -114,7 +114,7 @@ export function isFieldTypeDateFlagFuture(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeDate.FieldTypeDateFlagFuture"
+      value["_name"] === "field-type-date.FieldTypeDateFlagFuture"
     )
   )
     return false;
@@ -125,7 +125,7 @@ export function FieldTypeDateFlagFuture(
   _: FieldTypeDateFlagFutureInputParams = {}
 ): FieldTypeDateFlagFuture {
   return {
-    _name: "fieldTypeDate.FieldTypeDateFlagFuture"
+    _name: "field-type-date.FieldTypeDateFlagFuture"
   };
 }
 export function encodeFieldTypeDateFlagFuture(
@@ -143,7 +143,7 @@ export function decodeFieldTypeDateFlagFuture(
    */
   if (__id !== -1345777696) return null;
   return {
-    _name: "fieldTypeDate.FieldTypeDateFlagFuture"
+    _name: "field-type-date.FieldTypeDateFlagFuture"
   };
 }
 export function defaultFieldTypeDateFlagFuture(
@@ -166,7 +166,7 @@ export function updateFieldTypeDateFlagFuture(
   return value;
 }
 export interface FieldTypeDateFlagPast {
-  _name: "fieldTypeDate.FieldTypeDateFlagPast";
+  _name: "field-type-date.FieldTypeDateFlagPast";
 }
 export function isFieldTypeDateFlagPast(
   value: unknown
@@ -177,7 +177,7 @@ export function isFieldTypeDateFlagPast(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeDate.FieldTypeDateFlagPast"
+      value["_name"] === "field-type-date.FieldTypeDateFlagPast"
     )
   )
     return false;
@@ -188,7 +188,7 @@ export function FieldTypeDateFlagPast(
   _: FieldTypeDateFlagPastInputParams = {}
 ): FieldTypeDateFlagPast {
   return {
-    _name: "fieldTypeDate.FieldTypeDateFlagPast"
+    _name: "field-type-date.FieldTypeDateFlagPast"
   };
 }
 export function encodeFieldTypeDateFlagPast(
@@ -206,7 +206,7 @@ export function decodeFieldTypeDateFlagPast(
    */
   if (__id !== -1190157343) return null;
   return {
-    _name: "fieldTypeDate.FieldTypeDateFlagPast"
+    _name: "field-type-date.FieldTypeDateFlagPast"
   };
 }
 export function defaultFieldTypeDateFlagPast(
@@ -229,7 +229,7 @@ export function updateFieldTypeDateFlagPast(
   return value;
 }
 export interface FieldTypeDateFlagDefaultValueCurrentDate {
-  _name: "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate";
+  _name: "field-type-date.FieldTypeDateFlagDefaultValueCurrentDate";
 }
 export function isFieldTypeDateFlagDefaultValueCurrentDate(
   value: unknown
@@ -241,7 +241,7 @@ export function isFieldTypeDateFlagDefaultValueCurrentDate(
       "_name" in value &&
       typeof value["_name"] === "string" &&
       value["_name"] ===
-        "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate"
+        "field-type-date.FieldTypeDateFlagDefaultValueCurrentDate"
     )
   )
     return false;
@@ -252,7 +252,7 @@ export function FieldTypeDateFlagDefaultValueCurrentDate(
   _: FieldTypeDateFlagDefaultValueCurrentDateInputParams = {}
 ): FieldTypeDateFlagDefaultValueCurrentDate {
   return {
-    _name: "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate"
+    _name: "field-type-date.FieldTypeDateFlagDefaultValueCurrentDate"
   };
 }
 export function encodeFieldTypeDateFlagDefaultValueCurrentDate(
@@ -270,7 +270,7 @@ export function decodeFieldTypeDateFlagDefaultValueCurrentDate(
    */
   if (__id !== 210004158) return null;
   return {
-    _name: "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate"
+    _name: "field-type-date.FieldTypeDateFlagDefaultValueCurrentDate"
   };
 }
 export function defaultFieldTypeDateFlagDefaultValueCurrentDate(
@@ -293,7 +293,7 @@ export function updateFieldTypeDateFlagDefaultValueCurrentDate(
   return value;
 }
 export interface FieldTypeDateFlagUpdateOnEvent {
-  _name: "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent";
+  _name: "field-type-date.FieldTypeDateFlagUpdateOnEvent";
   event: Readonly<Event>;
 }
 export function isFieldTypeDateFlagUpdateOnEvent(
@@ -305,7 +305,7 @@ export function isFieldTypeDateFlagUpdateOnEvent(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent"
+      value["_name"] === "field-type-date.FieldTypeDateFlagUpdateOnEvent"
     )
   )
     return false;
@@ -320,7 +320,7 @@ export function FieldTypeDateFlagUpdateOnEvent(
   params: FieldTypeDateFlagUpdateOnEventInputParams
 ): FieldTypeDateFlagUpdateOnEvent {
   return {
-    _name: "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent",
+    _name: "field-type-date.FieldTypeDateFlagUpdateOnEvent",
     event: params["event"]
   };
 }
@@ -351,7 +351,7 @@ export function decodeFieldTypeDateFlagUpdateOnEvent(
   if (tmp2 === null) return null;
   event = tmp2;
   return {
-    _name: "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent",
+    _name: "field-type-date.FieldTypeDateFlagUpdateOnEvent",
     event
   };
 }
@@ -389,7 +389,7 @@ export function updateFieldTypeDateFlagUpdateOnEvent(
   return value;
 }
 export interface FieldTypeDate {
-  _name: "fieldTypeDate.FieldTypeDate";
+  _name: "field-type-date.FieldTypeDate";
   flags: ReadonlyArray<Readonly<FieldTypeDateFlag>>;
 }
 export function isFieldTypeDate(value: unknown): value is FieldTypeDate {
@@ -399,7 +399,7 @@ export function isFieldTypeDate(value: unknown): value is FieldTypeDate {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeDate.FieldTypeDate"
+      value["_name"] === "field-type-date.FieldTypeDate"
     )
   )
     return false;
@@ -421,7 +421,7 @@ export interface FieldTypeDateInputParams {
 }
 export function FieldTypeDate(params: FieldTypeDateInputParams): FieldTypeDate {
   return {
-    _name: "fieldTypeDate.FieldTypeDate",
+    _name: "field-type-date.FieldTypeDate",
     flags: params["flags"]
   };
 }
@@ -456,7 +456,7 @@ export function decodeFieldTypeDate(__d: IDeserializer): FieldTypeDate | null {
     __o1[__i1] = __tmp2;
   }
   return {
-    _name: "fieldTypeDate.FieldTypeDate",
+    _name: "field-type-date.FieldTypeDate",
     flags
   };
 }

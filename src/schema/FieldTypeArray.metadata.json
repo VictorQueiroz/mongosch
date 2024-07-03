@@ -23,7 +23,7 @@
   "FieldTypeArrayFlagMinLength": {
     "kind": "type",
     "id": -2125914307,
-    "globalName": "fieldTypeArray.FieldTypeArrayFlagMinLength",
+    "globalName": "field-type-array.FieldTypeArrayFlagMinLength",
     "name": "FieldTypeArrayFlagMinLength",
     "params": [
       { "name": "value", "type": { "type": "generic", "value": "int" } }
@@ -32,7 +32,7 @@
   "FieldTypeArrayFlagMaxLength": {
     "kind": "type",
     "id": -756086823,
-    "globalName": "fieldTypeArray.FieldTypeArrayFlagMaxLength",
+    "globalName": "field-type-array.FieldTypeArrayFlagMaxLength",
     "name": "FieldTypeArrayFlagMaxLength",
     "params": [
       { "name": "value", "type": { "type": "generic", "value": "int" } }
@@ -41,14 +41,14 @@
   "FieldTypeArrayFlagOptional": {
     "kind": "type",
     "id": 28218945,
-    "globalName": "fieldTypeArray.FieldTypeArrayFlagOptional",
+    "globalName": "field-type-array.FieldTypeArrayFlagOptional",
     "name": "FieldTypeArrayFlagOptional",
     "params": []
   },
   "FieldTypeArray": {
     "kind": "type",
     "id": -1280597715,
-    "globalName": "fieldTypeArray.FieldTypeArray",
+    "globalName": "field-type-array.FieldTypeArray",
     "name": "FieldTypeArray",
     "params": [
       { "name": "name", "type": { "type": "generic", "value": "string" } },
@@ -98,7 +98,7 @@
     {
       "kind": "type",
       "id": -2125914307,
-      "globalName": "fieldTypeArray.FieldTypeArrayFlagMinLength",
+      "globalName": "field-type-array.FieldTypeArrayFlagMinLength",
       "name": "FieldTypeArrayFlagMinLength",
       "params": [
         { "name": "value", "type": { "type": "generic", "value": "int" } }
@@ -107,7 +107,7 @@
     {
       "kind": "type",
       "id": -756086823,
-      "globalName": "fieldTypeArray.FieldTypeArrayFlagMaxLength",
+      "globalName": "field-type-array.FieldTypeArrayFlagMaxLength",
       "name": "FieldTypeArrayFlagMaxLength",
       "params": [
         { "name": "value", "type": { "type": "generic", "value": "int" } }
@@ -116,14 +116,14 @@
     {
       "kind": "type",
       "id": 28218945,
-      "globalName": "fieldTypeArray.FieldTypeArrayFlagOptional",
+      "globalName": "field-type-array.FieldTypeArrayFlagOptional",
       "name": "FieldTypeArrayFlagOptional",
       "params": []
     },
     {
       "kind": "type",
       "id": -1280597715,
-      "globalName": "fieldTypeArray.FieldTypeArray",
+      "globalName": "field-type-array.FieldTypeArray",
       "name": "FieldTypeArray",
       "params": [
         { "name": "name", "type": { "type": "generic", "value": "string" } },

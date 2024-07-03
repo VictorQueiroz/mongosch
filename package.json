@@ -5,7 +5,7 @@
     "c8": "^8.0.1",
     "cli-argument-helper": "^0.0.8",
     "eslint": "^8.50.0",
-    "jsbuffer": "^1.0.2",
+    "jsbuffer": "^1.0.36",
     "libphonenumber-js": "^1.10.45",
     "mongodb": "^6.1.0",
     "prettier": "^3.0.3",
@@ -30,6 +30,9 @@
     ]
   },
   "scripts": {
+    "test": "npm run build:models && docker build -t mongosch:1 . && docker run --rm -v .:/opt/app -it mongosch:1",
+    "test:run": "npx ava --timeout=60s test/index.ts test/models.ts",
+    "test:coverage": "npx c8 npm run test:run",
     "prepublishOnly": "npx tsc -b cli --force && npm run build:schema && npm run build:models",
     "build:schema": "npx jsbuffer schema/main -o src/schema --indentation-size 2 --no-ts-config && npm run prettier",
     "build:models": "npx ts-node --project cli/tsconfig.json cli --input example/model-definitions.ts -o example/schema",

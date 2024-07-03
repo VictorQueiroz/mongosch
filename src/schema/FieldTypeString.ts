@@ -20,17 +20,17 @@ export function encodeFieldTypeStringFlagTrait(
   value: FieldTypeStringFlag
 ) {
   switch (value._name) {
-    case "fieldTypeString.FieldTypeStringFlagOptional":
+    case "field-type-string.FieldTypeStringFlagOptional":
       return encodeFieldTypeStringFlagOptional(__s, value);
-    case "fieldTypeString.FieldTypeStringFlagMinLength":
+    case "field-type-string.FieldTypeStringFlagMinLength":
       return encodeFieldTypeStringFlagMinLength(__s, value);
-    case "fieldTypeString.FieldTypeStringFlagMaxLength":
+    case "field-type-string.FieldTypeStringFlagMaxLength":
       return encodeFieldTypeStringFlagMaxLength(__s, value);
-    case "fieldTypeString.FieldTypeStringFlagMatchRegularExpression":
+    case "field-type-string.FieldTypeStringFlagMatchRegularExpression":
       return encodeFieldTypeStringFlagMatchRegularExpression(__s, value);
   }
   throw new Error(
-    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- fieldTypeString.FieldTypeStringFlagOptional\n\t- fieldTypeString.FieldTypeStringFlagMinLength\n\t- fieldTypeString.FieldTypeStringFlagMaxLength\n\t- fieldTypeString.FieldTypeStringFlagMatchRegularExpression\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
+    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- field-type-string.FieldTypeStringFlagOptional\n\t- field-type-string.FieldTypeStringFlagMinLength\n\t- field-type-string.FieldTypeStringFlagMaxLength\n\t- field-type-string.FieldTypeStringFlagMatchRegularExpression\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
   );
 }
 export function decodeFieldTypeStringFlagTrait(__d: IDeserializer) {
@@ -79,29 +79,29 @@ export function compareFieldTypeStringFlagTrait(
   __b: FieldTypeStringFlag
 ) {
   switch (__a._name) {
-    case "fieldTypeString.FieldTypeStringFlagOptional":
-      if (__b._name !== "fieldTypeString.FieldTypeStringFlagOptional")
+    case "field-type-string.FieldTypeStringFlagOptional":
+      if (__b._name !== "field-type-string.FieldTypeStringFlagOptional")
         return false;
       return compareFieldTypeStringFlagOptional(__a, __b);
-    case "fieldTypeString.FieldTypeStringFlagMinLength":
-      if (__b._name !== "fieldTypeString.FieldTypeStringFlagMinLength")
+    case "field-type-string.FieldTypeStringFlagMinLength":
+      if (__b._name !== "field-type-string.FieldTypeStringFlagMinLength")
         return false;
       return compareFieldTypeStringFlagMinLength(__a, __b);
-    case "fieldTypeString.FieldTypeStringFlagMaxLength":
-      if (__b._name !== "fieldTypeString.FieldTypeStringFlagMaxLength")
+    case "field-type-string.FieldTypeStringFlagMaxLength":
+      if (__b._name !== "field-type-string.FieldTypeStringFlagMaxLength")
         return false;
       return compareFieldTypeStringFlagMaxLength(__a, __b);
-    case "fieldTypeString.FieldTypeStringFlagMatchRegularExpression":
+    case "field-type-string.FieldTypeStringFlagMatchRegularExpression":
       if (
         __b._name !==
-        "fieldTypeString.FieldTypeStringFlagMatchRegularExpression"
+        "field-type-string.FieldTypeStringFlagMatchRegularExpression"
       )
         return false;
       return compareFieldTypeStringFlagMatchRegularExpression(__a, __b);
   }
 }
 export interface FieldTypeStringFlagDefaultValue {
-  _name: "fieldTypeString.FieldTypeStringFlagDefaultValue";
+  _name: "field-type-string.FieldTypeStringFlagDefaultValue";
   value: string;
 }
 export function isFieldTypeStringFlagDefaultValue(
@@ -113,7 +113,7 @@ export function isFieldTypeStringFlagDefaultValue(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeString.FieldTypeStringFlagDefaultValue"
+      value["_name"] === "field-type-string.FieldTypeStringFlagDefaultValue"
     )
   )
     return false;
@@ -130,7 +130,7 @@ export function FieldTypeStringFlagDefaultValue(
   params: FieldTypeStringFlagDefaultValueInputParams
 ): FieldTypeStringFlagDefaultValue {
   return {
-    _name: "fieldTypeString.FieldTypeStringFlagDefaultValue",
+    _name: "field-type-string.FieldTypeStringFlagDefaultValue",
     value: params["value"]
   };
 }
@@ -159,7 +159,7 @@ export function decodeFieldTypeStringFlagDefaultValue(
    */
   value = __d.readString();
   return {
-    _name: "fieldTypeString.FieldTypeStringFlagDefaultValue",
+    _name: "field-type-string.FieldTypeStringFlagDefaultValue",
     value
   };
 }
@@ -197,7 +197,7 @@ export function updateFieldTypeStringFlagDefaultValue(
   return value;
 }
 export interface FieldTypeStringFlagOptional {
-  _name: "fieldTypeString.FieldTypeStringFlagOptional";
+  _name: "field-type-string.FieldTypeStringFlagOptional";
 }
 export function isFieldTypeStringFlagOptional(
   value: unknown
@@ -208,7 +208,7 @@ export function isFieldTypeStringFlagOptional(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeString.FieldTypeStringFlagOptional"
+      value["_name"] === "field-type-string.FieldTypeStringFlagOptional"
     )
   )
     return false;
@@ -219,7 +219,7 @@ export function FieldTypeStringFlagOptional(
   _: FieldTypeStringFlagOptionalInputParams = {}
 ): FieldTypeStringFlagOptional {
   return {
-    _name: "fieldTypeString.FieldTypeStringFlagOptional"
+    _name: "field-type-string.FieldTypeStringFlagOptional"
   };
 }
 export function encodeFieldTypeStringFlagOptional(
@@ -237,7 +237,7 @@ export function decodeFieldTypeStringFlagOptional(
    */
   if (__id !== -1310457092) return null;
   return {
-    _name: "fieldTypeString.FieldTypeStringFlagOptional"
+    _name: "field-type-string.FieldTypeStringFlagOptional"
   };
 }
 export function defaultFieldTypeStringFlagOptional(
@@ -260,7 +260,7 @@ export function updateFieldTypeStringFlagOptional(
   return value;
 }
 export interface FieldTypeStringFlagMinLength {
-  _name: "fieldTypeString.FieldTypeStringFlagMinLength";
+  _name: "field-type-string.FieldTypeStringFlagMinLength";
   value: number;
 }
 export function isFieldTypeStringFlagMinLength(
@@ -272,7 +272,7 @@ export function isFieldTypeStringFlagMinLength(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeString.FieldTypeStringFlagMinLength"
+      value["_name"] === "field-type-string.FieldTypeStringFlagMinLength"
     )
   )
     return false;
@@ -301,7 +301,7 @@ export function FieldTypeStringFlagMinLength(
   params: FieldTypeStringFlagMinLengthInputParams
 ): FieldTypeStringFlagMinLength {
   return {
-    _name: "fieldTypeString.FieldTypeStringFlagMinLength",
+    _name: "field-type-string.FieldTypeStringFlagMinLength",
     value: params["value"]
   };
 }
@@ -330,7 +330,7 @@ export function decodeFieldTypeStringFlagMinLength(
    */
   value = __d.readInt32();
   return {
-    _name: "fieldTypeString.FieldTypeStringFlagMinLength",
+    _name: "field-type-string.FieldTypeStringFlagMinLength",
     value
   };
 }
@@ -368,7 +368,7 @@ export function updateFieldTypeStringFlagMinLength(
   return value;
 }
 export interface FieldTypeStringFlagMaxLength {
-  _name: "fieldTypeString.FieldTypeStringFlagMaxLength";
+  _name: "field-type-string.FieldTypeStringFlagMaxLength";
   value: number;
 }
 export function isFieldTypeStringFlagMaxLength(
@@ -380,7 +380,7 @@ export function isFieldTypeStringFlagMaxLength(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeString.FieldTypeStringFlagMaxLength"
+      value["_name"] === "field-type-string.FieldTypeStringFlagMaxLength"
     )
   )
     return false;
@@ -409,7 +409,7 @@ export function FieldTypeStringFlagMaxLength(
   params: FieldTypeStringFlagMaxLengthInputParams
 ): FieldTypeStringFlagMaxLength {
   return {
-    _name: "fieldTypeString.FieldTypeStringFlagMaxLength",
+    _name: "field-type-string.FieldTypeStringFlagMaxLength",
     value: params["value"]
   };
 }
@@ -438,7 +438,7 @@ export function decodeFieldTypeStringFlagMaxLength(
    */
   value = __d.readInt32();
   return {
-    _name: "fieldTypeString.FieldTypeStringFlagMaxLength",
+    _name: "field-type-string.FieldTypeStringFlagMaxLength",
     value
   };
 }
@@ -476,7 +476,7 @@ export function updateFieldTypeStringFlagMaxLength(
   return value;
 }
 export interface FieldTypeStringFlagMatchRegularExpression {
-  _name: "fieldTypeString.FieldTypeStringFlagMatchRegularExpression";
+  _name: "field-type-string.FieldTypeStringFlagMatchRegularExpression";
   value: string;
 }
 export function isFieldTypeStringFlagMatchRegularExpression(
@@ -489,7 +489,7 @@ export function isFieldTypeStringFlagMatchRegularExpression(
       "_name" in value &&
       typeof value["_name"] === "string" &&
       value["_name"] ===
-        "fieldTypeString.FieldTypeStringFlagMatchRegularExpression"
+        "field-type-string.FieldTypeStringFlagMatchRegularExpression"
     )
   )
     return false;
@@ -506,7 +506,7 @@ export function FieldTypeStringFlagMatchRegularExpression(
   params: FieldTypeStringFlagMatchRegularExpressionInputParams
 ): FieldTypeStringFlagMatchRegularExpression {
   return {
-    _name: "fieldTypeString.FieldTypeStringFlagMatchRegularExpression",
+    _name: "field-type-string.FieldTypeStringFlagMatchRegularExpression",
     value: params["value"]
   };
 }
@@ -535,7 +535,7 @@ export function decodeFieldTypeStringFlagMatchRegularExpression(
    */
   value = __d.readString();
   return {
-    _name: "fieldTypeString.FieldTypeStringFlagMatchRegularExpression",
+    _name: "field-type-string.FieldTypeStringFlagMatchRegularExpression",
     value
   };
 }
@@ -573,7 +573,7 @@ export function updateFieldTypeStringFlagMatchRegularExpression(
   return value;
 }
 export interface FieldTypeString {
-  _name: "fieldTypeString.FieldTypeString";
+  _name: "field-type-string.FieldTypeString";
   flags: ReadonlyArray<Readonly<FieldTypeStringFlag>>;
 }
 export function isFieldTypeString(value: unknown): value is FieldTypeString {
@@ -583,7 +583,7 @@ export function isFieldTypeString(value: unknown): value is FieldTypeString {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeString.FieldTypeString"
+      value["_name"] === "field-type-string.FieldTypeString"
     )
   )
     return false;
@@ -607,7 +607,7 @@ export function FieldTypeString(
   params: FieldTypeStringInputParams
 ): FieldTypeString {
   return {
-    _name: "fieldTypeString.FieldTypeString",
+    _name: "field-type-string.FieldTypeString",
     flags: params["flags"]
   };
 }
@@ -647,7 +647,7 @@ export function decodeFieldTypeString(
     __o1[__i1] = __tmp2;
   }
   return {
-    _name: "fieldTypeString.FieldTypeString",
+    _name: "field-type-string.FieldTypeString",
     flags
   };
 }

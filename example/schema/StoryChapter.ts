@@ -99,6 +99,11 @@ export class StoryChapterModel {
   }
   public async updateOne(filter: Filter<IStoryChapter>, update: UpdateFilter<IStoryChapter> | Partial<IStoryChapter>) {
     if("$set" in update) {
+      if(!update['$set']) {
+        update['$set'] = {};
+      }
+      let changes = {...update['$set']};
+      update['$set'] = changes;
       const validation = partiallyValidateStoryChapter(update['$set']);
       if(validation !== null) {
         return validation;
@@ -117,6 +122,11 @@ export class StoryChapterModel {
   }
   public async updateMany(filter: Filter<IStoryChapter>, update: UpdateFilter<IStoryChapter> | Partial<IStoryChapter>) {
     if("$set" in update) {
+      if(!update['$set']) {
+        update['$set'] = {};
+      }
+      let changes = {...update['$set']};
+      update['$set'] = changes;
       const validation = partiallyValidateStoryChapter(update['$set']);
       if(validation !== null) {
         return validation;

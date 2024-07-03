@@ -16,7 +16,7 @@ test("it should validate regular expression", (t) => {
     }),
     {
       error:
-        "Expected value3 to match /^[a-zA-Z0-9._%+-]+@(gmail.com|hotmail.com)$/, but it didn't"
+        "Expected value.email to match /^[a-zA-Z0-9._%+-]+@(gmail.com|hotmail.com)$/, but it didn't"
     }
   );
 });

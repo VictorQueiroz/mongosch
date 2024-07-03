@@ -2,7 +2,7 @@
   "UnionItem": {
     "kind": "type",
     "id": 684885194,
-    "globalName": "fieldTypeUnion.UnionItem",
+    "globalName": "field-type-union.UnionItem",
     "name": "UnionItem",
     "params": [
       { "name": "id", "type": { "type": "generic", "value": "int" } },
@@ -20,7 +20,7 @@
   "FieldTypeUnion": {
     "kind": "type",
     "id": 326543358,
-    "globalName": "fieldTypeUnion.FieldTypeUnion",
+    "globalName": "field-type-union.FieldTypeUnion",
     "name": "FieldTypeUnion",
     "params": [
       { "name": "name", "type": { "type": "generic", "value": "string" } },
@@ -38,7 +38,7 @@
     {
       "kind": "type",
       "id": 684885194,
-      "globalName": "fieldTypeUnion.UnionItem",
+      "globalName": "field-type-union.UnionItem",
       "name": "UnionItem",
       "params": [
         { "name": "id", "type": { "type": "generic", "value": "int" } },
@@ -56,7 +56,7 @@
     {
       "kind": "type",
       "id": 326543358,
-      "globalName": "fieldTypeUnion.FieldTypeUnion",
+      "globalName": "field-type-union.FieldTypeUnion",
       "name": "FieldTypeUnion",
       "params": [
         { "name": "name", "type": { "type": "generic", "value": "string" } },

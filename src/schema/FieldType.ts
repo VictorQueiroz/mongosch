@@ -98,35 +98,35 @@ export function isFieldTypeTrait(value: unknown): value is FieldType {
 }
 export function encodeFieldTypeTrait(__s: ISerializer, value: FieldType) {
   switch (value._name) {
-    case "fieldTypeModelReference.FieldTypeModelReference":
+    case "field-type-model-reference.FieldTypeModelReference":
       return encodeFieldTypeModelReference(__s, value);
-    case "fieldTypeString.FieldTypeString":
+    case "field-type-string.FieldTypeString":
       return encodeFieldTypeString(__s, value);
-    case "fieldTypeObject.FieldTypeObject":
+    case "field-type-object.FieldTypeObject":
       return encodeFieldTypeObject(__s, value);
-    case "fieldTypeInteger.FieldTypeDouble":
+    case "field-type-integer.FieldTypeDouble":
       return encodeFieldTypeDouble(__s, value);
-    case "fieldTypeInteger.FieldTypeInt64":
+    case "field-type-integer.FieldTypeInt64":
       return encodeFieldTypeInt64(__s, value);
-    case "fieldTypeInteger.FieldTypeInt32":
+    case "field-type-integer.FieldTypeInt32":
       return encodeFieldTypeInt32(__s, value);
-    case "fieldTypeDate.FieldTypeDate":
+    case "field-type-date.FieldTypeDate":
       return encodeFieldTypeDate(__s, value);
-    case "fieldTypeEnum.FieldTypeEnumString":
+    case "field-type-enum.FieldTypeEnumString":
       return encodeFieldTypeEnumString(__s, value);
-    case "fieldTypeEnum.FieldTypeEnumInt":
+    case "field-type-enum.FieldTypeEnumInt":
       return encodeFieldTypeEnumInt(__s, value);
-    case "fieldTypeUnion.FieldTypeUnion":
+    case "field-type-union.FieldTypeUnion":
       return encodeFieldTypeUnion(__s, value);
-    case "fieldTypeBinary.FieldTypeBinary":
+    case "field-type-binary.FieldTypeBinary":
       return encodeFieldTypeBinary(__s, value);
-    case "fieldTypeArray.FieldTypeArray":
+    case "field-type-array.FieldTypeArray":
       return encodeFieldTypeArray(__s, value);
-    case "fieldTypeBoolean.FieldTypeBoolean":
+    case "field-type-boolean.FieldTypeBoolean":
       return encodeFieldTypeBoolean(__s, value);
   }
   throw new Error(
-    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- fieldTypeModelReference.FieldTypeModelReference\n\t- fieldTypeString.FieldTypeString\n\t- fieldTypeObject.FieldTypeObject\n\t- fieldTypeInteger.FieldTypeDouble\n\t- fieldTypeInteger.FieldTypeInt64\n\t- fieldTypeInteger.FieldTypeInt32\n\t- fieldTypeDate.FieldTypeDate\n\t- fieldTypeEnum.FieldTypeEnumString\n\t- fieldTypeEnum.FieldTypeEnumInt\n\t- fieldTypeUnion.FieldTypeUnion\n\t- fieldTypeBinary.FieldTypeBinary\n\t- fieldTypeArray.FieldTypeArray\n\t- fieldTypeBoolean.FieldTypeBoolean\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
+    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- field-type-model-reference.FieldTypeModelReference\n\t- field-type-string.FieldTypeString\n\t- field-type-object.FieldTypeObject\n\t- field-type-integer.FieldTypeDouble\n\t- field-type-integer.FieldTypeInt64\n\t- field-type-integer.FieldTypeInt32\n\t- field-type-date.FieldTypeDate\n\t- field-type-enum.FieldTypeEnumString\n\t- field-type-enum.FieldTypeEnumInt\n\t- field-type-union.FieldTypeUnion\n\t- field-type-binary.FieldTypeBinary\n\t- field-type-array.FieldTypeArray\n\t- field-type-boolean.FieldTypeBoolean\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
   );
 }
 export function decodeFieldTypeTrait(__d: IDeserializer) {
@@ -147,7 +147,7 @@ export function decodeFieldTypeTrait(__d: IDeserializer) {
     | FieldTypeArray
     | FieldTypeBoolean;
   switch (__id) {
-    case -969422962: {
+    case 1901102098: {
       const tmp = decodeFieldTypeModelReference(__d);
       if (tmp === null) return null;
       value = tmp;
@@ -235,45 +235,45 @@ export function defaultFieldTypeTrait() {
 }
 export function compareFieldTypeTrait(__a: FieldType, __b: FieldType) {
   switch (__a._name) {
-    case "fieldTypeModelReference.FieldTypeModelReference":
-      if (__b._name !== "fieldTypeModelReference.FieldTypeModelReference")
+    case "field-type-model-reference.FieldTypeModelReference":
+      if (__b._name !== "field-type-model-reference.FieldTypeModelReference")
         return false;
       return compareFieldTypeModelReference(__a, __b);
-    case "fieldTypeString.FieldTypeString":
-      if (__b._name !== "fieldTypeString.FieldTypeString") return false;
+    case "field-type-string.FieldTypeString":
+      if (__b._name !== "field-type-string.FieldTypeString") return false;
       return compareFieldTypeString(__a, __b);
-    case "fieldTypeObject.FieldTypeObject":
-      if (__b._name !== "fieldTypeObject.FieldTypeObject") return false;
+    case "field-type-object.FieldTypeObject":
+      if (__b._name !== "field-type-object.FieldTypeObject") return false;
       return compareFieldTypeObject(__a, __b);
-    case "fieldTypeInteger.FieldTypeDouble":
-      if (__b._name !== "fieldTypeInteger.FieldTypeDouble") return false;
+    case "field-type-integer.FieldTypeDouble":
+      if (__b._name !== "field-type-integer.FieldTypeDouble") return false;
       return compareFieldTypeDouble(__a, __b);
-    case "fieldTypeInteger.FieldTypeInt64":
-      if (__b._name !== "fieldTypeInteger.FieldTypeInt64") return false;
+    case "field-type-integer.FieldTypeInt64":
+      if (__b._name !== "field-type-integer.FieldTypeInt64") return false;
       return compareFieldTypeInt64(__a, __b);
-    case "fieldTypeInteger.FieldTypeInt32":
-      if (__b._name !== "fieldTypeInteger.FieldTypeInt32") return false;
+    case "field-type-integer.FieldTypeInt32":
+      if (__b._name !== "field-type-integer.FieldTypeInt32") return false;
       return compareFieldTypeInt32(__a, __b);
-    case "fieldTypeDate.FieldTypeDate":
-      if (__b._name !== "fieldTypeDate.FieldTypeDate") return false;
+    case "field-type-date.FieldTypeDate":
+      if (__b._name !== "field-type-date.FieldTypeDate") return false;
       return compareFieldTypeDate(__a, __b);
-    case "fieldTypeEnum.FieldTypeEnumString":
-      if (__b._name !== "fieldTypeEnum.FieldTypeEnumString") return false;
+    case "field-type-enum.FieldTypeEnumString":
+      if (__b._name !== "field-type-enum.FieldTypeEnumString") return false;
       return compareFieldTypeEnumString(__a, __b);
-    case "fieldTypeEnum.FieldTypeEnumInt":
-      if (__b._name !== "fieldTypeEnum.FieldTypeEnumInt") return false;
+    case "field-type-enum.FieldTypeEnumInt":
+      if (__b._name !== "field-type-enum.FieldTypeEnumInt") return false;
       return compareFieldTypeEnumInt(__a, __b);
-    case "fieldTypeUnion.FieldTypeUnion":
-      if (__b._name !== "fieldTypeUnion.FieldTypeUnion") return false;
+    case "field-type-union.FieldTypeUnion":
+      if (__b._name !== "field-type-union.FieldTypeUnion") return false;
       return compareFieldTypeUnion(__a, __b);
-    case "fieldTypeBinary.FieldTypeBinary":
-      if (__b._name !== "fieldTypeBinary.FieldTypeBinary") return false;
+    case "field-type-binary.FieldTypeBinary":
+      if (__b._name !== "field-type-binary.FieldTypeBinary") return false;
       return compareFieldTypeBinary(__a, __b);
-    case "fieldTypeArray.FieldTypeArray":
-      if (__b._name !== "fieldTypeArray.FieldTypeArray") return false;
+    case "field-type-array.FieldTypeArray":
+      if (__b._name !== "field-type-array.FieldTypeArray") return false;
       return compareFieldTypeArray(__a, __b);
-    case "fieldTypeBoolean.FieldTypeBoolean":
-      if (__b._name !== "fieldTypeBoolean.FieldTypeBoolean") return false;
+    case "field-type-boolean.FieldTypeBoolean":
+      if (__b._name !== "field-type-boolean.FieldTypeBoolean") return false;
       return compareFieldTypeBoolean(__a, __b);
   }
 }

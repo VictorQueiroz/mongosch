@@ -131,6 +131,12 @@ export class ContentParagraphModel {
   }
   public async updateOne(filter: Filter<IContentParagraph>, update: UpdateFilter<IContentParagraph> | Partial<IContentParagraph>) {
     if("$set" in update) {
+      if(!update['$set']) {
+        update['$set'] = {};
+      }
+      let changes = {...update['$set']};
+      changes.updatedAt = new Date();
+      update['$set'] = changes;
       const validation = partiallyValidateContentParagraph(update['$set']);
       if(validation !== null) {
         return validation;
@@ -149,6 +155,12 @@ export class ContentParagraphModel {
   }
   public async updateMany(filter: Filter<IContentParagraph>, update: UpdateFilter<IContentParagraph> | Partial<IContentParagraph>) {
     if("$set" in update) {
+      if(!update['$set']) {
+        update['$set'] = {};
+      }
+      let changes = {...update['$set']};
+      changes.updatedAt = new Date();
+      update['$set'] = changes;
       const validation = partiallyValidateContentParagraph(update['$set']);
       if(validation !== null) {
         return validation;

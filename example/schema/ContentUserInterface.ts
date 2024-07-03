@@ -159,6 +159,12 @@ export class ContentUserInterfaceModel {
   }
   public async updateOne(filter: Filter<IContentUserInterface>, update: UpdateFilter<IContentUserInterface> | Partial<IContentUserInterface>) {
     if("$set" in update) {
+      if(!update['$set']) {
+        update['$set'] = {};
+      }
+      let changes = {...update['$set']};
+      changes.updatedAt = new Date();
+      update['$set'] = changes;
       const validation = partiallyValidateContentUserInterface(update['$set']);
       if(validation !== null) {
         return validation;
@@ -177,6 +183,12 @@ export class ContentUserInterfaceModel {
   }
   public async updateMany(filter: Filter<IContentUserInterface>, update: UpdateFilter<IContentUserInterface> | Partial<IContentUserInterface>) {
     if("$set" in update) {
+      if(!update['$set']) {
+        update['$set'] = {};
+      }
+      let changes = {...update['$set']};
+      changes.updatedAt = new Date();
+      update['$set'] = changes;
       const validation = partiallyValidateContentUserInterface(update['$set']);
       if(validation !== null) {
         return validation;

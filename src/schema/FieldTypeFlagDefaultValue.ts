@@ -40,17 +40,17 @@ export function encodeFieldTypeFlagDefaultValueTrait(
   value: FieldTypeFlagDefaultValue
 ) {
   switch (value._name) {
-    case "fieldTypeString.FieldTypeStringFlagDefaultValue":
+    case "field-type-string.FieldTypeStringFlagDefaultValue":
       return encodeFieldTypeStringFlagDefaultValue(__s, value);
-    case "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble":
+    case "field-type-integer.FieldTypeIntegerFlagDefaultValueDouble":
       return encodeFieldTypeIntegerFlagDefaultValueDouble(__s, value);
-    case "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64":
+    case "field-type-integer.FieldTypeIntegerFlagDefaultValueInt64":
       return encodeFieldTypeIntegerFlagDefaultValueInt64(__s, value);
-    case "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32":
+    case "field-type-integer.FieldTypeIntegerFlagDefaultValueInt32":
       return encodeFieldTypeIntegerFlagDefaultValueInt32(__s, value);
   }
   throw new Error(
-    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- fieldTypeString.FieldTypeStringFlagDefaultValue\n\t- fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble\n\t- fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64\n\t- fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
+    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- field-type-string.FieldTypeStringFlagDefaultValue\n\t- field-type-integer.FieldTypeIntegerFlagDefaultValueDouble\n\t- field-type-integer.FieldTypeIntegerFlagDefaultValueInt64\n\t- field-type-integer.FieldTypeIntegerFlagDefaultValueInt32\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
   );
 }
 export function decodeFieldTypeFlagDefaultValueTrait(__d: IDeserializer) {
@@ -99,25 +99,26 @@ export function compareFieldTypeFlagDefaultValueTrait(
   __b: FieldTypeFlagDefaultValue
 ) {
   switch (__a._name) {
-    case "fieldTypeString.FieldTypeStringFlagDefaultValue":
-      if (__b._name !== "fieldTypeString.FieldTypeStringFlagDefaultValue")
+    case "field-type-string.FieldTypeStringFlagDefaultValue":
+      if (__b._name !== "field-type-string.FieldTypeStringFlagDefaultValue")
         return false;
       return compareFieldTypeStringFlagDefaultValue(__a, __b);
-    case "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble":
+    case "field-type-integer.FieldTypeIntegerFlagDefaultValueDouble":
       if (
-        __b._name !== "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueDouble"
+        __b._name !==
+        "field-type-integer.FieldTypeIntegerFlagDefaultValueDouble"
       )
         return false;
       return compareFieldTypeIntegerFlagDefaultValueDouble(__a, __b);
-    case "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64":
+    case "field-type-integer.FieldTypeIntegerFlagDefaultValueInt64":
       if (
-        __b._name !== "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt64"
+        __b._name !== "field-type-integer.FieldTypeIntegerFlagDefaultValueInt64"
       )
         return false;
       return compareFieldTypeIntegerFlagDefaultValueInt64(__a, __b);
-    case "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32":
+    case "field-type-integer.FieldTypeIntegerFlagDefaultValueInt32":
       if (
-        __b._name !== "fieldTypeInteger.FieldTypeIntegerFlagDefaultValueInt32"
+        __b._name !== "field-type-integer.FieldTypeIntegerFlagDefaultValueInt32"
       )
         return false;
       return compareFieldTypeIntegerFlagDefaultValueInt32(__a, __b);

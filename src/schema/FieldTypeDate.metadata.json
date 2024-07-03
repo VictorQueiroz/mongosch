@@ -28,28 +28,28 @@
   "FieldTypeDateFlagFuture": {
     "kind": "type",
     "id": -1345777696,
-    "globalName": "fieldTypeDate.FieldTypeDateFlagFuture",
+    "globalName": "field-type-date.FieldTypeDateFlagFuture",
     "name": "FieldTypeDateFlagFuture",
     "params": []
   },
   "FieldTypeDateFlagPast": {
     "kind": "type",
     "id": -1190157343,
-    "globalName": "fieldTypeDate.FieldTypeDateFlagPast",
+    "globalName": "field-type-date.FieldTypeDateFlagPast",
     "name": "FieldTypeDateFlagPast",
     "params": []
   },
   "FieldTypeDateFlagDefaultValueCurrentDate": {
     "kind": "type",
     "id": 210004158,
-    "globalName": "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate",
+    "globalName": "field-type-date.FieldTypeDateFlagDefaultValueCurrentDate",
     "name": "FieldTypeDateFlagDefaultValueCurrentDate",
     "params": []
   },
   "FieldTypeDateFlagUpdateOnEvent": {
     "kind": "type",
     "id": -388087272,
-    "globalName": "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent",
+    "globalName": "field-type-date.FieldTypeDateFlagUpdateOnEvent",
     "name": "FieldTypeDateFlagUpdateOnEvent",
     "params": [
       {
@@ -65,7 +65,7 @@
   "FieldTypeDate": {
     "kind": "type",
     "id": -367427752,
-    "globalName": "fieldTypeDate.FieldTypeDate",
+    "globalName": "field-type-date.FieldTypeDate",
     "name": "FieldTypeDate",
     "params": [
       {
@@ -111,28 +111,28 @@
     {
       "kind": "type",
       "id": -1345777696,
-      "globalName": "fieldTypeDate.FieldTypeDateFlagFuture",
+      "globalName": "field-type-date.FieldTypeDateFlagFuture",
       "name": "FieldTypeDateFlagFuture",
       "params": []
     },
     {
       "kind": "type",
       "id": -1190157343,
-      "globalName": "fieldTypeDate.FieldTypeDateFlagPast",
+      "globalName": "field-type-date.FieldTypeDateFlagPast",
       "name": "FieldTypeDateFlagPast",
       "params": []
     },
     {
       "kind": "type",
       "id": 210004158,
-      "globalName": "fieldTypeDate.FieldTypeDateFlagDefaultValueCurrentDate",
+      "globalName": "field-type-date.FieldTypeDateFlagDefaultValueCurrentDate",
       "name": "FieldTypeDateFlagDefaultValueCurrentDate",
       "params": []
     },
     {
       "kind": "type",
       "id": -388087272,
-      "globalName": "fieldTypeDate.FieldTypeDateFlagUpdateOnEvent",
+      "globalName": "field-type-date.FieldTypeDateFlagUpdateOnEvent",
       "name": "FieldTypeDateFlagUpdateOnEvent",
       "params": [
         {
@@ -148,7 +148,7 @@
     {
       "kind": "type",
       "id": -367427752,
-      "globalName": "fieldTypeDate.FieldTypeDate",
+      "globalName": "field-type-date.FieldTypeDate",
       "name": "FieldTypeDate",
       "params": [
         {

@@ -2,7 +2,7 @@
   "FieldTypeObject": {
     "kind": "type",
     "id": 1729791785,
-    "globalName": "fieldTypeObject.FieldTypeObject",
+    "globalName": "field-type-object.FieldTypeObject",
     "name": "FieldTypeObject",
     "params": [
       { "name": "name", "type": { "type": "generic", "value": "string" } },
@@ -24,7 +24,7 @@
     {
       "kind": "type",
       "id": 1729791785,
-      "globalName": "fieldTypeObject.FieldTypeObject",
+      "globalName": "field-type-object.FieldTypeObject",
       "name": "FieldTypeObject",
       "params": [
         { "name": "name", "type": { "type": "generic", "value": "string" } },

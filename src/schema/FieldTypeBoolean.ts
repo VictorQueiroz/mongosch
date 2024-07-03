@@ -12,11 +12,11 @@ export function encodeFieldTypeBooleanFlagsTrait(
   value: FieldTypeBooleanFlags
 ) {
   switch (value._name) {
-    case "fieldTypeBoolean.FieldTypeBooleanFlagsOptional":
+    case "field-type-boolean.FieldTypeBooleanFlagsOptional":
       return encodeFieldTypeBooleanFlagsOptional(__s, value);
   }
   throw new Error(
-    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- fieldTypeBoolean.FieldTypeBooleanFlagsOptional\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
+    `Failed to encode: Received invalid value on "_name" property. We got "${value["_name"]}" value, but this function was expecting to receive one of the following:\n\t- field-type-boolean.FieldTypeBooleanFlagsOptional\n\n\nPossible cause is that maybe this type simply does not extend this trait, and somehow the type-checking prevented you from calling this function wrongly.`
   );
 }
 export function decodeFieldTypeBooleanFlagsTrait(__d: IDeserializer) {
@@ -45,7 +45,7 @@ export function compareFieldTypeBooleanFlagsTrait(
   return compareFieldTypeBooleanFlagsOptional(__a, __b);
 }
 export interface FieldTypeBooleanFlagsOptional {
-  _name: "fieldTypeBoolean.FieldTypeBooleanFlagsOptional";
+  _name: "field-type-boolean.FieldTypeBooleanFlagsOptional";
 }
 export function isFieldTypeBooleanFlagsOptional(
   value: unknown
@@ -56,7 +56,7 @@ export function isFieldTypeBooleanFlagsOptional(
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeBoolean.FieldTypeBooleanFlagsOptional"
+      value["_name"] === "field-type-boolean.FieldTypeBooleanFlagsOptional"
     )
   )
     return false;
@@ -67,7 +67,7 @@ export function FieldTypeBooleanFlagsOptional(
   _: FieldTypeBooleanFlagsOptionalInputParams = {}
 ): FieldTypeBooleanFlagsOptional {
   return {
-    _name: "fieldTypeBoolean.FieldTypeBooleanFlagsOptional"
+    _name: "field-type-boolean.FieldTypeBooleanFlagsOptional"
   };
 }
 export function encodeFieldTypeBooleanFlagsOptional(
@@ -85,7 +85,7 @@ export function decodeFieldTypeBooleanFlagsOptional(
    */
   if (__id !== 1833850754) return null;
   return {
-    _name: "fieldTypeBoolean.FieldTypeBooleanFlagsOptional"
+    _name: "field-type-boolean.FieldTypeBooleanFlagsOptional"
   };
 }
 export function defaultFieldTypeBooleanFlagsOptional(
@@ -108,7 +108,7 @@ export function updateFieldTypeBooleanFlagsOptional(
   return value;
 }
 export interface FieldTypeBoolean {
-  _name: "fieldTypeBoolean.FieldTypeBoolean";
+  _name: "field-type-boolean.FieldTypeBoolean";
   flags: ReadonlyArray<Readonly<FieldTypeBooleanFlags>>;
 }
 export function isFieldTypeBoolean(value: unknown): value is FieldTypeBoolean {
@@ -118,7 +118,7 @@ export function isFieldTypeBoolean(value: unknown): value is FieldTypeBoolean {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeBoolean.FieldTypeBoolean"
+      value["_name"] === "field-type-boolean.FieldTypeBoolean"
     )
   )
     return false;
@@ -142,7 +142,7 @@ export function FieldTypeBoolean(
   params: FieldTypeBooleanInputParams
 ): FieldTypeBoolean {
   return {
-    _name: "fieldTypeBoolean.FieldTypeBoolean",
+    _name: "field-type-boolean.FieldTypeBoolean",
     flags: params["flags"]
   };
 }
@@ -182,7 +182,7 @@ export function decodeFieldTypeBoolean(
     __o1[__i1] = __tmp2;
   }
   return {
-    _name: "fieldTypeBoolean.FieldTypeBoolean",
+    _name: "field-type-boolean.FieldTypeBoolean",
     flags
   };
 }

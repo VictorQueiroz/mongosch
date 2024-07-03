@@ -8,7 +8,7 @@ import { decodeFieldTypeTrait } from "./FieldType";
 import { defaultFieldTypeTrait } from "./FieldType";
 import { compareFieldTypeTrait } from "./FieldType";
 export interface UnionItem {
-  _name: "fieldTypeUnion.UnionItem";
+  _name: "field-type-union.UnionItem";
   id: number;
   name: string;
   fieldType: Readonly<FieldType>;
@@ -20,7 +20,7 @@ export function isUnionItem(value: unknown): value is UnionItem {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeUnion.UnionItem"
+      value["_name"] === "field-type-union.UnionItem"
     )
   )
     return false;
@@ -58,7 +58,7 @@ export interface UnionItemInputParams {
 }
 export function UnionItem(params: UnionItemInputParams): UnionItem {
   return {
-    _name: "fieldTypeUnion.UnionItem",
+    _name: "field-type-union.UnionItem",
     id: params["id"],
     name: params["name"],
     fieldType: params["fieldType"]
@@ -106,7 +106,7 @@ export function decodeUnionItem(__d: IDeserializer): UnionItem | null {
   if (tmp4 === null) return null;
   fieldType = tmp4;
   return {
-    _name: "fieldTypeUnion.UnionItem",
+    _name: "field-type-union.UnionItem",
     id,
     name,
     fieldType
@@ -169,7 +169,7 @@ export function updateUnionItem(
   return value;
 }
 export interface FieldTypeUnion {
-  _name: "fieldTypeUnion.FieldTypeUnion";
+  _name: "field-type-union.FieldTypeUnion";
   name: string;
   items: ReadonlyArray<Readonly<UnionItem>>;
 }
@@ -180,7 +180,7 @@ export function isFieldTypeUnion(value: unknown): value is FieldTypeUnion {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeUnion.FieldTypeUnion"
+      value["_name"] === "field-type-union.FieldTypeUnion"
     )
   )
     return false;
@@ -205,7 +205,7 @@ export function FieldTypeUnion(
   params: FieldTypeUnionInputParams
 ): FieldTypeUnion {
   return {
-    _name: "fieldTypeUnion.FieldTypeUnion",
+    _name: "field-type-union.FieldTypeUnion",
     name: params["name"],
     items: params["items"]
   };
@@ -253,7 +253,7 @@ export function decodeFieldTypeUnion(
     __o2[__i2] = __tmp3;
   }
   return {
-    _name: "fieldTypeUnion.FieldTypeUnion",
+    _name: "field-type-union.FieldTypeUnion",
     name,
     items
   };

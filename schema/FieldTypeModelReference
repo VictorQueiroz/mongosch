@@ -1,6 +1,11 @@
 import { FieldType } from "./FieldType";
 import { ModelIdentity } from "./Model";
 
+export trait FieldTypeModelReferenceFlag{}
+
+export type FieldTypeModelReferenceFlagOptional : FieldTypeModelReferenceFlag {}
+
 export type FieldTypeModelReference : FieldType {
   ModelIdentity model;
+  vector<FieldTypeModelReferenceFlag> flags;
 }

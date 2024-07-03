@@ -1,7 +1,7 @@
 import { ISerializer } from "./__types__";
 import { IDeserializer } from "./__types__";
 export interface FieldTypeBinary {
-  _name: "fieldTypeBinary.FieldTypeBinary";
+  _name: "field-type-binary.FieldTypeBinary";
 }
 export function isFieldTypeBinary(value: unknown): value is FieldTypeBinary {
   if (
@@ -10,7 +10,7 @@ export function isFieldTypeBinary(value: unknown): value is FieldTypeBinary {
       value !== null &&
       "_name" in value &&
       typeof value["_name"] === "string" &&
-      value["_name"] === "fieldTypeBinary.FieldTypeBinary"
+      value["_name"] === "field-type-binary.FieldTypeBinary"
     )
   )
     return false;
@@ -21,7 +21,7 @@ export function FieldTypeBinary(
   _: FieldTypeBinaryInputParams = {}
 ): FieldTypeBinary {
   return {
-    _name: "fieldTypeBinary.FieldTypeBinary"
+    _name: "field-type-binary.FieldTypeBinary"
   };
 }
 export function encodeFieldTypeBinary(__s: ISerializer, _: FieldTypeBinary) {
@@ -36,7 +36,7 @@ export function decodeFieldTypeBinary(
    */
   if (__id !== -1706328239) return null;
   return {
-    _name: "fieldTypeBinary.FieldTypeBinary"
+    _name: "field-type-binary.FieldTypeBinary"
   };
 }
 export function defaultFieldTypeBinary(
