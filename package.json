@@ -39,7 +39,7 @@
     "build:models:fast": "TS_NODE_TRANSPILE_ONLY=1 npm run build:models",
     "prettier": "npx prettier --write src/schema"
   },
-  "version": "1.0.37",
+  "version": "1.0.38",
   "license": "MIT",
   "main": "./src/index.js",
   "dependencies": {
